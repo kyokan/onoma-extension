@@ -6,6 +6,7 @@ import MainSection from '../components/MainSection';
 import * as TodoActions from '../actions/todos';
 import style from './App.css';
 import extension from 'extensionizer';
+import classNames from 'classnames';
 
 @connect(
   state => ({
