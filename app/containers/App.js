@@ -42,8 +42,16 @@ export default class App extends Component {
 
     return (
       <div>
-        <div> Onoma (Popup) </div>
-        <button onClick={this.openExtensionInBrowser}> Browse Domains </button>
+        <div> onoma wallet </div>
+        <div> Take control of your Handshake coins and domain names. </div>
+        <button> Get Started </button>
+        <br></br>
+        <div onClick={this.openExtensionInBrowser}> Browse Domains </div>
+        <div> Information </div>
+
+        <div> Resolve on Handshake </div>
+        <div> Version 1.0 </div>
+        <div> Current Height: </div>
       </div>
     );
   }
