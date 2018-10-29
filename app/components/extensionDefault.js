@@ -3,7 +3,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import actions from '../actions/extension.js';
-console.log('actions:', actions);
 
 @connect(
   state => ({
@@ -19,7 +18,6 @@ export default class App extends Component {
   static propTypes = {};
 
   render() {
-    console.log("props, state", this.props, this.state);
 
     return (
       <div>

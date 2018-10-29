@@ -5,14 +5,13 @@ import style from './App.css';
 import extension from 'extensionizer';
 import classNames from 'classnames';
 import ExtensionDefault from '../components/extensionDefault.js';
+import ExtensionCreatePassword from '../components/extensionCreatePassword.js';
 
 @connect(
   function mapStateToProps(state) {
-    console.log('type:', typeof state);
-    console.log('type ext:', typeof state.extension);
 
     return {
-      state,
+      currentView: state.extension.currentView,
     };
   },
   dispatch => ({
@@ -24,11 +23,14 @@ export default class App extends Component {
   static propTypes = {};
 
   render() {
-    const { state } = this.props;
-    console.log("props:", this.props);
-    console.log("state", this.state, this.props.state);
 
-    if (this.props.state.extension.currentView === 'default') {
+    if (this.props.currentView === 'create-password') {
+      return (
+        <ExtensionCreatePassword />
+      )
+    }
+
+    if (this.props.currentView === 'default') {
       return (
         <ExtensionDefault />
       )

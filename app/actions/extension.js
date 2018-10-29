@@ -18,7 +18,6 @@ export function openExtensionInBrowser(route = null, queryString = null) {
   // if (route) {
   //   extensionURL += `#${route}`
   // }
-  console.log('extensionURL:', extensionURL);
   extension.tabs.create({ url: extensionURL })
 }
 

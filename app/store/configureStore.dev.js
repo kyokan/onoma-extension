@@ -1,7 +1,10 @@
 import { applyMiddleware, createStore, compose } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from '../reducers';
-import storage from '../utils/storage';
+
+
+// [WIP] DISABLE STORAGE
+// import storage from '../utils/storage';
 
 // If Redux DevTools Extension is installed use it, otherwise use Redux compose
 /* eslint-disable no-underscore-dangle */
@@ -14,7 +17,8 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
 
 const enhancer = composeEnhancers(
   applyMiddleware(thunk),
-  storage(),
+  // [WIP] DISABLE STORAGE
+  // storage(),
 );
 
 export default function (initialState) {

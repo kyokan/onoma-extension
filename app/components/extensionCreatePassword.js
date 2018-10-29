@@ -3,13 +3,14 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import actions from '../actions/extension.js';
-console.log('actions:', actions);
 
 @connect(
   state => ({
   }),
   dispatch => ({
-    actions: bindActionCreators({}, dispatch)
+    actions: bindActionCreators({
+      setView: actions.setView,
+    }, dispatch)
   })
 )
 export default class App extends Component {
@@ -20,10 +21,10 @@ export default class App extends Component {
 
     return (
       <div>
-        <div> Back </div>
+        <div onClick={() => {this.props.actions.setView('default')}}> Back </div>
         <div> Encrypt your wallet with a password </div>
-        <input> New password </input>
-        <input> Confirm password </input>
+        <div> New password </div>
+        <div> Confirm password </div>
         <button> Next </button>
       </div>
     );
