@@ -4,51 +4,38 @@ import { connect } from 'react-redux';
 import style from './App.css';
 import extension from 'extensionizer';
 import classNames from 'classnames';
+import ExtensionDefault from '../components/extensionDefault.js';
 
 @connect(
-  state => ({
-  }),
+  function mapStateToProps(state) {
+    console.log('type:', typeof state);
+    console.log('type ext:', typeof state.extension);
+
+    return {
+      state,
+    };
+  },
   dispatch => ({
     actions: bindActionCreators({}, dispatch)
   })
 )
 export default class App extends Component {
 
-  static propTypes = {
-    todos: PropTypes.array.isRequired,
-    actions: PropTypes.object.isRequired
-  };
-
-  openExtensionInBrowser (route = null, queryString = null) {
-    let extensionURL = extension.runtime.getURL('window.html')
-
-    // if (queryString) {
-    //   extensionURL += `?${queryString}`
-    // }
-
-    // if (route) {
-    //   extensionURL += `#${route}`
-    // }
-    console.log('extensionUrl:', extensionURL)
-    extension.tabs.create({ url: extensionURL })
-  }
+  static propTypes = {};
 
   render() {
-    const { todos, actions } = this.props;
+    const { state } = this.props;
+    console.log("props:", this.props);
+    console.log("state", this.state, this.props.state);
+
+    if (this.props.state.extension.currentView === 'default') {
+      return (
+        <ExtensionDefault />
+      )
+    }
 
     return (
-      <div>
-        <div> onoma wallet </div>
-        <div> Take control of your Handshake coins and domain names. </div>
-        <button> Get Started </button>
-        <br></br>
-        <div onClick={this.openExtensionInBrowser}> Browse Domains </div>
-        <div> Information </div>
-
-        <div> Resolve on Handshake </div>
-        <div> Version 1.0 </div>
-        <div> Current Height: </div>
-      </div>
+      <div> View Not Yet Defined </div>
     );
   }
 }

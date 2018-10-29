@@ -5,7 +5,13 @@ import './todoapp.css';
 
 chrome.storage.local.get('state', (obj) => {
   const { state } = obj;
-  const initialState = JSON.parse(state || '{}');
+  // const initialState = JSON.parse(state || '{}');
+  const initialState = {
+    extension: {
+      currentView: 'default',
+      resolverOn: false,
+    }
+  };
 
   const createStore = require('../../app/store/configureStore');
 
