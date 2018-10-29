@@ -1,5 +1,6 @@
+@import '../../variables';
+
 .header {
-  &__hi {
-    color: blue;
-  }
+  @extend %row-nowrap;
+  background-color: $azure-blue;
 }
