@@ -11,6 +11,7 @@ const baseDevConfig = () => ({
   devtool: 'eval-cheap-module-source-map',
   entry: {
     todoapp: [customPath, hotScript, path.join(__dirname, '../chrome/extension/todoapp')],
+    window: [customPath, hotScript, path.join(__dirname, '../chrome/extension/window')],
     background: [customPath, hotScript, path.join(__dirname, '../chrome/extension/background')],
   },
   devMiddleware: {
