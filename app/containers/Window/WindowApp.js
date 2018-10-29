@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Header from '../../components/Header';
 
 @connect(
   state => ({
@@ -15,6 +16,7 @@ export default class WindowApp extends Component {
   render() {
     return (
       <div>
+        <Header />
         I am a window app
       </div>
     );
