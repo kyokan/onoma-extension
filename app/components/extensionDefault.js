@@ -24,10 +24,7 @@ export default class App extends Component {
         <div> Take control of your Handshake coins and domain names. </div>
         <button> Get Started </button>
         <br></br>
-        <div onClick={()=>{
-          console.log('actions', actions);
-          actions.openExtensionInBrowser();
-        }}> Browse Domains </div>
+        <div onClick={actions.openExtensionInBrowser}> Browse Domains </div>
         <div> Information </div>
 
         <div> Resolve on Handshake </div>
