@@ -1,17 +1,23 @@
 import * as ActionTypes from '../constants/ActionTypes';
 
 const initialState = [{
-  text: 'Use Redux',
-  completed: false,
-  id: 0
+  currentView: 'default',
+  resolverOn: false,
 }];
 
 const actionsMap = {
-  [ActionTypes.ADD_TODO](state, action) {
+  [ActionTypes.EXTENSION_TOGGLE_RESOLVER](state, action) {
+    console.log({state});
     return [{
-      id: state.reduce((maxId, todo) => Math.max(todo.id, maxId), -1) + 1,
-      completed: false,
-      text: action.text
+      extension: {
+        resolverOn: !state.extension.resolverOn,
+      },
+      ...state.extension
+    }, ...state];
+  },
+  [ActionTypes.EXTENSION_SET_VIEW](state, action) {
+    console.log({state});
+    return [{
     }, ...state];
   },
   [ActionTypes.DELETE_TODO](state, action) {
