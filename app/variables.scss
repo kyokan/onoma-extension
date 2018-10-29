@@ -1,0 +1,13 @@
+// Blue
+$azure-blue: #007eff;
+
+// Extends
+%col-nowrap {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+%row-nowrap {
+  display: flex;
+  flex-flow: row nowrap;
+}
