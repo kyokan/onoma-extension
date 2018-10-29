@@ -9,7 +9,9 @@ console.log('actions:', actions);
   state => ({
   }),
   dispatch => ({
-    actions: bindActionCreators({}, dispatch)
+    actions: bindActionCreators({
+      setView: actions.setView,
+    }, dispatch)
   })
 )
 export default class App extends Component {
@@ -17,12 +19,13 @@ export default class App extends Component {
   static propTypes = {};
 
   render() {
+    console.log("props, state", this.props, this.state);
 
     return (
       <div>
         <div> onoma wallet </div>
         <div> Take control of your Handshake coins and domain names. </div>
-        <button> Get Started </button>
+        <button onClick={() => {this.props.actions.setView('create-password')}}> Get Started </button>
         <br></br>
         <div onClick={actions.openExtensionInBrowser}> Browse Domains </div>
         <div> Information </div>
