@@ -6,6 +6,8 @@ import extension from 'extensionizer';
 import classNames from 'classnames';
 import ExtensionDefault from '../components/extensionDefault.js';
 import ExtensionCreatePassword from '../components/extensionCreatePassword.js';
+import ExtensionAccessFundsOptions from '../components/extensionAccessFundsOptions.js';
+
 
 @connect(
   function mapStateToProps(state) {
@@ -23,14 +25,21 @@ export default class App extends Component {
   static propTypes = {};
 
   render() {
+    const { currentView } = this.props;
 
-    if (this.props.currentView === 'create-password') {
+    if (currentView === 'access-funds-show-options') {
       return (
-        <ExtensionCreatePassword />
-      )
+        <ExtensionAccessFundsOptions />
+      );
     }
 
-    if (this.props.currentView === 'default') {
+    if (currentView === 'create-password') {
+      return (
+        <ExtensionCreatePassword />
+      );
+    }
+
+    if (currentView === 'default') {
       return (
         <ExtensionDefault />
       )

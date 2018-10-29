@@ -22,10 +22,11 @@ export default class App extends Component {
     return (
       <div>
         <div onClick={() => {this.props.actions.setView('default')}}> Back </div>
-        <div> Encrypt your wallet with a password </div>
-        <div> New password </div>
-        <div> Confirm password </div>
-        <button onClick={() => {this.props.actions.setView('access-funds-show-options')}}> Next </button>
+        <div> How would you like to access your funds? </div>
+        <div> Connect Your Ledger </div>
+        <div> Import seed from Faucet </div>
+        <div> GitHub SSH proof </div>
+        <div> Add funds later </div>
       </div>
     );
   }
