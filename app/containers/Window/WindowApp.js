@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Header from '../../components/Header';
+import SubHeader from '../../components/SubHeader';
 import './window.scss';
 
 @connect(
@@ -16,9 +17,12 @@ export default class WindowApp extends Component {
 
   render() {
     return (
-      <div>
+      <div className="window-app">
         <Header />
-        I am a window app
+        <SubHeader />
+        <div className="window-app__content">
+          I am a window app
+        </div>
       </div>
     );
   }

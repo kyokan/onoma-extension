@@ -17,14 +17,21 @@ export default class Header extends Component {
 
     return (
       <div className="header">
-        <div className="header__title">
-          Handshake Wallet
-        </div>
-        <div className="header__block-height">
-          {`Current Height: ${blockHeight}`}
-        </div>
-        <div className="header__status">
-          Synced
+        <div className="header__content">
+          <div className="header__title">
+            Handshake Wallet
+          </div>
+          <div className="header__block-height">
+            <div className="header__block-height-label">
+              Current Height:
+            </div>
+            <div className="header__block-height-text">
+              {blockHeight}
+            </div>
+          </div>
+          <div className="header__status">
+            Synced
+          </div>
         </div>
       </div>
     );

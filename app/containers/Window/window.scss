@@ -1,8 +1,35 @@
-html {
-  font-size: 16px;
-}
+@import '../../variables.scss';
 
-body {
+html, body {
   margin: 0;
   padding: 0;
+  font-family: sans-serif;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+#root {
+  @extend %col-nowrap;
+  height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: rgba($black, .05);
+  z-index: 100;
+  -webkit-tap-highlight-color:  rgba(255, 255, 255, 0);
+}
+
+.window-app {
+  @extend %col-nowrap;
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  overflow-x: auto;
+  overflow-y: auto;
+
+  &__content {
+    flex: 1 0 auto;
+  }
 }
