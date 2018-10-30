@@ -1,8 +1,9 @@
-html {
-  font-size: 16px;
-}
-
-body {
+html, body {
   margin: 0;
   padding: 0;
+  font-family: sans-serif;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
