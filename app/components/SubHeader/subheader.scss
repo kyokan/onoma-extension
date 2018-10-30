@@ -1,0 +1,58 @@
+@import '../../variables';
+
+.subheader {
+  @extend %row-nowrap;
+  padding: .5rem 1rem;
+  font-size: .9rem;
+  box-shadow: 0 1px 1px 0 rgba($black, .2);
+
+  &__content {
+    @extend %row-nowrap;
+    flex: 1 0 auto;
+    align-items: center;
+    max-width: 42.5rem;
+    margin: 0 auto;
+  }
+
+  &__actions {
+    @extend %row-nowrap;
+    flex: 1 0 auto;
+    align-items: center;
+    color: $azure-blue;
+  }
+
+  &__action {
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  &__action + &__action {
+    margin-left: 2rem;
+  }
+
+  &__search {
+    @extend %row-nowrap;
+    border: 1px solid rgba($black, .2);
+    border-radius: 2rem;
+    align-items: center;
+    padding: .2rem .5rem .2rem .75rem;
+
+    &__input {
+      border: none;
+      outline: none;
+      font-size: .7rem;
+      font-weight: 500;
+      line-height: 1rem;
+      margin-right: .5rem;
+      min-width: 10rem;
+
+      &::-webkit-input-placeholder {
+        color: rgba($black, .35);
+      }
+    }
+
+    &__icon {
+
+    }
+  }
+}
