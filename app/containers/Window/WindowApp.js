@@ -17,10 +17,12 @@ export default class WindowApp extends Component {
 
   render() {
     return (
-      <div>
+      <div className="window-app">
         <Header />
         <SubHeader />
-        I am a window app
+        <div className="window-app__content">
+          I am a window app
+        </div>
       </div>
     );
   }
