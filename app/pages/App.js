@@ -1,13 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import style from './App.css';
+import style from './App.scss';
 import extension from 'extensionizer';
 import classNames from 'classnames';
 import ExtensionDefault from '../components/extensionDefault.js';
 import ExtensionCreatePassword from '../components/extensionCreatePassword.js';
 import ExtensionAccessFundsOptions from '../components/extensionAccessFundsOptions.js';
-
 
 @connect(
   function mapStateToProps(state) {

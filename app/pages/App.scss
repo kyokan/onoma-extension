@@ -1,0 +1,61 @@
+/*
+
+primaryBlue - #693AFA;
+primaryBlack - #111111;
+priamaryGrey - #E1EAF9;
+
+secondaryGreen - #0BCA6B;
+secondaryRed - #F53923;
+secondaryGrey - #A2A2A2;
+
+bgBordersWhite - #FFFFFF;
+bgBordersOffWhite - #F7F7FA;
+bgBordersGrey - #E2E2E2;
+
+ */
+
+.normal {
+  background: #FFFFFF;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: url("../../chrome/assets/fonts/Roboto-Regular.ttf");
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 100;
+  src: url("../../chrome/assets/fonts/Roboto-Thin.ttf");
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 300;
+  src: url("../../chrome/assets/fonts/Roboto-Light.ttf");
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  src: url("../../chrome/assets/fonts/Roboto-Medium.ttf");
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  src: url("../../chrome/assets/fonts/Roboto-Bold.ttf");
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 800;
+  src: url("../../chrome/assets/fonts/Roboto-Black.ttf");
+}

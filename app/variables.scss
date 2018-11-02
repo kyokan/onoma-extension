@@ -15,3 +15,54 @@ $azure-blue: #007eff;
   display: flex;
   flex-flow: row nowrap;
 }
+
+%link {
+  color: $azure-blue;
+  cursor: pointer;
+  transition: color 200ms ease-in-out;
+
+  &:hover {
+    color: lighten($azure-blue, 10);
+  }
+
+  &:active {
+    color: darken($azure-blue, 10);
+  }
+}
+
+%btn-secondary {
+  border: 1px solid $azure-blue;
+  padding: .75rem 1rem;
+  font-size: .9rem;
+  outline: none;
+  background-color: transparent;
+  color: $azure-blue;
+  border-radius: .75rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 200ms ease-in-out;
+
+  &:focus {
+    box-shadow: 0 0 2px 1px rgba($azure-blue, .25);
+  }
+
+  &:hover {
+    border-color: lighten($azure-blue, 10);
+    background-color: rgba($white, .5);
+    color: lighten($azure-blue, 10);
+  }
+
+  &:active {
+    border-color: darken($azure-blue, 10);
+    background-color: rgba($white, .5);
+    color: darken($azure-blue, 10);
+    box-shadow: none;
+  }
+}
+
+%panel {
+  background-color: $white;
+  border: 1px solid rgba($black, .1);
+  box-shadow: 0 1px 2px 1px rgba($black, .05);
+  border-radius: .5rem;
+}

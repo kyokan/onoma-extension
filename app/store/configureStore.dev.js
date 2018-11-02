@@ -1,6 +1,6 @@
 import { applyMiddleware, createStore, compose } from 'redux';
 import thunk from 'redux-thunk';
-import rootReducer from '../reducers';
+import rootReducer from '../ducks';
 import storage from '../utils/storage';
 
 // If Redux DevTools Extension is installed use it, otherwise use Redux compose
@@ -21,8 +21,8 @@ export default function (initialState) {
   const store = createStore(rootReducer, initialState, enhancer);
 
   if (module.hot) {
-    module.hot.accept('../reducers', () => {
-      const nextRootReducer = require('../reducers');
+    module.hot.accept('../ducks', () => {
+      const nextRootReducer = require('../ducks');
 
       store.replaceReducer(nextRootReducer);
     });

@@ -51,6 +51,7 @@
     "eslint-plugin-import": "^1.16.0",
     "eslint-plugin-jsx-a11y": "^2.2.3",
     "eslint-plugin-react": "^6.5.0",
+    "file-loader": "^2.0.0",
     "jsdom": "^9.2.1",
     "minimist": "^1.2.0",
     "mocha": "^3.1.2",
@@ -70,6 +71,7 @@
   },
   "dependencies": {
     "autoprefixer": "^7.2.5",
+    "bignumber.js": "^8.0.1",
     "bluebird": "^3.3.4",
     "classnames": "^2.2.6",
     "extensionizer": "^1.0.1",

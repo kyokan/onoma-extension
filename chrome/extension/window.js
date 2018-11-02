@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import WindowRoot from '../../app/containers/Window/WindowRoot';
+import WindowRoot from '../../app/pages/Window/WindowRoot';
 
 chrome.storage.local.get('state', (obj) => {
   const { state } = obj;
