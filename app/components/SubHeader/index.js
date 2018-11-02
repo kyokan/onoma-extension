@@ -9,18 +9,18 @@ class SubHeader extends Component {
       push: PropTypes.func.isRequired,
     }),
   };
-
+a
   render() {
     const { history: { push } } = this.props;
     return (
       <div className="subheader">
         <div className="subheader__content">
           <div className="subheader__actions">
-            <div className="subheader__action" onClick={() => push('/account')}>Account</div>
-            <div className="subheader__action">Send</div>
-            <div className="subheader__action">Receive</div>
-            <div className="subheader__action" onClick={() => push('/get_coins')}>Get Coins</div>
-            <div className="subheader__action" onClick={() => push('/settings')}>Settings</div>
+            <a className="subheader__action" onClick={() => push('/account')}>Account</a>
+            <a className="subheader__action">Send</a>
+            <a className="subheader__action">Receive</a>
+            <a className="subheader__action" onClick={() => push('/get_coins')}>Get Coins</a>
+            <a className="subheader__action" onClick={() => push('/settings')}>Settings</a>
           </div>
           <div className="subheader__search">
             <input className="subheader__search__input" type="text" placeholder="Lookup top-level domain" />

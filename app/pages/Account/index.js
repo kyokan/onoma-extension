@@ -19,7 +19,7 @@ class Account extends Component {
     domains: [],
   };
 
-  renderEmpty = text => <div>{text}</div>
+  renderEmpty = text => <div className="account__empty-list">{text}</div>
 
   renderTransactions() {
     const { transactions } = this.props;

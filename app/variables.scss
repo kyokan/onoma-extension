@@ -43,7 +43,9 @@ $azure-blue: #007eff;
   transition: 200ms ease-in-out;
 
   &:focus {
-    box-shadow: 0 0 2px 1px rgba($azure-blue, .25);
+    border-color: lighten($azure-blue, 10);
+    background-color: rgba($white, .5);
+    color: lighten($azure-blue, 10);
   }
 
   &:hover {
@@ -62,7 +64,7 @@ $azure-blue: #007eff;
 
 %panel {
   background-color: $white;
-  border: 1px solid rgba($black, .1);
-  box-shadow: 0 1px 2px 1px rgba($black, .05);
+  border: 1px solid rgba($black, .15);
+  box-shadow: 0 2px 2px 1px rgba($black, .1);
   border-radius: .5rem;
 }
