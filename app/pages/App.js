@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import style from './App.scss';
 import extension from 'extensionizer';
 import classNames from 'classnames';
-import ExtensionDefault from '../components/extensionDefault.js';
+import ExtensionDefault from '../components//ExtensionDefault/index.js';
 import ExtensionCreatePassword from '../components/extensionCreatePassword.js';
 import ExtensionAccessFundsOptions from '../components/extensionAccessFundsOptions.js';
 

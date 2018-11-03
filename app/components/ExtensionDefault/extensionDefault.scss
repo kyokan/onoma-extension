@@ -1,0 +1,45 @@
+@import '../../variables';
+
+.extension_primary_section {
+  height: 144px;
+  border-bottom: 1px solid black;
+  padding: 12px 10px;
+}
+
+.header_text {
+  font-family: 'SF-Pro-Display-Regular';
+  font-weight: bold;
+  color: black;
+  font-size: 18px;
+  line-height: 21px;
+  margin-bottom: 12px;
+}
+
+.subheader_text{
+  font-family: 'SF-Pro-Display-Regular';
+  font-size: 14px;
+  line-height: 16px;
+  width: 235px;
+  color: black;
+  margin-bottom: 12px;
+}
+
+.extension_cta_button {
+  height: 38px;
+  width: 100%;
+  border-radius: 8px;
+  background-color: $azure-blue;
+  color: white;
+  font-family: 'SF-Pro-Display-Regular';
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 16px;
+  text-align: center;
+}
+
+// .extension_cta_text{
+// }
+
+.extension_secondary_section {
+  padding: 6px 5px;
+}
