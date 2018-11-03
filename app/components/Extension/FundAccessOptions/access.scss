@@ -2,7 +2,7 @@
 
 .access_line_break {
   margin-top: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   width: 120%;
   margin-left: -20px;
 }
@@ -18,13 +18,22 @@
 }
 
 .header_text {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
+}
+
+.access_cta_wrapper {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-start;
+  justify-content: center;
+  position: relative;
+  // right: 10px;
+  // margin-right: 5px;
 }
 
 .access_cta_button {
-  @extend %btn-primary;
   height: 70px;
-  width: 100%;
+  width: 90%;
   background-color: $white;
   color: $azure-blue;
   margin: 0px 10px;
@@ -35,18 +44,16 @@
   flex-flow: column nowrap;
   align-items: center;
   justify-content: center;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 
   &:focus {
     border-color: darken(#E2E2E2, 10);
     background-color: darken($white, 10);
-    //color: lighten($azure-blue, 10);
   }
 
   &:hover {
     border-color: darken(#E2E2E2, 10);
     background-color: darken($white, 10);
-    //color: lighten($azure-blue, 10);
   }
 
   &:active {
