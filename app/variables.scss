@@ -30,6 +30,36 @@ $azure-blue: #007eff;
   }
 }
 
+%btn-primary {
+  border: 1px solid $azure-blue;
+  padding: .75rem 1rem;
+  font-size: .9rem;
+  outline: none;
+  background-color: $azure-blue;
+  color: $white;
+  border-radius: .75rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 200ms ease-in-out;
+
+  &:focus {
+    border-color: lighten($azure-blue, 10);
+    background-color: lighten($azure-blue, 10);
+    //color: lighten($azure-blue, 10);
+  }
+
+  &:hover {
+    border-color: lighten($azure-blue, 10);
+    background-color: lighten($azure-blue, 10);
+    //color: lighten($azure-blue, 10);
+  }
+
+  &:active {
+    border-color: darken($azure-blue, 10);
+    background-color: darken($azure-blue, 10);
+  }
+}
+
 %btn-secondary {
   border: 1px solid $azure-blue;
   padding: .75rem 1rem;
