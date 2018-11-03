@@ -2,24 +2,34 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { BigNumber as bn } from 'bignumber.js';
+import Modal from '../../components/Modal';
 import './account.scss';
 
 class Account extends Component {
   static propTypes = {
-    account: PropTypes.string.isRequired,
+    accountBase: PropTypes.string.isRequired,
+    accountIndex: PropTypes.number.isRequired,
     balance: PropTypes.object.isRequired,
     transactions: PropTypes.array.isRequired,
     domains: PropTypes.array.isRequired,
   };
 
   static defaultProps = {
-    account: 'm/44`/5353`/0',
+    accountBase: 'm/44`/5353`/',
+    accountIndex: 0,
     balance: bn(0),
     transactions: [],
     domains: [],
   };
 
-  renderEmpty = text => <div>{text}</div>
+  state = {
+    isShowingAccountModal: false,
+  };
+
+  openModal = () => this.setState({ isShowingAccountModal: true });
+  closeModal = () => this.setState({ isShowingAccountModal: false });
+
+  renderEmpty = text => <div className="account__empty-list">{text}</div>;
 
   renderTransactions() {
     const { transactions } = this.props;
@@ -37,12 +47,63 @@ class Account extends Component {
       : domains.map(tx => <div>I am a domain</div>);
   }
 
+  renderAccountModal() {
+    const { accountBase, accountIndex } = this.props;
+
+    return !this.state.isShowingAccountModal
+      ? null
+      : (
+        <Modal
+          className="account__switch-account-modal"
+          onClose={this.closeModal}
+        >
+          <div className="account__switch-account-modal__wrapper">
+            <div
+              className="account__switch-account-modal__close-btn"
+              onClick={this.closeModal}
+            >
+              ✕
+            </div>
+            <div className="account__switch-account-modal__header">
+              <div className="account__switch-account-modal__title">
+                Switch Account
+              </div>
+              <div className="account__switch-account-modal__subtitle">
+                Enter an account index you would like to interact with
+              </div>
+            </div>
+            <div className="account__switch-account-modal__content">
+              <div className="account__switch-account-modal__account-base">
+                {`${accountBase}`}
+              </div>
+              <input
+                type="number"
+                className="account__switch-account-modal__account-index"
+                placeholder={accountIndex}
+                min="0"
+              />
+            </div>
+            <div className="account__switch-account-modal__footer">
+              <button className="account__switch-account-modal__btn">
+                Switch
+              </button>
+            </div>
+          </div>
+        </Modal>
+      );
+  }
+
   render() {
-    const { account, balance } = this.props;
+    const { accountBase, accountIndex, balance } = this.props;
 
     return (
       <div className="account">
-        <div className="account__address">{account}</div>
+        <div
+          className="account__address"
+          onClick={this.openModal}
+        >
+          {`${accountBase}${accountIndex}`}
+        </div>
         <div className="account__header">
           <div className="account__balance-wrapper">
             <div className="account__balance-wrapper__label">
@@ -66,6 +127,7 @@ class Account extends Component {
             { this.renderDomains() }
           </div>
         </div>
+        {this.renderAccountModal()}
       </div>
     )
   }
