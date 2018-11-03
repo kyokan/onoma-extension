@@ -7,7 +7,6 @@ const initialState = {
 
 const actionsMap = {
   [ActionTypes.EXTENSION_TOGGLE_RESOLVER](state, action) {
-    console.log({state});
     return state;
   },
   [ActionTypes.EXTENSION_SET_VIEW](state, action) {
