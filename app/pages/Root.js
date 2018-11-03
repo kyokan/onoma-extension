@@ -1,6 +1,7 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import App from './App';
+import PropTypes from 'prop-types';
 
 export default class Root extends Component {
 
