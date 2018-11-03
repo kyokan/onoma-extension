@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import style from './App.scss';
 import extension from 'extensionizer';
 import classNames from 'classnames';
-import ExtensionDefault from '../components//ExtensionDefault/index.js';
-import ExtensionCreatePassword from '../components/extensionCreatePassword.js';
-import ExtensionAccessFundsOptions from '../components/extensionAccessFundsOptions.js';
+import ExtensionDefault from '../components//Extension/Default/index.js';
+import ExtensionCreatePassword from '../components/Extension/CreatePassword/index.js';
+import ExtensionAccessFundsOptions from '../components/Extension/FundAccessOptions/index.js';
 
 @connect(
   function mapStateToProps(state) {

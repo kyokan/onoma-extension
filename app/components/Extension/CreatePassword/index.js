@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
-import actions from '../actions/extension.js';
+import actions from '../../../actions/extension.js';
 
 @connect(
   state => ({
@@ -13,7 +13,7 @@ import actions from '../actions/extension.js';
     }, dispatch)
   })
 )
-export default class App extends Component {
+export default class CreatePassword extends Component {
 
   static propTypes = {};
 
