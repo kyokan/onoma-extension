@@ -20,7 +20,7 @@ const actionsMap = {
   },
 };
 
-export default function extension(state = {}, action) {
+export default function extension(state = initialState, action) {
   const reduceFn = actionsMap[action.type];
   let finalState = state;
   if (reduceFn) {

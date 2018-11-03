@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import style from './App.scss';
-import extension from 'extensionizer';
-import classNames from 'classnames';
 import ExtensionDefault from '../components//Extension/Default/index.js';
 import ExtensionCreatePassword from '../components/Extension/CreatePassword/index.js';
 import ExtensionAccessFundsOptions from '../components/Extension/FundAccessOptions/index.js';
+import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import './App.scss';
 
 @connect(
   function mapStateToProps(state) {
-
     return {
       currentView: state.extension.currentView,
     };
@@ -21,7 +19,9 @@ import ExtensionAccessFundsOptions from '../components/Extension/FundAccessOptio
 )
 export default class App extends Component {
 
-  static propTypes = {};
+  static propTypes = {
+    currentView: PropTypes.string,
+  };
 
   render() {
     const { currentView } = this.props;
