@@ -33,7 +33,7 @@ export default class App extends Component {
           <div className='extension_option_text'> Information </div>
           <div className='extension_option_text'> Help </div>
           <div className='resolver_switch'>
-            <span className='switch-wrapper'>
+            <span>
               <label className='switch'>
                 <input type='checkbox'/>
                 <span className='slider round'></span>
