@@ -8,6 +8,26 @@ $dark-grey: #c2c2c2;
 $azure-blue: #007eff;
 
 // Extends
+
+%arrow {
+  i {
+    border: solid black;
+    border-width: 0 1.5px 1.5px 0;
+    display: inline-block;
+    padding: 3px;
+  }
+
+  .right {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+  }
+
+  .left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+  }
+}
+
 %col-nowrap {
   display: flex;
   flex-flow: column nowrap;

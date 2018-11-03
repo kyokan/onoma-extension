@@ -1,0 +1,78 @@
+@import '../extension.scss';
+
+.access_line_break {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  width: 120%;
+  margin-left: -20px;
+}
+
+.access_back {
+  margin-right: 7px;
+  position: relative;
+  bottom: 1px;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.header_text {
+  margin-bottom: 20px;
+}
+
+.access_cta_button {
+  @extend %btn-primary;
+  height: 70px;
+  width: 100%;
+  background-color: $white;
+  color: $azure-blue;
+  margin: 0px 10px;
+  border: 1.5px solid #E2E2E2;
+  border-radius: 12px;
+  box-shadow: 0 5px 10px 0 #E2E9F2;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+
+  &:focus {
+    border-color: darken(#E2E2E2, 10);
+    background-color: darken($white, 10);
+    //color: lighten($azure-blue, 10);
+  }
+
+  &:hover {
+    border-color: darken(#E2E2E2, 10);
+    background-color: darken($white, 10);
+    //color: lighten($azure-blue, 10);
+  }
+
+  &:active {
+    border-color: darken(#E2E2E2, 10);
+    background-color: darken($white, 10);
+  }
+}
+
+.access_cta_primary_text {
+  height: 16px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 16px;
+  text-align: center;
+
+}
+
+.access_cta_secondary_text {
+  height: 11px;
+  width: 65px;
+  opacity: 0.5;
+  color: #2480FD;
+  font-size: 9px;
+  font-weight: 600;
+  line-height: 11px;
+  text-align: center;
+  margin-top: 3px;
+  text-transform: uppercase;
+}
