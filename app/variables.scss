@@ -2,6 +2,7 @@
 $white: #fff;
 $black: #000;
 $grey: #e6e6e6;
+$dark-grey: #c2c2c2;
 
 // Blue
 $azure-blue: #007eff;
@@ -98,4 +99,82 @@ $azure-blue: #007eff;
   border: 1px solid rgba($black, .15);
   box-shadow: 0 2px 2px 1px rgba($black, .1);
   border-radius: .5rem;
+}
+
+
+/*
+  Generic UI Elements
+ */
+
+// Switch
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 26px;
+}
+
+.switch-wrapper {
+}
+
+.switch-text {
+  align-self: center;
+  padding-left: 12px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: $grey;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 17.31px;
+  width: 16.67px;
+  left: 7.2px;
+  bottom: 4.55px;
+  background-color: $dark-grey;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: $azure-blue;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px $azure-blue;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(20px);
+  -ms-transform: translateX(20px);
+  transform: translateX(20px);
+  background-color: $white;
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
 }

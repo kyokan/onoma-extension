@@ -25,7 +25,7 @@ export default class App extends Component {
         <div className='extension_primary_section'>
           <div className='header_text'>handshake wallet</div>
           <div className='subheader_text'>Take control of your Handshake coins and domain names.</div>
-          <button className='extension_cta_button' onClick={() => {this.props.actions.setView('create-password')}}>Get Started</button>
+          <button className='extension_cta_button cta__btn' onClick={() => {this.props.actions.setView('create-password')}}>Get Started</button>
           <div className='extension_primary_line_break'> </div>
         </div>
         <div className='extension_primary_section'>
