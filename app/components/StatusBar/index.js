@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 // import actions from '../../../actions/extension.js';
-import './connect.scss';
+import './status.scss';
 
 @connect(
   state => ({
@@ -30,22 +30,25 @@ export default class ConnectLedger extends Component {
 
   renderStatusBar() {
     const { currentStep , totalSteps } = this.props;
+    console.log(currentStep, totalSteps);
 
-    let bar = [];
+    let elements = [];
 
     for (let i = 0; i < this.props.totalSteps; i++) {
-      bar.push(
+      elements.push(
         <span
-          classNames={
-            className([
+          className={
+            classNames([
               'status_bar_element',
-              i <= currentStep ? 'status_bar_element__active' : false
+              i < currentStep ? 'status_bar_element__active' : false
             ])
           }
         >
         </span>
       )
     }
+
+    return elements;
   }
 
   render() {
@@ -58,7 +61,7 @@ export default class ConnectLedger extends Component {
             {barSegments}
           </span>
           <span>
-            2/6
+            {currentStep + `/` + totalSteps}
           </span>
         </div>
     );

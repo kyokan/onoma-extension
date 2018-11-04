@@ -1,0 +1,131 @@
+@import '../extension.scss';
+
+.import_back_button {
+  margin-bottom: 15px;
+}
+
+.import_back {
+  margin-right: 7px;
+  position: relative;
+  bottom: 1px;
+}
+
+.import_status_bar {
+  margin-bottom: 20px;
+}
+
+.subheader_text {
+  font-weight: 500;
+  &__accent {
+    color: #f45e4f;
+    font-weight: 600;
+  }
+}
+
+.import_warning_text {
+  margin-bottom: 20px;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.import_header {}
+
+.import_password_input {
+  @extend %box-input;
+  width: 90%;
+  margin: 10px 0rem;
+  border: 1px solid #E2E2E2;
+  border-radius: 8px;
+}
+
+
+.import_user_input {
+  display: flex;
+  flex: row nowrap;
+  width: 100%;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 2px 2px;
+}
+
+.import_checkbox_wrapper {
+}
+
+.import_checkbox_text {
+  margin-left: 10px;
+  font-weight: 500;
+}
+
+.import-checkbox-container {
+  width: 15px;
+  height: 15px;
+  border: 1px solid #E2E2E2;
+  border-radius: 2px;
+  background-color: #E2E2E2;
+
+  &__active {
+    background-color: $azure-blue;
+  }
+}
+
+.import-checkbox-symbol {
+  margin-left: 2.2px;
+  margin-top: 3px;
+  height: .25rem;
+  width: .5rem;
+  border-top: 2px solid $white;
+  border-right: 2px solid $white;
+  transform: rotate(135deg);
+}
+
+.import_cta_button {
+  height: 45px;
+  width: 100%;
+  border-radius: 8px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 16px;
+  @extend %btn-primary;
+  text-align: center;
+  outline: none;
+  border: none;
+  background-color: #E4E4E2;
+  color: #909095;
+
+  &__active {
+    height: 45px;
+    width: 100%;
+    border-radius: 8px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 16px;
+    @extend %btn-primary;
+    text-align: center;
+    outline: none;
+    border: none;
+    background-color: $azure-blue;
+    color: white;
+  }
+}
+
+
+.import_cta {
+  margin-top: 15%;
+}
+
+.import_text_description {
+  margin-top: 12px;
+  text-align: center;
+}
+
+.import_text_purchase_description {
+  color: $azure-blue;
+  margin-top: 2.5px;
+  font-weight: 400;
+  text-align: center;
+  cursor: pointer;
+}

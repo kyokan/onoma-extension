@@ -1,13 +1,18 @@
 @import '../../variables.scss';
 
 .status_bar_container {
-  width: 90%;
+  width: 100%;
+  display: flex;
+  flex: row nowrap;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .status_bar {
   display: flex;
   flex: row nowrap;
   height: 5px;
+  width: 85%;
 }
 
 .status_bar_element {
