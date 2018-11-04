@@ -32,9 +32,13 @@ export default class CreatePassword extends Component {
         </div>
         <div className='extension_primary_line_break create_line_break'> </div>
         <div className='header_text'> Encrypt your wallet with a password </div>
-        <div> New password </div>
-        <div> Confirm password </div>
-        <button onClick={() => {this.props.actions.setView('access-funds-show-options')}}> Next </button>
+        <div>
+          <input className='create_password_input' placeholder='Enter passphrase'></input>
+        </div>
+        <div>
+          <input className='create_password_input' placeholder='Confirm passphrase'></input>
+        </div>
+        <button className='extension_cta_button create_cta' onClick={() => {this.props.actions.setView('access-funds-show-options')}}> Next </button>
       </div>
     );
   }
