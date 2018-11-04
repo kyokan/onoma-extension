@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import actions from '../../../actions/extension.js';
+import StatusBar from '../../StatusBar/index.js';
 import './create.scss';
 
 @connect(
@@ -30,7 +31,11 @@ export default class CreatePassword extends Component {
             Back
           </span>
         </div>
-        <div className='extension_primary_line_break create_line_break'> </div>
+
+        <div className='create_status_bar'>
+          <StatusBar currentStep={2} totalSteps={5} />
+        </div>
+
         <div className='header_text'> Encrypt your wallet with a password </div>
         <div>
           <input className='create_password_input' placeholder='Enter passphrase'></input>

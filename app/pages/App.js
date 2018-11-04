@@ -30,8 +30,14 @@ export default class App extends Component {
     const { currentView } = this.props;
 
     return (
-      <ImportSeedWarning />
+      <ExtensionCreatePassword />
     );
+
+    if (currentView === 'seed-phrase-warning') {
+      return (
+        <ImportSeedWarning />
+      );
+    }
 
     if (currentView === 'connect-ledger') {
       return (
