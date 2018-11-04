@@ -1,0 +1,24 @@
+@import '../../variables.scss';
+
+.status_bar_container {
+  width: 90%;
+}
+
+.status_bar {
+  display: flex;
+  flex: row nowrap;
+  height: 5px;
+}
+
+.status_bar_element {
+  background-color: #E2E2E2;
+  flex: 1 0 auto;
+
+  &__active {
+    background-color: $azure-blue;
+  }
+}
+
+.status_bar_text {
+  color: #9E9EA2;
+}
