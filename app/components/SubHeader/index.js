@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import c from 'classnames';
 import SendModal from '../SendModal';
 import ReceiveModal from '../ReceiveModal';
 import './subheader.scss';
@@ -9,6 +10,9 @@ class SubHeader extends Component {
   static propTypes = {
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
+    }),
+    location: PropTypes.shape({
+      pathname: PropTypes.string.isRequired,
     }),
   };
 
@@ -36,7 +40,10 @@ class SubHeader extends Component {
   }
 
   render() {
-    const { history: { push } } = this.props;
+    const { history: { push }, location: { pathname } } = this.props;
+    const { isShowingSendModal, isShowingReceiveModal } = this.state;
+    const isShowingModal = isShowingSendModal || isShowingReceiveModal;
+
     return (
       <div className="subheader">
         <div className="subheader__content">
@@ -46,11 +53,46 @@ class SubHeader extends Component {
             <div className="subheader__search__icon" />
           </div>
           <div className="subheader__actions">
-            <a className="subheader__action" onClick={() => push('/account')}>Home</a>
-            <a className="subheader__action" onClick={this.openSendModal}>Send</a>
-            <a className="subheader__action" onClick={this.openReceiveModal}>Receive</a>
-            <a className="subheader__action" onClick={() => push('/get_coins')}>Get Coins</a>
-            <a className="subheader__action" onClick={() => push('/settings')}>Settings</a>
+            <a
+              className={c('subheader__action', {
+                'subheader__action--selected': !isShowingModal && /account/.test(pathname),
+              })}
+              onClick={() => push('/account')}
+            >
+              Home
+            </a>
+            <a
+              className={c('subheader__action', {
+                'subheader__action--selected': isShowingSendModal,
+              })}
+              onClick={this.openSendModal}
+            >
+              Send
+            </a>
+            <a
+              className={c('subheader__action', {
+                'subheader__action--selected': isShowingReceiveModal,
+              })}
+              onClick={this.openReceiveModal}
+            >
+              Receive
+            </a>
+            <a
+              className={c('subheader__action', {
+                'subheader__action--selected': !isShowingModal && /get_coins/.test(pathname),
+              })}
+              onClick={() => push('/get_coins')}
+            >
+              Get Coins
+            </a>
+            <a
+              className={c('subheader__action', {
+                'subheader__action--selected': !isShowingModal && /settings/.test(pathname),
+              })}
+              onClick={() => push('/settings')}
+            >
+              Settings
+            </a>
           </div>
         </div>
         { this.renderModal() }

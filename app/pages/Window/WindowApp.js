@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { HashRouter, Switch, Route, Redirect } from 'react-router-dom'
 import SubHeader from '../../components/SubHeader';
 import Account from '../Account';
+import GetCoins from '../GetCoins';
 import './window.scss';
 
 @connect(
@@ -23,8 +24,9 @@ export default class WindowApp extends Component {
           <div className="window-app__content">
             <Switch>
               <Route path="/account" component={Account} />
-              <Route path="/get_coins" component={() => <div>Get Coins</div>} />
+              <Route path="/get_coins" component={GetCoins} />
               <Route path="/settings" component={() => <div>Settings</div>} />
+              <Redirect to="/account" />
             </Switch>
           </div>
         </div>

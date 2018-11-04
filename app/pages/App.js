@@ -39,7 +39,6 @@ export default class App extends Component {
       );
     }
 
-
     if (currentView === 'terms-and-conditions') {
       return (
         <ExtensionTerms />
