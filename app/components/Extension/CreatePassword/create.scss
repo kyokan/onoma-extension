@@ -16,9 +16,7 @@
   cursor: pointer;
 }
 
-.create_header {
-  // margin-bottom: 0px;
-}
+.create_header {}
 
 .create_password_input {
   @extend %box-input;
