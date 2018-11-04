@@ -59,11 +59,13 @@
 }
 
 .import-checkbox-container {
-  width: 15px;
-  height: 15px;
-  border: 1px solid #E2E2E2;
+  width: 20px;
+  height: 20px;
   border-radius: 2px;
   background-color: #E2E2E2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   &__active {
     background-color: $azure-blue;
@@ -71,10 +73,10 @@
 }
 
 .import-checkbox-symbol {
-  margin-left: 2.2px;
-  margin-top: 3px;
-  height: .25rem;
-  width: .5rem;
+  position: relative;
+  top: -2px;
+  height: 5px;
+  width: 10px;
   border-top: 2px solid $white;
   border-right: 2px solid $white;
   transform: rotate(135deg);
@@ -111,7 +113,6 @@
     color: white;
   }
 }
-
 
 .import_cta {
   margin-top: 15%;

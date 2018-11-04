@@ -58,8 +58,8 @@ export default class ImportSeedWarning extends Component {
 
         <div className='import_user_input'>
           <span className='import_checkbox_wrapper' onClick={this.handleAgreementClick.bind(this)}>
-            <div className={agreementConfirmed ? 'import-checkbox-container__active' :  'import-checkbox-container'}>
-              <div className={agreementConfirmed ? 'import-checkbox-symbol' : ''}> </div>
+            <div className={agreementConfirmed ? 'import-checkbox-container import-checkbox-container__active' :  'import-checkbox-container'}>
+              <div className={agreementConfirmed ? 'import-checkbox-symbol' : ''}> <div></div> </div>
             </div>
           </span>
           <span className='import_checkbox_text subheader_text'>
@@ -67,7 +67,7 @@ export default class ImportSeedWarning extends Component {
           </span>
         </div>
         <button
-          className='import_cta_button__active import_cta'
+          className={classNames(['import_cta', agreementConfirmed ? 'import_cta_button__active' : 'import_cta_button'])}
           onClick={() => {this.props.actions.setView('default')}}
         >
           I Agree, Continue
