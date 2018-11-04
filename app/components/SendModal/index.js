@@ -4,6 +4,10 @@ import { BigNumber as bn } from 'bignumber.js';
 import Modal from '../Modal';
 import './send.scss';
 
+const SLOW = 'Slow';
+const STANDARD = 'Standard';
+const FAST = 'Fast';
+
 export default class SendModal extends Component {
   static propTypes = {
     onClose: PropTypes.func.isRequired,
@@ -11,10 +15,12 @@ export default class SendModal extends Component {
 
   state = {
     gasFee: bn(0.00027),
+    selectedGasOption: STANDARD,
   };
 
   render() {
     const { onClose } = this.props;
+    const { selectedGasOption, gasFee } = this.state;
 
     return (
       <Modal className="send" onClose={this.props.onClose}>
@@ -45,20 +51,27 @@ export default class SendModal extends Component {
               </div>
               <div className="send__network-fee__form">
                 <div className="send__network-fee__select">
-                  <select>
-                    <option>Slow</option>
-                    <option>Standard</option>
-                    <option>Fast</option>
+                  <div>{selectedGasOption}</div>
+                  <select
+                    onChange={e => this.setState({ selectedGasOption: e.target.value })}
+                    value={selectedGasOption}
+                  >
+                    <option value={SLOW}>Slow</option>
+                    <option value={STANDARD}>Standard</option>
+                    <option value={FAST}>Fast</option>
                   </select>
                 </div>
                 <div className="send__network-fee__fee-amount">
-                  {`${this.state.gasFee} HNS`}
+                  {`${gasFee} HNS`}
                 </div>
+              </div>
+              <div className="send__estimated-time">
+                {`Est. delivery 5-10 mins`}
               </div>
             </div>
           </div>
           <div className="send__actions">
-            <button className="send__cta-btn">Continue</button>
+            <button className="send__cta-btn" disabled>Continue</button>
           </div>
         </div>
       </Modal>
