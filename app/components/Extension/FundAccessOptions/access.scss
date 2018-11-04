@@ -87,25 +87,3 @@
   margin-top: 3px;
   text-transform: uppercase;
 }
-
-.circle-check-container {
-  position: absolute;
-  margin-top: -22px;
-  margin-left: 122px;
-  width: 12.5px;
-  height: 12.5px;
-  border: 1px solid $azure-blue;
-  border-radius: 20px;
-  background-color: $azure-blue;
-}
-
-.circle-check-symbol {
-  position: absolute;
-  top: 3px;
-  left: 2px;
-  height: .2rem;
-  width: .4rem;
-  border-top: 2px solid $white;
-  border-right: 2px solid $white;
-  transform: rotate(135deg);
-}
