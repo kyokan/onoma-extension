@@ -31,10 +31,10 @@ export default class CreatePassword extends Component {
           </span>
         </div>
         <div className='extension_primary_line_break terms_line_break'> </div>
-        <div className='header_text'> Terms of use </div>
+        <div className='header_text'> Terms of Use </div>
         <div className='subheader_text terms_subheader'> Please review and agree to the Handshake wallet's terms of use.</div>
         <button className='terms_button clickable'>
-          <span> Terms of use </span>
+          <span> Terms of Use </span>
           <span className='directional_symbol terms_forward_arrow'>
             <i className="right"></i>
           </span>
