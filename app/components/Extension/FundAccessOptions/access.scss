@@ -46,14 +46,20 @@
   justify-content: center;
   margin-bottom: 10px;
 
+
   &:focus {
-    border-color: darken(#E2E2E2, 10);
-    background-color: darken($white, 10);
+    border: 1.5px solid $azure-blue;
+    border-radius: 12px;
+    background-color: #FFFFFF;
+    box-shadow: 0 5px 10px 0 #E2E9F2;
+    outline: none;
   }
 
   &:hover {
-    border-color: darken(#E2E2E2, 10);
-    background-color: darken($white, 10);
+    border: 1.5px solid $azure-blue;
+    border-radius: 12px;
+    background-color: #FFFFFF;
+    box-shadow: 0 5px 10px 0 #E2E9F2;
   }
 
   &:active {

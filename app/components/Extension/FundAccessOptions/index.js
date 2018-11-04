@@ -33,17 +33,17 @@ export default class FundAccessOptions extends Component {
         <div className='extension_primary_line_break access_line_break'> </div>
           <div className='header_text'> How would you like to access your wallet? </div>
         <div className='access_cta_wrapper'>
-          <button className='access_cta_button' onClick={() => {this.props.actions.setView('create-password')}}>
+          <button className='access_cta_button' onClick={() => {}}>
             <div className='access_cta_primary_text'> Connect Ledger Device </div>
             <div className='access_cta_secondary_text'> Recommended </div>
           </button>
 
-          <button className='access_cta_button' onClick={() => {this.props.actions.setView('create-password')}}>
+          <button className='access_cta_button' onClick={() => {}}>
             <div className='access_cta_primary_text'> Import Seed Phrase </div>
             <div className='access_cta_secondary_text'> Not Secure </div>
           </button>
 
-          <button className='access_cta_button' onClick={() => {this.props.actions.setView('create-password')}}>
+          <button className='access_cta_button' onClick={() => {}}>
             <div className='access_cta_primary_text'> Create A New Wallet </div>
             <div className='access_cta_secondary_text'> Not Secure </div>
           </button>
