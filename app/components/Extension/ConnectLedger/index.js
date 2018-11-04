@@ -35,8 +35,6 @@ export default class ConnectLedger extends Component {
   }
 
   render() {
-    console.log('state:', this.state);
-
     const ctaClasses = classNames([
       'connect_cta',
       this.allStepsComplete() ? 'connect_cta__active' : false,
@@ -60,7 +58,14 @@ export default class ConnectLedger extends Component {
             <span className='connect_status_number'> 1 </span>
             <span className='connect_status_text'> Connect your Ledger wallet directly to your computer</span>
             <span className='connect_status_symbol'>
-              <div className='ledger-circle-check-container'>
+              <div className={
+                classNames(
+                  [
+                    'ledger-circle-check-container',
+                    this.state.step_one === 'complete' ? 'ledger-circle-check-container__active' : false
+                  ]
+                )
+              }>
                 <div className='ledger-circle-check-symbol'></div>
               </div>
             </span>
@@ -70,7 +75,14 @@ export default class ConnectLedger extends Component {
             <span className='connect_status_number'> 2 </span>
             <span className='connect_status_text'> Enter your secret pin on your Ledger device</span>
             <span className='connect_status_symbol'>
-              <div className='ledger-circle-check-container'>
+              <div className={
+                classNames(
+                  [
+                    'ledger-circle-check-container',
+                    this.state.step_two === 'complete' ? 'ledger-circle-check-container__active' : false
+                  ]
+                )
+              }>
                 <div className='ledger-circle-check-symbol'></div>
               </div>
             </span>
@@ -94,7 +106,6 @@ export default class ConnectLedger extends Component {
           </div> 
         </div>
 
-        {/*<button className='connect_cta connect_cta__active' onClick={() => {this.props.actions.setView('default')}}> Unlock Ledger </button>*/}
         <button className={ctaClasses} onClick={() => {this.props.actions.setView('default')}}> Unlock Ledger </button>
 
         <div className='connect_support_cta'> Need help? Visit support page </div>
