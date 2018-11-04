@@ -14,11 +14,33 @@ import './connect.scss';
     }, dispatch)
   })
 )
+
 export default class ConnectLedger extends Component {
 
   static propTypes = {};
 
+  state = {
+    step_one: 'not_started',
+    step_two: 'not_started',
+    step_three: 'complete',
+  };
+
+  allStepsComplete() {
+    const { step_one, step_two, step_three } = this.state;
+    if (step_one === 'complete' && step_two === 'complete' && step_three === 'complete') {
+      return true;
+    }
+
+    return false;
+  }
+
   render() {
+    console.log('state:', this.state);
+
+    const ctaClasses = classNames([
+      'connect_cta',
+      this.allStepsComplete() ? 'connect_cta__active' : false,
+    ]);
 
     return (
       <div className='extension_primary_section'>
@@ -58,14 +80,22 @@ export default class ConnectLedger extends Component {
             <span className='connect_status_number'> 3 </span>
             <span className='connect_status_text'> Select the Handshake app on your Ledger device</span>
             <span className='connect_status_symbol'>
-              <div className='ledger-circle-check-container'>
+              <div className={
+                classNames(
+                  [
+                    'ledger-circle-check-container',
+                    this.state.step_three === 'complete' ? 'ledger-circle-check-container__active' : false
+                  ]
+                )
+              }>
                 <div className='ledger-circle-check-symbol'></div>
               </div>
             </span>
           </div> 
         </div>
 
-        <button className='extension_cta_button connect_cta' onClick={() => {this.props.actions.setView('default')}}> Unlock Ledger </button>
+        {/*<button className='connect_cta connect_cta__active' onClick={() => {this.props.actions.setView('default')}}> Unlock Ledger </button>*/}
+        <button className={ctaClasses} onClick={() => {this.props.actions.setView('default')}}> Unlock Ledger </button>
 
         <div className='connect_support_cta'> Need help? Visit support page </div>
       </div>
