@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ExtensionDefault from '../components//Extension/Default/index.js';
 import ExtensionCreatePassword from '../components/Extension/CreatePassword/index.js';
 import ExtensionAccessFundsOptions from '../components/Extension/FundAccessOptions/index.js';
+import ExtensionTerms from '../components//Extension/Terms/index.js';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -25,6 +26,10 @@ export default class App extends Component {
 
   render() {
     const { currentView } = this.props;
+
+    return (
+      <ExtensionTerms />
+    );
 
     if (currentView === 'access-funds-show-options') {
       return (
