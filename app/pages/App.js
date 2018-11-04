@@ -3,6 +3,7 @@ import ExtensionDefault from '../components//Extension/Default/index.js';
 import ExtensionCreatePassword from '../components/Extension/CreatePassword/index.js';
 import ExtensionAccessFundsOptions from '../components/Extension/FundAccessOptions/index.js';
 import ExtensionTerms from '../components//Extension/Terms/index.js';
+import ExtensionConnectLedger from '../components//Extension/ConnectLedger/index.js';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -28,8 +29,14 @@ export default class App extends Component {
     const { currentView } = this.props;
 
     return (
-      <ExtensionTerms />
+      <ExtensionConnectLedger />
     );
+
+    if (currentView === 'terms-and-conditions') {
+      return (
+        <ExtensionTerms />
+      );
+    }
 
     if (currentView === 'access-funds-show-options') {
       return (

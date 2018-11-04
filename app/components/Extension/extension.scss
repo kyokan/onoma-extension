@@ -8,22 +8,42 @@
   @extend %arrow;
 }
 
-.header_text {
+//Extends
+
+%description_text {
   font-family: 'Roboto', sans-serif;
-  // font-family: 'SF-Pro-Display-Regular';
+  font-size: 12px;
+  line-height: 14px;
+  width: 100%;
+  color: black;
+}
+
+%subheader_text {
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  line-height: 16px;
+  width: 100%;
+  color: black;
+}
+
+%header_text {
+  font-family: 'Roboto', sans-serif;
   font-weight: bold;
   color: black;
   font-size: 18px;
   line-height: 21px;
 }
 
+.header_text {
+  @extend %header_text;
+}
+
 .subheader_text {
-  // font-family: 'SF-Pro-Display-Regular';
-  font-family: 'Roboto', sans-serif;
-  font-size: 14px;
-  line-height: 16px;
-  width: 100%;
-  color: black;
+  @extend %subheader_text;
+}
+
+.description_text {
+  @extend %description_text;
 }
 
 .extension_cta_button {
