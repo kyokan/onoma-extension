@@ -63,6 +63,7 @@ $azure-blue: #007eff;
   cursor: pointer;
   font-weight: 500;
   transition: 200ms ease-in-out;
+  user-select: none;
 
   &:focus {
     border-color: lighten($azure-blue, 10);
@@ -79,6 +80,14 @@ $azure-blue: #007eff;
   &:active {
     border-color: darken($azure-blue, 10);
     background-color: darken($azure-blue, 10);
+  }
+
+  &:disabled {
+    //border-color: darken($azure-blue, 10);
+    border-color: $grey;
+    background-color: $grey;
+    color: rgba($black, .4);
+    cursor: default;
   }
 }
 
