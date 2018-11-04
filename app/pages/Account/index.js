@@ -100,9 +100,8 @@ class Account extends Component {
       <div className="account">
         <div
           className="account__address"
-          // onClick={this.openModal}
         >
-          <div>Default account</div>
+          <div>Default Account</div>
           <div className="account__info-icon" />
         </div>
         <div className="account__header">
