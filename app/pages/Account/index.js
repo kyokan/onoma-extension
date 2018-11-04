@@ -94,27 +94,22 @@ class Account extends Component {
   }
 
   render() {
-    const { accountBase, accountIndex, balance } = this.props;
+    const { balance } = this.props;
 
     return (
       <div className="account">
         <div
           className="account__address"
-          onClick={this.openModal}
+          // onClick={this.openModal}
         >
-          {`${accountBase}${accountIndex}`}
+          <div>Default account</div>
+          <div className="account__info-icon" />
         </div>
         <div className="account__header">
           <div className="account__balance-wrapper">
-            <div className="account__balance-wrapper__label">
-              Current Balance
-            </div>
             <div className="account__balance-wrapper__amount">
               {`HNS ${+balance.toFixed(5)}`}
               </div>
-          </div>
-          <div className="account__actions">
-            <button className="btn-secondary account__btn">Add proof, get coins</button>
           </div>
         </div>
         <div className="account__content">

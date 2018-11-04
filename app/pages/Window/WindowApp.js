@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { HashRouter, Switch, Route, Redirect } from 'react-router-dom'
-import Header from '../../components/Header';
 import SubHeader from '../../components/SubHeader';
 import Account from '../Account';
 import './window.scss';
@@ -20,7 +19,6 @@ export default class WindowApp extends Component {
     return (
       <HashRouter hashType="slash">
         <div className="window-app">
-          <Header />
           <SubHeader />
           <div className="window-app__content">
             <Switch>
