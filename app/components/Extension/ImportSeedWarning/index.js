@@ -30,6 +30,9 @@ export default class ImportSeedWarning extends Component {
 
   render() {
     const { agreementConfirmed } = this.state;
+    const currentStep = 1;
+    const totalSteps = 3;
+    const steps = agreementConfirmed ? currentStep + 1 : currentStep;
 
     return (
       <div className='extension_primary_section'>
@@ -42,7 +45,7 @@ export default class ImportSeedWarning extends Component {
           </span>
         </div>
         <div className='import_status_bar'>
-          <StatusBar currentStep={1} totalSteps={6} />
+          <StatusBar currentStep={steps} totalSteps={totalSteps} />
         </div>
         <div className='header_text'>
           Import your Seed Phrase
@@ -75,7 +78,12 @@ export default class ImportSeedWarning extends Component {
         <div className='subheader_text import_text_description'>
           I want the most secure option!
         </div>
-        <div className='subheader_text__accented import_text_purchase_description' onClick={() => {}}>
+        <div
+          className='subheader_text__accented import_text_purchase_description'
+          onClick={() => {
+            // redirect to -> https://purse.io/product/B01J66NF46
+          }}
+        >
           Buy Ledger Nano S
         </div>
       </div>
