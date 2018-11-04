@@ -7,6 +7,15 @@
   font-size: .9rem;
   box-shadow: 0 1px 1px 0 rgba($black, .2);
 
+  &__logo {
+    height: 1.5rem;
+    width: 1.5rem;
+    background-image: url('/img/icon-128.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-right: 1rem;
+  }
+
   &__content {
     @extend %row-nowrap;
     flex: 1 0 auto;
@@ -19,13 +28,16 @@
     @extend %row-nowrap;
     flex: 1 0 auto;
     align-items: center;
-    color: $azure-blue;
+    justify-content: flex-end;
+    //color: $azure-blue;
   }
 
   &__action {
     @extend %link;
+    color: $black;
+    font-size: .8rem;
     padding: 1rem .5rem;
-    font-weight: 500;
+    font-weight: 600;
     transition: box-shadow 200ms ease-in-out;
     box-shadow: inset 0 -2px rgba($azure-blue, 0);
     user-select: none;

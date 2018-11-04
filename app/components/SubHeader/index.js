@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import SendModal from '../SendModal';
 import ReceiveModal from '../ReceiveModal';
-
+import Logo from '../../../chrome/assets/img/icon-128.png';
 import './subheader.scss';
 
 class SubHeader extends Component {
@@ -41,16 +41,17 @@ class SubHeader extends Component {
     return (
       <div className="subheader">
         <div className="subheader__content">
+          <div className="subheader__logo" />
+          <div className="subheader__search">
+            <input className="subheader__search__input" type="text" placeholder="Lookup top-level domain" />
+            <div className="subheader__search__icon">🔍</div>
+          </div>
           <div className="subheader__actions">
-            <a className="subheader__action" onClick={() => push('/account')}>Account</a>
+            <a className="subheader__action" onClick={() => push('/account')}>Home</a>
             <a className="subheader__action" onClick={this.openSendModal}>Send</a>
             <a className="subheader__action" onClick={this.openReceiveModal}>Receive</a>
             <a className="subheader__action" onClick={() => push('/get_coins')}>Get Coins</a>
             <a className="subheader__action" onClick={() => push('/settings')}>Settings</a>
-          </div>
-          <div className="subheader__search">
-            <input className="subheader__search__input" type="text" placeholder="Lookup top-level domain" />
-            <div className="subheader__search__icon">🔍</div>
           </div>
         </div>
         { this.renderModal() }
