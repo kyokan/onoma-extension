@@ -1,0 +1,33 @@
+@import '../extension.scss';
+
+.create_line_break {
+  margin-top: 10px;
+  margin-left: -25px;
+  margin-bottom: 20px;
+}
+
+.create_back {
+  margin-right: 7px;
+  position: relative;
+  bottom: 1px;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.create_header {
+  // margin-bottom: 0px;
+}
+
+.create_password_input {
+  @extend %box-input;
+  width: 90%;
+  margin: 10px 0rem;
+  border: 1px solid #E2E2E2;
+  border-radius: 8px;
+}
+
+.create_cta {
+  margin-top: 42.5%;
+}

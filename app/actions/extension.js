@@ -11,7 +11,6 @@ export function toggleResolver() {
 
 export function openExtensionInBrowser(route = null, queryString = null) {
   let extensionURL = extension.runtime.getURL('window.html')
-  // if (queryString) {
   //   extensionURL += `?${queryString}`
   // }
 

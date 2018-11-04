@@ -1,23 +1,29 @@
 @import '../../variables';
 
 .extension_primary_section {
-  padding: 14px 12px;
+  padding: 1.2rem 1.4rem;
+}
+
+.directional_symbol {
+  @extend %arrow;
 }
 
 .header_text {
+  font-family: 'Roboto', sans-serif;
+  // font-family: 'SF-Pro-Display-Regular';
   font-weight: bold;
   color: black;
   font-size: 18px;
   line-height: 21px;
-  margin-bottom: 6%;
 }
 
-.subheader_text{
+.subheader_text {
+  // font-family: 'SF-Pro-Display-Regular';
+  font-family: 'Roboto', sans-serif;
   font-size: 14px;
   line-height: 16px;
-  width: 235px;
+  width: 100%;
   color: black;
-  margin-bottom: 6%;
 }
 
 .extension_cta_button {
@@ -26,8 +32,10 @@
   border-radius: 8px;
   background-color: $azure-blue;
   color: white;
+  // font-family: 'SF-Pro-Display-Regular';
+  font-family: 'Roboto', sans-serif;
   font-size: 12px;
-  font-weight: 300;
+  font-weight: 600;
   line-height: 16px;
   text-align: center;
   @extend %btn-primary;
@@ -36,17 +44,15 @@
 .extension_primary_line_break {
   height: 5px;
   border-bottom: 1px solid $grey;
-  width: 295px;
-  margin-top: 14px;
-  margin-left: -20px;
+  width: 350px;
 }
 
 .extension_option_text {
+  font-family: 'Roboto', sans-serif;
   font-size: 14px;
   line-height: 16px;
   width: 235px;
   color: black;
-  margin-bottom: 4%;
   cursor: pointer;
 }
 
@@ -54,22 +60,12 @@
   padding: 6px 5px;
 }
 
-.extension_backgroud_text {
+.extension_background_text {
   height: 14px;
   opacity: 0.3;
   color: #000000;
+  font-family: 'Roboto', sans-serif;
   font-size: 11px;
-  font-weight: 500;
+  font-weight: 600;
   line-height: 14px;
-}
-
-.extension_backgroud_text_wrapper {
-  margin-top: 31px;
-}
-
-.resolver_switch {
-  margin-top: 35px;
-  display: flex;
-  flex-flow: row nowrap;
-  align-content: flex-start;
 }
