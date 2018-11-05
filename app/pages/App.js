@@ -6,6 +6,7 @@ import ExtensionTerms from '../components//Extension/Terms/index.js';
 import ExtensionConnectLedger from '../components//Extension/ConnectLedger/index.js';
 import ImportSeedWarning from '../components//Extension/ImportSeedWarning/index.js';
 import ImportSeedEnterPassphrase from '../components/Extension/ImportSeedEnterPassphrase/index.js';
+import ImportSeedLedgerWarning from '../components/Extension/ImportSeedLedgerWarning/index.js';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -31,8 +32,14 @@ export default class App extends Component {
     const { currentView } = this.props;
 
     return (
-      <ImportSeedEnterPassphrase />
+      <ImportSeedLedgerWarning />
     );
+
+    if (currentView === 'import-seed-enter-passphrase') {
+      return (
+        <ImportSeedEnterPassphrase />
+      );
+    }
 
     if (currentView === 'seed-phrase-warning') {
       return (
