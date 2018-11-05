@@ -1,28 +1,29 @@
 @import '../extension.scss';
 
-.import_enter_back_button {
+.import_ledger_back_button {
   margin-bottom: 10px;
 }
 
-.import_enter_back {
+.import_ledger_back {
   margin-right: 7px;
   position: relative;
   bottom: 1px;
 }
 
-.import_enter_status_bar {
+.import_ledger_status_bar {
   margin-bottom: 10px;
 }
 
 .subheader_text {
-  font-weight: 500;
-  &__accent {
-    color: #f45e4f;
-    font-weight: 600;
-  }
+  font-weight: 400;
 }
 
-.import_enter_warning_text {
+.import_ledger_subtext {
+  margin: 10px 0px;
+  text-align: center;
+}
+
+.import_ledger_warning_text {
   margin-bottom: 20px;
 }
 
@@ -30,32 +31,8 @@
   cursor: pointer;
 }
 
-.subheader_text_separator {
-  height: 7.5px;
-}
-
-.import_enter_textarea {
-  margin-top: 5px;
-  width: 250px;
-  height: 110px;
-  outline: none;
-  resize: none;
-  overflow: wrap;
-  border: 2px solid #cdcddd;
-  border-radius: 7.5px;
-  font-weight: 500;
-  font-size: 14px;
-  padding: 10px 10px;
-
-}
-
-.import_enter_textarea::placeholder {
-  color: #a2a2a2;
-  font-weight: 500;
-  font-size: 14px;
-}
-
-.import_enter_cta_button {
+.import_ledger_cta_button {
+  margin: 5px 0px;
   height: 45px;
   width: 100%;
   border-radius: 8px;
@@ -85,21 +62,14 @@
     background-color: $azure-blue;
     color: white;
   }
+
+  &__inverted {
+    background-color: white;
+    color: $azure-blue;
+    border: 1px solid $azure-blue;
+  }
 }
 
-.import_enter_cta {
+.import_ledger_cta {
   margin-top: 20px;
-}
-
-.import_enter_text_description {
-  margin-top: 12px;
-  text-align: center;
-}
-
-.import_enter_text_purchase_description {
-  color: $azure-blue;
-  margin-top: 2.5px;
-  font-weight: 400;
-  text-align: center;
-  cursor: pointer;
 }

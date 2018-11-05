@@ -37,13 +37,13 @@ export default class App extends Component {
     //   <AccountLogin />
     // );
 
-    return (
-      <Account />
-    );
-
     // return (
-    //   <ImportSeedLedgerWarning />
+    //   <Account />
     // );
+
+    return (
+      <ImportSeedLedgerWarning />
+    );
 
     if (currentView === 'import-seed-enter-passphrase') {
       return (
