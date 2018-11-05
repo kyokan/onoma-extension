@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ProofModal from '../../components/ProofModal';
 import './get-coins.scss';
 
 // eslint-disable-next-line react/prop-types
@@ -13,6 +14,41 @@ const Step = ({ number, title, paragraph }) => (
 );
 
 export default class GetCoins extends Component {
+  state = {
+    isShowingGitHubModal: false,
+    isShowingPGPModal: false,
+  };
+
+  closeModal = () => this.setState({ isShowingGitHubModal: false, isShowingPGPModal: false });
+  openGitHubModal = () => this.setState({ isShowingGitHubModal: true, isShowingPGPModal: false })
+  openPGPModal = () => this.setState({ isShowingGitHubModal: false, isShowingPGPModal: true })
+
+  renderModal() {
+    const { isShowingGitHubModal, isShowingPGPModal } = this.state;
+
+    if (isShowingGitHubModal) {
+      return (
+        <ProofModal
+          stepOneInstruction="Copy your Handshake and meow meow human pass me milk"
+          stepTwoInstruction="After submitting your Handshake address into your Github SSH keys, paste your Github SSG proof below."
+          onSubmit={() => console.log('submit github proof')}
+          onClose={this.closeModal}
+        />
+      );
+    }
+
+    if (isShowingPGPModal) {
+      return (
+        <ProofModal
+          stepOneInstruction="Copy your Handshake and meow meow human pass me milk"
+          stepTwoInstruction="After submitting your Handshake address into your PGP keys, paste your PGP proof below."
+          onSubmit={() => console.log('submit pgp proof')}
+          onClose={this.closeModal}
+        />
+      );
+    }
+  }
+
   render() {
     return (
       <div className="get-coins">
@@ -64,17 +100,22 @@ export default class GetCoins extends Component {
               <div>GitHub Developers</div>
               <div><span>15 or more followers</span></div>
               <div>SSH keys</div>
-              <button>Submit GitHub Proof</button>
+              <button onClick={this.openGitHubModal}>
+                Submit GitHub Proof
+              </button>
             </div>
             <div className="get-coins__panel__offer">
               <div>+2500 HNS</div>
               <div>PGP Web of Trust</div>
               <div>Strong set email</div>
               <div>SSH keys</div>
-              <button>Submit PGP Proof</button>
+              <button onClick={this.openPGPModal}>
+                Submit PGP Proof
+              </button>
             </div>
           </div>
         </div>
+        { this.renderModal() }
       </div>
     );
   }
