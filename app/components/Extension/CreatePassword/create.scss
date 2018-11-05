@@ -1,5 +1,16 @@
 @import '../extension.scss';
 
+.create_back {
+  margin-right: 7px;
+  position: relative;
+  bottom: 1px;
+}
+
+.create_status_bar {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
 .clickable {
   cursor: pointer;
 }
@@ -12,6 +23,6 @@
   border-radius: 8px;
 }
 
-.login_cta {
-  margin-top: 15px;
+.create_cta {
+  margin-top: 35%;
 }
