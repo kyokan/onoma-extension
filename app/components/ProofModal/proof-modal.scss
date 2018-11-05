@@ -4,6 +4,7 @@
   max-width: 32rem;
   position: relative;
   padding: 2rem;
+  box-sizing: border-box;
 
   &__container {
     @extend %col-nowrap;

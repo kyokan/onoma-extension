@@ -29,7 +29,7 @@ export default class GetCoins extends Component {
     if (isShowingGitHubModal) {
       return (
         <ProofModal
-          stepOneInstruction="Copy your Handshake and meow meow human pass me milk"
+          stepOneInstruction="Copy your Handshake and meow meow human pass me milk why you no mouse?"
           stepTwoInstruction="After submitting your Handshake address into your Github SSH keys, paste your Github SSG proof below."
           onSubmit={() => console.log('submit github proof')}
           onClose={this.closeModal}
