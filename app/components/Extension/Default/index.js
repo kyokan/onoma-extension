@@ -47,7 +47,7 @@ export default class App extends Component {
           <div className='default_background_text_wrapper'>
             <div className='extension_background_text default_background'>Version 1.0</div>
             <div className='extension_background_text default_background'>Current Height: #3952</div>
-            <div className='extension_background_text default_background'>Hash: 0fj48fj30fuw-0fj48fj30fuw-0fj48fj30fuw</div>
+            <div className='extension_background_text default_background'>Current Hash: 0fj48fj30fuw-0fj48fj30fuw-0fj48fj30fuw</div>
           </div>
         </div>
       </div>

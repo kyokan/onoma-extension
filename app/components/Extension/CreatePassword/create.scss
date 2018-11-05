@@ -15,9 +15,7 @@
   cursor: pointer;
 }
 
-.create_header {}
-
-.create_password_input {
+.login_password_input {
   @extend %box-input;
   width: 90%;
   margin: 10px 0rem;
