@@ -1,15 +1,14 @@
 @import '../extension.scss';
 
-.create_line_break {
-  margin-top: 10px;
-  margin-left: -25px;
-  margin-bottom: 20px;
-}
-
 .create_back {
   margin-right: 7px;
   position: relative;
   bottom: 1px;
+}
+
+.create_status_bar {
+  margin-top: 10px;
+  margin-bottom: 20px;
 }
 
 .clickable {
@@ -27,5 +26,5 @@
 }
 
 .create_cta {
-  margin-top: 42.5%;
+  margin-top: 35%;
 }
