@@ -1,35 +1,42 @@
 @import '../extension';
 
-.default_header {
+.account_header {
   margin-bottom: 6%;
 }
 
-.default_subheader{
-  margin-bottom: 6%;
+.account_subheader{
 }
 
-.default_cta {
+.account_cta {
   margin-bottom: 12px;
 }
 
-.default_line_break {
-  margin-top: 12px;
-  margin-left: -20px;
+.account_option {
+  margin: 10px 0px;
+  cursor: pointer;
 }
 
-.default_option {
-  margin-bottom: 4%;
+.account_background {
+  margin: 5px 0px;
 }
 
-.default_background {}
-
-.default_background_text_wrapper {
+.account_background_text_wrapper {
   margin-top: 31px;
 }
 
-.resolver_switch {
-  margin-top: 35px;
+.account_resolver_switch {
+  margin-top: 100px;
   display: flex;
   flex-flow: row nowrap;
   align-content: flex-start;
+}
+
+.account_background_text_wrapper {
+  margin: 25px 0px;
+}
+
+.account_line_break {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: -25px;
 }
