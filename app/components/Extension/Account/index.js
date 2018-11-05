@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import classNames from 'classnames';
 import actions from '../../../actions/extension.js';
 import '../extension.scss';
-import './default.scss';
+import './loggedin.scss';
 
 @connect(
   state => ({

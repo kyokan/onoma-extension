@@ -1,23 +1,10 @@
 @import '../extension.scss';
 
-.create_back {
-  margin-right: 7px;
-  position: relative;
-  bottom: 1px;
-}
-
-.create_status_bar {
-  margin-top: 10px;
-  margin-bottom: 20px;
-}
-
 .clickable {
   cursor: pointer;
 }
 
-.create_header {}
-
-.create_password_input {
+.login_password_input {
   @extend %box-input;
   width: 90%;
   margin: 10px 0rem;
@@ -25,6 +12,6 @@
   border-radius: 8px;
 }
 
-.create_cta {
-  margin-top: 35%;
+.login_cta {
+  margin-top: 15px;
 }

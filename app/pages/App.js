@@ -7,6 +7,8 @@ import ExtensionConnectLedger from '../components//Extension/ConnectLedger/index
 import ImportSeedWarning from '../components//Extension/ImportSeedWarning/index.js';
 import ImportSeedEnterPassphrase from '../components/Extension/ImportSeedEnterPassphrase/index.js';
 import ImportSeedLedgerWarning from '../components/Extension/ImportSeedLedgerWarning/index.js';
+import Account from '../components/Extension/Account/index.js';
+import AccountLogin from '../components/Extension/AccountLogin/index.js';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -32,8 +34,16 @@ export default class App extends Component {
     const { currentView } = this.props;
 
     return (
-      <ImportSeedLedgerWarning />
+      <AccountLogin />
     );
+
+    // return (
+    //   <Account />
+    // );
+
+    // return (
+    //   <ImportSeedLedgerWarning />
+    // );
 
     if (currentView === 'import-seed-enter-passphrase') {
       return (

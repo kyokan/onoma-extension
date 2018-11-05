@@ -1,0 +1,35 @@
+@import '../extension';
+
+.default_header {
+  margin-bottom: 6%;
+}
+
+.default_subheader{
+  margin-bottom: 6%;
+}
+
+.default_cta {
+  margin-bottom: 12px;
+}
+
+.default_line_break {
+  margin-top: 12px;
+  margin-left: -20px;
+}
+
+.default_option {
+  margin-bottom: 4%;
+}
+
+.default_background {}
+
+.default_background_text_wrapper {
+  margin-top: 31px;
+}
+
+.resolver_switch {
+  margin-top: 35px;
+  display: flex;
+  flex-flow: row nowrap;
+  align-content: flex-start;
+}
