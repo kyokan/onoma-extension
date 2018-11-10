@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './auction.scss';
-
+import AuctionHeader from './AuctionHeader';
+import AuctionStatus from './Status';
+import { BiddingOpen, BiddingClose } from './BiddingOpen';
 
 export const dummyStateLee = {
   domain: 'cryptocurrency/',
@@ -90,7 +92,6 @@ export const ACTION_PROCESS = {
   `
 };
 
-
 // TODO
 const moment = date => date;
 
@@ -98,10 +99,15 @@ const statusToMessage = status => ({
   AVAILABLE: 'Available',
 })[status];
 
-const isLimitedTimeRemaining = (biddingCloseDate) => {
-  const TODO = true || biddingCloseDate;
-  return TODO;
-};
+function getSellAmount(status, bids) {
+  if (status !== 'SOLD') {
+    return null;
+  }
+  if (bids.length === 1) {
+    return '0.00000 HNS';
+  }
+  return `${bids[1].bidAmount} HNS`;
+}
 
 export default class Auction extends Component {
   state = dummyStateCryptocurrency
@@ -111,43 +117,23 @@ export default class Auction extends Component {
       <div className="auction">
         <div className="auction__top">
           <div className="auction__left">
-            <div>,
-              { this.state.domain }
-            </div>
-            <div>
-              Status
-            </div>
-            <div>
-              { statusToMessage(this.state.status) }
-            </div>
-            <div>
-              {
-                isLimitedTimeRemaining(this.state.biddingCloseDate)
-                  ? 'limited time remaining'
-                  : null
-              }
-            </div>
-            <div>
-              { `${this.state.bids.length} bids` }
-            </div>
-            <div>
-              Bidding open
-            </div>
-            <div>
-              { moment(this.state.biddingOpenDate) }
-            </div>
-            <div>
-              { `block #${this.state.biddingOpenBlock}` }
-            </div>
-            <div>
-              Bidding close
-            </div>
-            <div>
-              { moment(this.state.biddingCloseDate) }
-            </div>
-            <div>
-              { `block #${this.state.biddingCloseBlock}` }
-            </div>
+            <AuctionHeader
+              domain={this.state.domain}
+            />
+            <AuctionStatus
+              statusMessage={statusToMessage(this.state.status)}
+              sellAmount={getSellAmount(this.state.status, this.state.bids)}
+              biddingCloseDate={this.state.biddingCloseDate}
+              bids={this.state.bids.length}
+            />
+            <BiddingOpen
+              date={this.state.biddingOpenDate}
+              block={this.state.biddingOpenBlock}
+            />
+            <BiddingClose
+              date={this.state.biddingCloseDate}
+              block={this.state.biddingCloseBlock}
+            />
           </div>
           <div className="action__right">
             <div>
@@ -200,3 +186,4 @@ export default class Auction extends Component {
     );
   }
 }
+
