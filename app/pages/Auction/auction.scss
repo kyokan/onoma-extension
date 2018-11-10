@@ -1,0 +1,23 @@
+@import "../../variables";
+
+.auction {
+  @extend %row-nowrap;
+  flex: 1 0 auto;
+  overflow-y: auto;
+  max-width: 42.5rem;
+  width: 100%;
+  margin: 1.5rem auto;
+  height: 0;
+  padding: 0 .1rem;
+
+  &__left {
+    @extend %col-nowrap;
+    flex: 0 1 auto;
+    margin-right: 1rem;
+  }
+
+  &__right {
+    @extend %col-nowrap;
+    flex: 0 0 auto;
+  }
+}
