@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 function moment(date) {
   // todo
-  return date;
+  return JSON.stringify(date);
 }
 
 function bidding({
