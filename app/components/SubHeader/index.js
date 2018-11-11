@@ -27,8 +27,9 @@ class SubHeader extends Component {
 
 
   handleInputValueChange = (e) => {
+    const value = e.target.value;
     this.setState(() => ({
-      inputValue: e.target.value
+      inputValue: value
     }));
   }
 
