@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './auction.scss';
 import AuctionHeader from './AuctionHeader';
 import AuctionStatus from './Status';
-import { BiddingOpen, BiddingClose } from './BiddingOpen';
+import { BiddingOpen, BiddingClose } from './Bidding';
 
 export const dummyStateLee = {
   domain: 'cryptocurrency/',
@@ -92,6 +92,13 @@ export const ACTION_PROCESS = {
   `
 };
 
+const defaultBiddingClose = (
+  <React.Fragment>
+    <div>5 days after the 1st bid</div>
+    <div>If no bids are placed 7 days after auction opens, this TLD will be randomly assigned a new auction open date to prevent squatting.</div>
+  </React.Fragment>
+);
+
 // TODO
 const moment = date => date;
 
@@ -119,6 +126,7 @@ export default class Auction extends Component {
           <div className="auction__left">
             <AuctionHeader
               domain={this.state.domain}
+              isSold={this.state.status === 'SOLD'}
             />
             <AuctionStatus
               statusMessage={statusToMessage(this.state.status)}
@@ -130,10 +138,14 @@ export default class Auction extends Component {
               date={this.state.biddingOpenDate}
               block={this.state.biddingOpenBlock}
             />
-            <BiddingClose
-              date={this.state.biddingCloseDate}
-              block={this.state.biddingCloseBlock}
-            />
+            {
+              this.state.bids.length
+                ? <BiddingClose
+                  date={this.state.biddingCloseDate}
+                  block={this.state.biddingCloseBlock}
+                />
+                : defaultBiddingClose
+            }
           </div>
           <div className="action__right">
             <div>

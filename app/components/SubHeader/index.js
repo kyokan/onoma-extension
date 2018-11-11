@@ -25,11 +25,29 @@ class SubHeader extends Component {
     };
   }
 
+
+  handleInputValueChange = (e) => {
+    this.setState(() => ({
+      inputValue: e.target.value
+    }));
+  }
+
+  handleSearchClick = () => {
+    const name = this.state.inputValue;
+
+    if (!name.length) {
+      return;
+    }
+
+    this.props.history.push(`/auction/${name}`);
+  }
+
   openSendModal = () => this.setState({ isShowingSendModal: true, isShowingReceiveModal: false });
   openReceiveModal = () => this.setState({ isShowingSendModal: false, isShowingReceiveModal: true });
   closeModal = () => this.setState({ isShowingSendModal: false, isShowingReceiveModal: false });
 
-  renderModal() {
+
+  renderModal = () => {
     const { isShowingReceiveModal, isShowingSendModal } = this.state;
 
     if (isShowingReceiveModal) {
@@ -53,8 +71,17 @@ class SubHeader extends Component {
         <div className="subheader__content">
           <div className="subheader__logo" />
           <div className="subheader__search">
-            <input className="subheader__search__input" type="text" placeholder="Lookup top-level domain" />
-            <div className="subheader__search__icon" />
+            <input
+              className="subheader__search__input"
+              type="text"
+              value={this.state.inputValue}
+              onChange={this.handleInputValueChange}
+              placeholder="Lookup top-level domain"
+            />
+            <div
+              className="subheader__search__icon"
+              onClick={this.handleSearchClick}
+            />
           </div>
           <div className="subheader__actions">
             <a

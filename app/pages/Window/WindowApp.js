@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { HashRouter, Switch, Route, Redirect } from 'react-router-dom'
 import SubHeader from '../../components/SubHeader';
-import Account from './Account';
-import GetCoins from './GetCoins';
+import Account from '../Account';
+import Auction from '../Auction';
+import GetCoins from '../GetCoins';
 import './window.scss';
 
 @connect(
@@ -28,6 +29,7 @@ export default class WindowApp extends Component {
               <Route path="/receive" component={Account} />
               <Route path="/get_coins" component={GetCoins} />
               <Route path="/settings" component={() => <div>Settings</div>} />
+              <Route path="/auction" component={Auction} />
               <Redirect to="/account" />
             </Switch>
           </div>
