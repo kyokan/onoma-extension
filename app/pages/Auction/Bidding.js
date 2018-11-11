@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 function moment(date) {
   // todo
@@ -27,7 +28,7 @@ function bidding({
 
 bidding.propTypes = {
   type: PropTypes.string.isRequired,
-  date: PropTypes.date.isRequired,
+  date: PropTypes.instanceOf(Date).isRequired,
   block: PropTypes.number.isRequired,
 };
 
@@ -43,7 +44,7 @@ export function BiddingOpen({
 }
 
 BiddingOpen.propTypes = {
-  date: PropTypes.date.isRequired,
+  date: PropTypes.instanceOf(Date).isRequired,
   block: PropTypes.number.isRequired,
 };
 
@@ -59,6 +60,6 @@ export function BiddingClose({
 }
 
 BiddingClose.propTypes = {
-  date: PropTypes.date.isRequired,
+  date: PropTypes.instanceOf(Date).isRequired,
   block: PropTypes.number.isRequired,
 };

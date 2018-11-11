@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const isLimitedTimeRemaining = (biddingCloseDate) => {
   const TODO = true || biddingCloseDate;
@@ -38,6 +39,6 @@ export default function AuctionStatus({
 AuctionStatus.propTypes = {
   statusMessage: PropTypes.string.isRequired,
   sellAmount: PropTypes.string,
-  biddingCloseDate: PropTypes.Date.isRequired,
+  biddingCloseDate: PropTypes.instanceOf(Date).isRequired,
   bids: PropTypes.number.isRequired,
 };

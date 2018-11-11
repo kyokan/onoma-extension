@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 export default function AuctionHeader({ domain, isSold }) {
   return (
@@ -15,5 +16,5 @@ export default function AuctionHeader({ domain, isSold }) {
 
 AuctionHeader.propTypes = {
   domain: PropTypes.string.isRequired,
-  isSold: PropTypes.boolean.isRequired,
+  isSold: PropTypes.bool.isRequired,
 };
