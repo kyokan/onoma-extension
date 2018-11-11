@@ -3,6 +3,8 @@ import './auction.scss';
 import AuctionHeader from './AuctionHeader';
 import AuctionStatus from './Status';
 import { BiddingOpen, BiddingClose } from './Bidding';
+import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 export const dummyStateLee = {
   domain: 'cryptocurrency/',
@@ -116,8 +118,19 @@ function getSellAmount(status, bids) {
   return `${bids[1].bidAmount} HNS`;
 }
 
-export default class Auction extends Component {
+export default withRouter(class Auction extends Component {
   state = dummyStateCryptocurrency
+
+  static propTypes = {
+    history: PropTypes.shape({
+      push: PropTypes.func.isRequired,
+    }),
+    location: PropTypes.shape({
+      pathname: PropTypes.string.isRequired,
+    }),
+  };
+
+  getDomain = () => this.props.location.pathname.split('/')[2]
 
   render() {
     return (
@@ -125,7 +138,7 @@ export default class Auction extends Component {
         <div className="auction__top">
           <div className="auction__left">
             <AuctionHeader
-              domain={this.state.domain}
+              domain={this.getDomain()}
               isSold={this.state.status === 'SOLD'}
             />
             <AuctionStatus
@@ -197,5 +210,5 @@ export default class Auction extends Component {
       </div>
     );
   }
-}
+});
 
