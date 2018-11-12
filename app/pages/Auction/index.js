@@ -119,7 +119,23 @@ function getSellAmount(status, bids) {
 }
 
 export default withRouter(class Auction extends Component {
-  state = dummyStateCryptocurrency
+  constructor(props) {
+    super(props);
+
+    const domain = this.getDomain();
+
+    const dummyStates = [
+      dummyStateCryptocurrency,
+      dummyStateExchange,
+      dummyStateLee,
+      dummyStatePony,
+    ];
+
+    // TODO get this from actual place
+    this.state = dummyStates.find(
+      dummyState => dummyState.domain === domain
+    ) || { ...dummyStateCryptocurrency, domain };
+  }
 
   static propTypes = {
     history: PropTypes.shape({
@@ -130,83 +146,109 @@ export default withRouter(class Auction extends Component {
     }),
   };
 
-  getDomain = () => this.props.location.pathname.split('/')[2]
+  getDomain = () => {
+    console.log('this.props.location.pathname', this.props.location.pathname)
+    const out = this.props.location.pathname.split('/')[2]
+    console.log('out', out)
+    return out
+  }
+
+  renderBiddingClose = () => (
+    this.state.bids.length
+      ? <BiddingClose
+        date={this.state.biddingCloseDate}
+        block={this.state.biddingCloseBlock}
+      />
+      : defaultBiddingClose
+  )
+
+  renderAuctionRight = () => {
+    return (
+      <div className="auction__right">
+        <div>
+          Highest bid:
+        </div>
+        <div>
+          {/* if should display*/}
+          { `Hidden until ${moment(this.state.biddingCloseDate)}` }
+        </div>
+        <div>
+          { `${this.state.bids.length} bids` }
+        </div>
+        <div>
+          Your bid:
+        </div>
+        <div>
+          this is actually an input where you can place a bid
+        </div>
+        <div>
+          {'Winner pays 2nd highest bid price. If there is only one bidder, bidder gets this name for free.'}
+        </div>
+      </div>
+    );
+  }
+
+  renderAuctionBottom = () => {
+    return (
+      <div className="action__bottom">
+        <div>
+          { `Bid history (${this.state.bids.length})`}
+        </div>
+        {/* css grid this into a table*/}
+        <div>Time placed</div>
+        <div>Bidder</div>
+        <div>Bid amount</div>
+        {
+          this.state.bids.map(bid => (
+            <React.Fragment>
+              <div>
+                { moment(bid.timePlaced) }
+              </div>
+              <div>
+                { bid.bidder }
+              </div>
+              <div>
+                {/* this can be hidden*/}
+                { bid.bidAmount }
+              </div>
+            </React.Fragment>
+          ))
+        }
+      </div>
+    );
+  }
+
+  renderAuctionLeft = () => {
+    console.info('lol')
+    return (
+      <div className="auction__left">
+        <AuctionHeader
+          domain={this.getDomain()}
+          isSold={this.state.status === 'SOLD'}
+        />
+        <AuctionStatus
+          statusMessage={statusToMessage(this.state.status)}
+          sellAmount={getSellAmount(this.state.status, this.state.bids)}
+          biddingCloseDate={this.state.biddingCloseDate}
+          bids={this.state.bids.length}
+        />
+        <BiddingOpen
+          date={this.state.biddingOpenDate}
+          block={this.state.biddingOpenBlock}
+        />
+        { this.renderBiddingClose() }
+      </div>
+    );
+  }
 
   render() {
     return (
       <div className="auction">
         <div className="auction__top">
-          <div className="auction__left">
-            <AuctionHeader
-              domain={this.getDomain()}
-              isSold={this.state.status === 'SOLD'}
-            />
-            <AuctionStatus
-              statusMessage={statusToMessage(this.state.status)}
-              sellAmount={getSellAmount(this.state.status, this.state.bids)}
-              biddingCloseDate={this.state.biddingCloseDate}
-              bids={this.state.bids.length}
-            />
-            <BiddingOpen
-              date={this.state.biddingOpenDate}
-              block={this.state.biddingOpenBlock}
-            />
-            {
-              this.state.bids.length
-                ? <BiddingClose
-                  date={this.state.biddingCloseDate}
-                  block={this.state.biddingCloseBlock}
-                />
-                : defaultBiddingClose
-            }
-          </div>
-          <div className="action__right">
-            <div>
-              Highest bid:
-            </div>
-            <div>
-              {/* if should display*/}
-              { `Hidden until ${moment(this.state.biddingCloseDate)}` }
-            </div>
-            <div>
-              { `${this.state.bids.length} bids` }
-            </div>
-            <div>
-              Your bid:
-            </div>
-            <div>
-              this is actually an input where you can place a bid
-            </div>
-            <div>
-              {'Winner pays 2nd highest bid price. If there is only one bidder, bidder gets this name for free.'}
-            </div>
-          </div>
+          {this.renderAuctionLeft()}
+          {this.renderAuctionRight()}
         </div>
-        <div className="action__bottom">
-          <div>
-            { `Bid history (${this.state.bids.length})`}
-          </div>
-          {/* css grid this into a table*/}
-          <div>Time placed</div>
-          <div>Bidder</div>
-          <div>Bid amount</div>
-          {
-            this.state.bids.map(bid => (
-              <React.Fragment>
-                <div>
-                  { moment(bid.timePlaced) }
-                </div>
-                <div>
-                  { bid.bidder }
-                </div>
-                <div>
-                  {/* this can be hidden*/}
-                  { bid.bidAmount }
-                </div>
-              </React.Fragment>
-            ))
-          }
-        </div>
+        {this.renderAuctionBottom()}
       </div>
     );
   }
