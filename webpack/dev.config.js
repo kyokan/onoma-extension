@@ -8,9 +8,10 @@ const customPath = path.join(__dirname, './customPublicPath');
 const hotScript = 'webpack-hot-middleware/client?path=__webpack_hmr&dynamicPublicPath=true';
 
 const baseDevConfig = () => ({
+  target: 'web',
   devtool: 'eval-cheap-module-source-map',
   entry: {
-    todoapp: [customPath, hotScript, path.join(__dirname, '../chrome/extension/todoapp')],
+    popup: [customPath, hotScript, path.join(__dirname, '../chrome/extension/popup')],
     window: [customPath, hotScript, path.join(__dirname, '../chrome/extension/window')],
     background: [customPath, hotScript, path.join(__dirname, '../chrome/extension/background')],
   },
@@ -42,8 +43,17 @@ const baseDevConfig = () => ({
       }
     })
   ],
+  node: {
+    fs: 'empty',
+    path: 'empty',
+  },
   resolve: {
-    extensions: ['*', '.js']
+    // extensions: ['*', '.js'],
+    alias: {
+      path$: 'path-browserify'
+    },
+    modules: ['node_modules'],
+    extensions: ['-browser.js', '.js', '.json']
   },
   module: {
     rules: [

@@ -5,8 +5,9 @@ const autoprefixer = require('autoprefixer');
 const customPath = path.join(__dirname, './customPublicPath');
 
 module.exports = {
+  target: 'web',
   entry: {
-    todoapp: [customPath, path.join(__dirname, '../chrome/extension/todoapp')],
+    popup: [customPath, path.join(__dirname, '../chrome/extension/popup')],
     background: [customPath, path.join(__dirname, '../chrome/extension/background')],
     inject: [customPath, path.join(__dirname, '../chrome/extension/inject')]
   },
@@ -30,8 +31,17 @@ module.exports = {
       }
     })
   ],
+  node: {
+    fs: 'empty',
+    path: 'empty',
+  },
   resolve: {
-    extensions: ['*', '.js']
+    // extensions: ['*', '.js'],
+    alias: {
+      path$: 'path-browserify'
+    },
+    modules: ['node_modules'],
+    extensions: ['-browser.js', '.js', '.json']
   },
   module: {
     rules: [
