@@ -7,6 +7,8 @@ import ExtensionDefault from '../components/Extension/Default';
 import FundAccessOptions from '../components/Extension/FundAccessOptions';
 import CreateNewAccount from '../components/Extension/CreateNewAccount';
 
+import client from '../utils/client';
+
 // import ExtensionCreatePassword from '../components/Extension/CreatePassword';
 // import ExtensionAccessFundsOptions from '../components/Extension/FundAccessOptions';
 // import ExtensionTerms from '../components/Extension/Terms';
@@ -31,10 +33,21 @@ import './App.scss';
   })
 )
 export default class App extends Component {
-
   static propTypes = {
     currentView: PropTypes.string,
   };
+
+  componentWillMount() {
+    client.dispatch({ type: 'getState' })
+      .then(({ address }) => {
+        console.log(address)
+        if (!address) {
+          return client.dispatch({ type: 'createWallet', payload: 'asdfasdf' })
+        }
+        return address
+      })
+      .then(console.log.bind(console));
+  }
 
   render() {
     const { currentView } = this.props;
