@@ -5,6 +5,7 @@ import Terms from '../Terms';
 import CreatePassword from '../CreatePassword';
 import CopySeed from '../CopySeed';
 import ConfirmSeed from '../ConfirmSeed';
+import client from '../../../utils/client';
 
 const TERM_OF_USE = 0;
 const CREATE_PASSWORD = 1;
@@ -19,6 +20,10 @@ export default class CreateNewAccount extends Component {
 
   state = {
     currentStep: TERM_OF_USE,
+    password: '',
+    confirmPassword: '',
+    seedphrase: '',
+    address: '',
   };
 
   render() {
@@ -37,7 +42,21 @@ export default class CreateNewAccount extends Component {
             currentStep={2}
             totalSteps={4}
             onBack={() => this.setState({ currentStep: TERM_OF_USE })}
-            onNext={() => this.setState({ currentStep: COPY_SEEDPHRASE })}
+            onNext={() => {
+              const { password, confirmPassword } = this.state;
+              if (password === confirmPassword) {
+                client.dispatch({ type: 'createWallet', payload: password })
+                  .then(({ address, seed }) => {
+                    this.setState({
+                      address,
+                      seedphrase: seed,
+                      currentStep: COPY_SEEDPHRASE,
+                    });
+                  });
+              }
+            }}
+            onPasswordChange={password => this.setState({ password })}
+            onConfirmPasswordChange={confirmPassword => this.setState({ confirmPassword })}
           />
         );
       case COPY_SEEDPHRASE:
@@ -45,6 +64,7 @@ export default class CreateNewAccount extends Component {
           <CopySeed
             currentStep={3}
             totalSteps={4}
+            seedphrase={this.state.seedphrase}
             onBack={() => this.setState({ currentStep: CREATE_PASSWORD })}
             onNext={() => this.setState({ currentStep: CONFIRM_SEEDPHRASE })}
           />
@@ -54,8 +74,9 @@ export default class CreateNewAccount extends Component {
           <ConfirmSeed
             currentStep={4}
             totalSteps={4}
+            seedphrase={this.state.seedphrase}
             onBack={() => this.setState({ currentStep: COPY_SEEDPHRASE })}
-            onNext={() => console.log('created accoutn')}
+            onNext={() => alert(this.state.address)}
           />
         );
       default:

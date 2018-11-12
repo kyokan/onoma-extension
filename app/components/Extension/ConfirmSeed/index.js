@@ -91,7 +91,13 @@ export default class ConfirmSeed extends Component {
         </div>
         <button
           className="extension_cta_button create_cta"
-          onClick={onNext}
+          onClick={() => {
+            if (this.state.words === this.props.seedphrase) {
+              onNext();
+            } else {
+              alert('Seed Phrase does not match');
+            }
+          }}
         >
           Next
         </button>

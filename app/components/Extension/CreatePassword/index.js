@@ -26,6 +26,8 @@ export default class CreatePassword extends Component {
     totalSteps: PropTypes.number.isRequired,
     onBack: PropTypes.func.isRequired,
     onNext: PropTypes.func.isRequired,
+    onPasswordChange: PropTypes.func.isRequired,
+    onConfirmPasswordChange: PropTypes.func.isRequired,
   };
 
   render() {
@@ -35,6 +37,8 @@ export default class CreatePassword extends Component {
       totalSteps,
       onBack,
       onNext,
+      onPasswordChange,
+      onConfirmPasswordChange,
     } = this.props;
 
     return (
@@ -54,10 +58,18 @@ export default class CreatePassword extends Component {
           </div>
           <div className="header_text">Encrypt your wallet with a password.</div>
           <div className="create-password__input">
-            <input type="password" placeholder="Enter Password" />
+            <input
+              type="password"
+              placeholder="Enter Password"
+              onChange={e => onPasswordChange(e.target.value)}
+            />
           </div>
           <div className="create-password__input">
-            <input type="password" placeholder="Confirm Password" />
+            <input
+              type="password"
+              placeholder="Confirm Password"
+              onChange={e => onConfirmPasswordChange(e.target.value)}
+            />
           </div>
         </div>
         <button

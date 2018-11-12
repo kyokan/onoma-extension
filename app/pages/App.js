@@ -38,15 +38,17 @@ export default class App extends Component {
   };
 
   componentWillMount() {
-    client.dispatch({ type: 'getState' })
-      .then(({ address }) => {
-        console.log(address)
-        if (!address) {
-          return client.dispatch({ type: 'createWallet', payload: 'asdfasdf' })
-        }
-        return address
-      })
-      .then(console.log.bind(console));
+    // client.dispatch({ type: 'getState' })
+    //   .then(({ address }) => {
+    //     if (!address) {
+    //       return client.dispatch({
+    //         type: 'createWallet',
+    //         payload: 'asdfasdf',
+    //       });
+    //     }
+    //     return address;
+    //   })
+    //   .then(console.log.bind(console));
   }
 
   render() {

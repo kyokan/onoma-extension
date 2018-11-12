@@ -4,11 +4,19 @@ class Client {
     this.id = 0;
     this.defers = {};
     this.port.onMessage.addListener(msg => {
-      const { id, payload } = JSON.parse(msg);
-      const { resolve } = this.defers[id] || {};
+      const { id, payload, error } = JSON.parse(msg);
+      const { resolve, reject } = this.defers[id] || {};
+
+      if (error && reject) {
+        reject(payload);
+        this.defers[id] = null;
+        return;
+      }
+
       if (resolve) {
         resolve(payload);
         this.defers[id] = null;
+        return;
       }
     });
   }
