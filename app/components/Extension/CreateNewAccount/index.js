@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import Terms from '../Terms';
 import CreatePassword from '../CreatePassword';
+import CopySeed from '../CopySeed';
 
 const TERM_OF_USE = 0;
 const CREATE_PASSWORD = 1;
@@ -39,6 +40,14 @@ export default class CreateNewAccount extends Component {
           />
         );
       case COPY_SEEDPHRASE:
+        return (
+          <CopySeed
+            currentStep={3}
+            totalSteps={4}
+            onBack={() => this.setState({ currentStep: CREATE_PASSWORD })}
+            onNext={() => this.setState({ currentStep: CONFIRM_SEEDPHRASE })}
+          />
+        );
       case CONFIRM_SEEDPHRASE:
       default:
         return <noscript />;

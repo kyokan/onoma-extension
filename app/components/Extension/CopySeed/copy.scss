@@ -1,0 +1,36 @@
+@import "../../../variables";
+@import '../extension.scss';
+
+.copy-seed {
+  &__subheader {
+    font-size: .85rem;
+    line-height: 1.2rem;
+    font-weight: 400;
+    padding-right: 2rem;
+    box-sizing: border-box;
+  }
+
+  &__textarea {
+    @extend %col-nowrap;
+    @extend %box-input;
+    width: 100%;
+    box-sizing: border-box;
+    padding: .5rem;
+    flex: 1 1 auto;
+    margin: 1rem 0 3rem;
+    box-shadow: 0 0 0 1.5px rgba($black, .2);
+
+    textarea {
+      flex: 1 1 auto;
+      width: 100%;
+      box-sizing: border-box;
+      resize: none;
+      border: none;
+      outline: none;
+      font-size: .9rem;
+      line-height: 1.2rem;
+      color: $black;
+      cursor: pointer;
+    }
+  }
+}
