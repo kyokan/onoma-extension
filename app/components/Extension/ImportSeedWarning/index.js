@@ -48,16 +48,14 @@ export default class ImportSeedWarning extends Component {
           <StatusBar currentStep={steps} totalSteps={totalSteps} />
         </div>
         <div className='header_text'>
-          Import your Seed Phrase
+          Import your recovery seed phrase
         </div>
 
-        <div className='subheader_text import_warning_text'>
-          <span>This option is</span>
-          <span className='subheader_text__accent'> not secure</span>
+        <div className='subheader_text import_warning_text'>  
           <span>
-            . Entering your mnemonic seed on any website is dangerous. You could lose all your funds if you accidentally visit a phishing website or if this extension is compromised.
-          </span>
-        </div>
+            Entering your seed on any website is dangerous. You could lose your HNS names and coins if you accidentally visit a phishing website or if this extension is compromised.
+          </span> 
+         </div>
 
         <div className='import_user_input'>
           <span className='import_checkbox_wrapper' onClick={this.handleAgreementClick.bind(this)}>
@@ -66,16 +64,21 @@ export default class ImportSeedWarning extends Component {
             </div>
           </span>
           <span className='import_checkbox_text subheader_text'>
-            I understand I am selecting the least secure option, making my funds vulnerable to attack.
+            I understand I am selecting the least secure option.
           </span>
         </div>
         <button
           className={classNames(['import_cta', agreementConfirmed ? 'import_cta_button__active' : 'import_cta_button'])}
           onClick={() => {this.props.actions.setView('default')}}
         >
-          I Agree, Continue
+          I Agree
         </button>
-        <div className='subheader_text import_text_description'>
+
+{/* Hiding buy ledger here because we decided it might make more sense to only buy in the ledger flow. Single exit for this screen.*/}
+
+{
+/*        
+<div className='subheader_text import_text_description'>
           I want the most secure option!
         </div>
         <div
@@ -86,6 +89,10 @@ export default class ImportSeedWarning extends Component {
         >
           Buy Ledger Nano S
         </div>
+*/
+}
+
+
       </div>
     );
   }
