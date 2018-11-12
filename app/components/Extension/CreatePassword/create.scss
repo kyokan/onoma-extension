@@ -1,4 +1,24 @@
+@import "../../../variables";
 @import '../extension.scss';
+
+.create-password {
+  @extend %col-nowrap;
+
+  &__content {
+    @extend %col-nowrap;
+    flex: 1 0 auto;
+  }
+
+  &__input {
+    @extend %box-input;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 1rem;
+    input {
+      width: 100%;
+    }
+  }
+}
 
 .create_back {
   margin-right: 7px;
@@ -7,8 +27,7 @@
 }
 
 .create_status_bar {
-  margin-top: 10px;
-  margin-bottom: 20px;
+  margin: .8rem 0 1rem;
 }
 
 .clickable {
@@ -21,8 +40,4 @@
   margin: 10px 0rem;
   border: 1px solid #E2E2E2;
   border-radius: 8px;
-}
-
-.create_cta {
-  margin-top: 35%;
 }

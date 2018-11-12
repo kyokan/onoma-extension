@@ -121,7 +121,7 @@
 
 chrome.storage.sync.set({ password: '123457' }, () => {
   console.log('settings saved');
-})
+});
 
 chrome.extension.onConnect.addListener(function(port) {
   console.log("Connected .....");

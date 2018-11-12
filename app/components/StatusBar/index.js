@@ -25,7 +25,7 @@ export default class ConnectLedger extends Component {
 
   static defaultProps = {
     currentStep: 1,
-    totalSteps: 3,
+    totalSteps: 5,
   }
 
   renderStatusBar() {
@@ -57,7 +57,7 @@ export default class ConnectLedger extends Component {
           <span className='status_bar'>
             {barSegments}
           </span>
-          <span>
+          <span className="status__step-number">
             {currentStep + `/` + totalSteps}
           </span>
         </div>

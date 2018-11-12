@@ -2,9 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Root from '../../app/pages/Root';
 
-chrome.storage.local.get('state', (obj) => {
-  // const { state } = obj;
-  // const initialState = JSON.parse(state || '{}');
+chrome.storage.local.get('state', () => {
   const createStore = require('../../app/store/configureStore');
 
   ReactDOM.render(

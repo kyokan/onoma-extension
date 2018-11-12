@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import classNames from 'classnames';
 import actions from '../../../actions/extension.js';
 import './access.scss';
+import PropTypes from "prop-types";
 
 @connect(
   state => ({
@@ -16,19 +17,32 @@ import './access.scss';
 )
 export default class FundAccessOptions extends Component {
 
-  static propTypes = {};
+  static propTypes = {
+    actions: PropTypes.shape({
+      setView: PropTypes.func.isRequired,
+    }).isRequired,
+  };
 
   state = {
     activeButton: 'none',
   };
 
   handleClick = (optionName) => {
-    if (this.state.activeButton === optionName) {
-      this.props.actions.setView('default');
+    const { activeButton } = this.state;
+    const { actions: { setView } } = this.props;
+    if (activeButton === optionName) {
+      switch (optionName) {
+        case 'create':
+          return setView('create-new-account');
+        case 'ledger':
+        case 'seed':
+        default:
+          return null;
+      }
     }
 
     this.setState({ activeButton: optionName });
-  }
+  };
 
   renderCheck = () => {
     return (
@@ -36,7 +50,7 @@ export default class FundAccessOptions extends Component {
         <div className='circle-check-symbol'> </div>
       </div>
     );
-  }
+  };
 
   render() {
     let ledgerCheck = null;

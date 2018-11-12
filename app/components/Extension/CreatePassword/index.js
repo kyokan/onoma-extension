@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import classNames from 'classnames';
-import actions from '../../../actions/extension.js';
-import StatusBar from '../../StatusBar/index.js';
+// import classNames from 'classnames';
+import actions from '../../../actions/extension';
+import StatusBar from '../../StatusBar';
 import './create.scss';
 
 @connect(
@@ -17,33 +18,54 @@ import './create.scss';
 )
 export default class CreatePassword extends Component {
 
-  static propTypes = {};
+  static propTypes = {
+    actions: PropTypes.shape({
+      setView: PropTypes.func.isRequired,
+    }).isRequired,
+    currentStep: PropTypes.number.isRequired,
+    totalSteps: PropTypes.number.isRequired,
+    onBack: PropTypes.func.isRequired,
+    onNext: PropTypes.func.isRequired,
+  };
 
   render() {
+    const {
+      actions: { setView },
+      currentStep,
+      totalSteps,
+      onBack,
+      onNext,
+    } = this.props;
 
     return (
-      <div className='extension_primary_section'>
-        <div className='subheader_text clickable' onClick={() => {this.props.actions.setView('default')}}>
-          <span className='directional_symbol create_back'>
-            <i className="arrow left"></i>
+      <div className="extension_primary_section create-password">
+        <div
+          className="subheader_text clickable"
+          onClick={onBack}
+        >
+          <span className="directional_symbol create_back">
+            <i className="arrow left" />
           </span>
-          <span>
-            Back
-          </span>
+          <span>Back</span>
         </div>
-
-        <div className='create_status_bar'>
-          <StatusBar currentStep={2} totalSteps={5} />
+        <div className="create-password__content">
+          <div className="create_status_bar">
+            <StatusBar currentStep={currentStep} totalSteps={totalSteps} />
+          </div>
+          <div className="header_text">Encrypt your wallet with a password.</div>
+          <div className="create-password__input">
+            <input type="password" placeholder="Enter Password" />
+          </div>
+          <div className="create-password__input">
+            <input type="password" placeholder="Confirm Password" />
+          </div>
         </div>
-
-        <div className='header_text'> Encrypt your wallet with a password </div>
-        <div>
-          <input className='create_password_input' placeholder='Enter passphrase'></input>
-        </div>
-        <div>
-          <input className='create_password_input' placeholder='Confirm passphrase'></input>
-        </div>
-        <button className='extension_cta_button create_cta' onClick={() => {this.props.actions.setView('access-funds-show-options')}}> Next </button>
+        <button
+          className="extension_cta_button create_cta"
+          onClick={onNext}
+        >
+          Next
+        </button>
       </div>
     );
   }
