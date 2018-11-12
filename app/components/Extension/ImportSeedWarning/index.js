@@ -74,7 +74,7 @@ export default class ImportSeedWarning extends Component {
           I Agree
         </button>
 
-{/* Hiding buy ledger here because we decided it might make more sense to only buy in the ledger flow. Single exit for this screen.*/}
+{/* Hiding buy ledger here because we decided it might make more sense to only buy in the ledger flow. Single exit for this screen. Buy ledger will be on desktop.*/}
 
 {
 /*        
