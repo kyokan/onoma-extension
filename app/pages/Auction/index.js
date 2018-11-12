@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import './auction.scss';
-import AuctionHeader from './AuctionHeader';
-import AuctionStatus from './Status';
 import { BiddingOpen, BiddingClose } from './Bidding';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -94,6 +92,11 @@ export const ACTION_PROCESS = {
   `
 };
 
+const isLimitedTimeRemaining = (biddingCloseDate) => {
+  const TODO = true || biddingCloseDate;
+  return TODO;
+};
+
 const defaultBiddingClose = (
   <React.Fragment>
     <div>5 days after the 1st bid</div>
@@ -146,12 +149,7 @@ export default withRouter(class Auction extends Component {
     }),
   };
 
-  getDomain = () => {
-    console.log('this.props.location.pathname', this.props.location.pathname)
-    const out = this.props.location.pathname.split('/')[2]
-    console.log('out', out)
-    return out
-  }
+  getDomain = () => this.props.location.pathname.split('/')[2]
 
   renderBiddingClose = () => (
     this.state.bids.length
@@ -190,7 +188,7 @@ export default withRouter(class Auction extends Component {
 
   renderAuctionBottom = () => {
     return (
-      <div className="action__bottom">
+      <div className="auction__bottom">
         <div>
           { `Bid history (${this.state.bids.length})`}
         </div>
@@ -219,19 +217,41 @@ export default withRouter(class Auction extends Component {
   }
 
   renderAuctionLeft = () => {
-    console.info('lol')
+    const isSold = this.state.status === 'SOLD';
+    const domain = this.getDomain();
+    const statusMessage = statusToMessage(this.state.status);
+    const sellAmount = getSellAmount(this.state.status, this.state.bids);
+    const biddingCloseDate = this.state.biddingCloseDate;
+    const bids = this.state.bids.length;
+
     return (
       <div className="auction__left">
-        <AuctionHeader
-          domain={this.getDomain()}
-          isSold={this.state.status === 'SOLD'}
-        />
-        <AuctionStatus
-          statusMessage={statusToMessage(this.state.status)}
-          sellAmount={getSellAmount(this.state.status, this.state.bids)}
-          biddingCloseDate={this.state.biddingCloseDate}
-          bids={this.state.bids.length}
-        />
+        <div className="auction__domain">
+          { `${domain}/` }
+        </div>
+        {
+          isSold && <div>`Visit link would go here ${domain}`</div>
+        }
+        <div className="auction__group">
+          <div>
+            Status
+          </div>
+          <div>
+            { statusMessage }
+          </div>
+          <div>
+            {
+              isLimitedTimeRemaining(biddingCloseDate)
+                ? 'limited time remaining'
+                : null
+            }
+          </div>
+          {
+            sellAmount
+              ? <div>`for ${sellAmount}`</div>
+              : <div>`${bids} bids`</div>
+          }
+        </div>
         <BiddingOpen
           date={this.state.biddingOpenDate}
           block={this.state.biddingOpenBlock}
@@ -244,10 +264,8 @@ export default withRouter(class Auction extends Component {
   render() {
     return (
       <div className="auction">
-        <div className="auction__top">
-          {this.renderAuctionLeft()}
-          {this.renderAuctionRight()}
-        </div>
+        {this.renderAuctionLeft()}
+        {this.renderAuctionRight()}
         {this.renderAuctionBottom()}
       </div>
     );

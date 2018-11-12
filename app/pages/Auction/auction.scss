@@ -1,7 +1,6 @@
 @import "../../variables";
 
 .auction {
-  @extend %row-nowrap;
   flex: 1 0 auto;
   overflow-y: auto;
   max-width: 42.5rem;
@@ -9,15 +8,33 @@
   margin: 1.5rem auto;
   height: 0;
   padding: 0 .1rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+}
 
-  &__left {
-    @extend %col-nowrap;
-    flex: 0 1 auto;
-    margin-right: 1rem;
-  }
+.auction__bottom {
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
 
-  &__right {
-    @extend %col-nowrap;
-    flex: 0 0 auto;
-  }
+.auction__left {
+  display: grid;
+  align-items: center;
+  grid-template-rows: auto auto auto auto;
+}
+
+.auction__domain {
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+
+.auction__group {
+  display: grid;
+  grid-template-rows: 1rem 2rem auto;
+  align-items: center;
+}
+
+.auction__large {
+  font-size: 2rem;
 }

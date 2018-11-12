@@ -12,11 +12,11 @@ function bidding({
   type,
 }) {
   return (
-    <div>
+    <div className="auction__group">
       <div>
         {`Bidding ${type}`}
       </div>
-      <div>
+      <div className="auction__large">
         { moment(date) }
       </div>
       <div>
