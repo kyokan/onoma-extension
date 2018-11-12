@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-// import classNames from 'classnames';
+import c from 'classnames';
 import actions from '../../../actions/extension';
 import StatusBar from '../../StatusBar';
-import './copy.scss';
+import './confirm-seed.scss';
 
 @connect(
   state => ({
@@ -16,7 +16,7 @@ import './copy.scss';
     }, dispatch)
   })
 )
-export default class CopySeed extends Component {
+export default class ConfirmSeed extends Component {
 
   static propTypes = {
     actions: PropTypes.shape({
@@ -33,13 +33,23 @@ export default class CopySeed extends Component {
     seedphrase: 'witch collapse practice feed shame open despair creek road again ice least',
   };
 
+  state = {
+    words: '',
+    pasteAttempted: false,
+  };
+
+  handleKeyDown = e => {
+    if (e.key === 'Enter' || !(/^[a-zA-Z ]+$/).test(e.key)) {
+      e.preventDefault();
+    }
+  };
+
   render() {
     const {
       currentStep,
       totalSteps,
       onBack,
       onNext,
-      seedphrase,
     } = this.props;
 
     return (
@@ -57,15 +67,25 @@ export default class CopySeed extends Component {
           <div className="create_status_bar">
             <StatusBar currentStep={currentStep} totalSteps={totalSteps} />
           </div>
-          <div className="header_text">Your Recovery Seed Phrase</div>
+          <div className="header_text">Verify Your Seed Phrase</div>
           <div className="subheader_text copy-seed__subheader">
             This is your secret 24-word phrase to recover your funds. This is the only way to access your funds. Do not lose this phrase.
           </div>
-          <div className="copy-seed__textarea" >
+          <div
+            className={c('copy-seed__textarea', {
+              'copy-seed__textarea--shake': this.state.pasteAttempted,
+            })}
+          >
             <textarea
-              value={seedphrase}
-              onClick={e => e.target.select()}
-              readOnly
+              placeholder="Type your seedphrase here"
+              onKeyDown={this.handleKeyDown}
+              onChange={e => this.setState({ words: e.target.value })}
+              onPaste={e => {
+                e.preventDefault();
+                this.setState({ pasteAttempted: true });
+                setTimeout(() => this.setState({ pasteAttempted: false }), 1000);
+              }}
+              value={this.state.words}
             />
           </div>
         </div>
@@ -73,7 +93,7 @@ export default class CopySeed extends Component {
           className="extension_cta_button create_cta"
           onClick={onNext}
         >
-          I've copied this somewhere safe
+          Next
         </button>
       </div>
     );

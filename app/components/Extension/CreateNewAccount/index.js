@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Terms from '../Terms';
 import CreatePassword from '../CreatePassword';
 import CopySeed from '../CopySeed';
+import ConfirmSeed from '../ConfirmSeed';
 
 const TERM_OF_USE = 0;
 const CREATE_PASSWORD = 1;
@@ -49,6 +50,14 @@ export default class CreateNewAccount extends Component {
           />
         );
       case CONFIRM_SEEDPHRASE:
+        return (
+          <ConfirmSeed
+            currentStep={4}
+            totalSteps={4}
+            onBack={() => this.setState({ currentStep: COPY_SEEDPHRASE })}
+            onNext={() => console.log('created accoutn')}
+          />
+        );
       default:
         return <noscript />;
     }
