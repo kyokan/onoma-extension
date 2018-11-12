@@ -32,16 +32,16 @@ export default class CreatePassword extends Component {
           </span>
         </div>
 
-        <div className='create_status_bar'>
+        <div className='login_status_bar'>
           <StatusBar currentStep={2} totalSteps={5} />
         </div>
 
-        <div className='header_text'> Encrypt your wallet with a password </div>
+        <div className='header_text'> Set up a password </div>
         <div>
-          <input className='create_password_input' placeholder='Enter passphrase'></input>
+          <input className='login_password_input' placeholder='Password (min. 8 characters)'></input>
         </div>
         <div>
-          <input className='create_password_input' placeholder='Confirm passphrase'></input>
+          <input className='login_password_input' placeholder='Confirm password'></input>
         </div>
         <button className='extension_cta_button create_cta' onClick={() => {this.props.actions.setView('access-funds-show-options')}}> Next </button>
       </div>

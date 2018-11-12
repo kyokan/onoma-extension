@@ -33,6 +33,12 @@ export default class App extends Component {
   render() {
     const { currentView } = this.props;
 
+
+    return (
+      <ExtensionCreatePassword />
+    );
+
+
     // return (
     //   <AccountLogin />
     // );
