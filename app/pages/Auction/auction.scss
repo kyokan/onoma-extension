@@ -4,29 +4,49 @@
   flex: 1 0 auto;
   overflow-y: auto;
   max-width: 42.5rem;
-  width: 100%;
+  width: 90%;
   margin: 1.5rem auto;
   height: 0;
   padding: 0 .1rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto auto;
+  grid-template-rows: auto auto auto;
 }
 
 .auction__bottom {
   grid-column-start: 1;
   grid-column-end: 3;
+  background-color: aquamarine;
 }
 
 .auction__left {
   display: grid;
   align-items: center;
   grid-template-rows: auto auto auto auto;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  background-color: bisque;
+}
+
+.auction__right {
+  background-color: darkseagreen;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  grid-column-start: 2;
+  grid-column-end: 3;
 }
 
 .auction__domain {
-  font-weight: bold;
+  font-weight: 600;
   font-size: 1.3rem;
+  align-self: baseline;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  height: 4.2rem;
 }
 
 .auction__group {
@@ -36,5 +56,16 @@
 }
 
 .auction__large {
-  font-size: 2rem;
+  font-size: 1.2rem;
+  font-weight: 450;
 }
+
+.auction__status_ {
+  color: greenyellow;
+}
+
+.auction___title {
+  font-weight: 550;
+  font-size: 1.1rem;
+}
+

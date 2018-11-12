@@ -13,13 +13,13 @@ function bidding({
 }) {
   return (
     <div className="auction__group">
-      <div>
+      <div className="auction__title">
         {`Bidding ${type}`}
       </div>
       <div className="auction__large">
         { moment(date) }
       </div>
-      <div>
+      <div className="auction__block">
         { `block #${block}` }
       </div>
     </div>

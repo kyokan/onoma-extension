@@ -189,13 +189,13 @@ export default withRouter(class Auction extends Component {
   renderAuctionBottom = () => {
     return (
       <div className="auction__bottom">
-        <div>
+        <div className="auction__history__title">
           { `Bid history (${this.state.bids.length})`}
         </div>
         {/* css grid this into a table*/}
-        <div>Time placed</div>
-        <div>Bidder</div>
-        <div>Bid amount</div>
+        <div className="auction__title">Time placed</div>
+        <div className="auction__title">Bidder</div>
+        <div className="auction__title">Bid amount</div>
         {
           this.state.bids.map(bid => (
             <React.Fragment>
@@ -225,39 +225,41 @@ export default withRouter(class Auction extends Component {
     const bids = this.state.bids.length;
 
     return (
-      <div className="auction__left">
+      <React.Fragment>
         <div className="auction__domain">
           { `${domain}/` }
         </div>
-        {
-          isSold && <div>`Visit link would go here ${domain}`</div>
-        }
-        <div className="auction__group">
-          <div>
-            Status
-          </div>
-          <div>
-            { statusMessage }
-          </div>
-          <div>
+        <div className="auction__left">
+          {
+            isSold && <div>`Visit link would go here ${domain}`</div>
+          }
+          <div className="auction__group">
+            <div className="auction__title">
+              Status
+            </div>
+            <div className="auction_status">
+              { statusMessage }
+            </div>
+            <div>
+              {
+                isLimitedTimeRemaining(biddingCloseDate)
+                  ? 'limited time remaining'
+                  : null
+              }
+            </div>
             {
-              isLimitedTimeRemaining(biddingCloseDate)
-                ? 'limited time remaining'
-                : null
+              sellAmount
+                ? <div>`for ${sellAmount}`</div>
+                : <div>`${bids} bids`</div>
             }
           </div>
-          {
-            sellAmount
-              ? <div>`for ${sellAmount}`</div>
-              : <div>`${bids} bids`</div>
-          }
+          <BiddingOpen
+            date={this.state.biddingOpenDate}
+            block={this.state.biddingOpenBlock}
+          />
+          { this.renderBiddingClose() }
         </div>
-        <BiddingOpen
-          date={this.state.biddingOpenDate}
-          block={this.state.biddingOpenBlock}
-        />
-        { this.renderBiddingClose() }
-      </div>
+      </React.Fragment>
     );
   }
 
