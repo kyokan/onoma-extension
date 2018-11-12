@@ -1,18 +1,25 @@
 @import '../../variables.scss';
 
+.status {
+  &__step-number {
+    flex: 0 0 auto;
+    margin-left: 1rem;
+  }
+}
+
 .status_bar_container {
   width: 100%;
   display: flex;
-  flex: row nowrap;
+  flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
 }
 
 .status_bar {
   display: flex;
-  flex: row nowrap;
-  height: 5px;
-  width: 85%;
+  flex-flow: row nowrap;
+  height: .1875rem;
+  flex: 1 0 auto;
 }
 
 .status_bar_element {

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 // import classNames from 'classnames';
 import actions from '../../../actions/extension';
 import StatusBar from '../../StatusBar';
-import './create.scss';
+import './copy.scss';
 
 @connect(
   state => ({
@@ -16,7 +16,7 @@ import './create.scss';
     }, dispatch)
   })
 )
-export default class CreatePassword extends Component {
+export default class CopySeed extends Component {
 
   static propTypes = {
     actions: PropTypes.shape({
@@ -24,21 +24,22 @@ export default class CreatePassword extends Component {
     }).isRequired,
     currentStep: PropTypes.number.isRequired,
     totalSteps: PropTypes.number.isRequired,
+    seedphrase: PropTypes.string.isRequired,
     onBack: PropTypes.func.isRequired,
     onNext: PropTypes.func.isRequired,
-    onPasswordChange: PropTypes.func.isRequired,
-    onConfirmPasswordChange: PropTypes.func.isRequired,
+  };
+
+  static defaultProps = {
+    seedphrase: 'witch collapse practice feed shame open despair creek road again ice least',
   };
 
   render() {
     const {
-      actions: { setView },
       currentStep,
       totalSteps,
       onBack,
       onNext,
-      onPasswordChange,
-      onConfirmPasswordChange,
+      seedphrase,
     } = this.props;
 
     return (
@@ -56,19 +57,15 @@ export default class CreatePassword extends Component {
           <div className="create_status_bar">
             <StatusBar currentStep={currentStep} totalSteps={totalSteps} />
           </div>
-          <div className="header_text">Encrypt your wallet with a password.</div>
-          <div className="create-password__input">
-            <input
-              type="password"
-              placeholder="Enter Password"
-              onChange={e => onPasswordChange(e.target.value)}
-            />
+          <div className="header_text">Your Recovery Seed Phrase</div>
+          <div className="subheader_text copy-seed__subheader">
+            This is your secret 24-word phrase to recover your funds. This is the only way to access your funds. Do not lose this phrase.
           </div>
-          <div className="create-password__input">
-            <input
-              type="password"
-              placeholder="Confirm Password"
-              onChange={e => onConfirmPasswordChange(e.target.value)}
+          <div className="copy-seed__textarea" >
+            <textarea
+              value={seedphrase}
+              onClick={e => e.target.select()}
+              readOnly
             />
           </div>
         </div>
@@ -76,7 +73,7 @@ export default class CreatePassword extends Component {
           className="extension_cta_button create_cta"
           onClick={onNext}
         >
-          Next
+          I've copied this somewhere safe
         </button>
       </div>
     );

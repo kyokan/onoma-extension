@@ -1,5 +1,11 @@
 @import '../extension.scss';
 
+.terms {
+  &__status-bar {
+    margin: .8rem 0 1rem;
+  }
+}
+
 .terms_line_break {
   margin-top: 10px;
   margin-left: -25px;

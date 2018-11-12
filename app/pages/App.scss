@@ -25,28 +25,12 @@ html, body {
   overflow-x: hidden;
 }
 
+#root {
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
 .normal {
   background: #FFFFFF;
 }
-
- //@font-face {
- //  font-family: 'SF-Pro-Display';
- //   font-style: normal;
- //   font-weight: 400;
- //  src: url("../../chrome/assets/fonts/SF-Pro-Display-Regular.otf") format("opentype");
- //}
- //
- //@font-face {
- //  font-family: 'SF-Pro-Display';
- //   font-style: normal;
- //   font-weight: 500;
- //  src: url("../../chrome/assets/fonts/SF-Pro-Display-Medium.otf") format("opentype");
- //}
- //
- //
- //@font-face {
- //  font-family: 'SF-Pro-Display';
- //   font-style: normal;
- //   font-weight: 600;
- //  src: url("../../chrome/assets/fonts/SF-Pro-Display-Semibold.otf") format("opentype");
- //}

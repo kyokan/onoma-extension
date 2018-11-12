@@ -1,4 +1,15 @@
+@import '../../../variables';
 @import '../extension';
+
+.default {
+  @extend %col-nowrap;
+
+  &__primary-section {
+    padding: 1.2rem 1.4rem 1rem;
+    flex: 1 0 auto;
+    box-sizing: border-box;
+  }
+}
 
 .default_header {
   margin-bottom: 6%;
