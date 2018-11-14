@@ -1,6 +1,6 @@
 /* eslint-disable no-use-before-define */
 import startnode from './background/startnode';
-import selectors from './background/selectors';
+// import selectors from './background/selectors';
 const chrome = global.chrome;
 
 // Initialize Node
@@ -19,7 +19,11 @@ async function initControllers(node) {
       return;
     }
 
-    console.log(action);
+    const { type, payload } = action;
+
+    switch (type) {
+      // case ''
+    }
   });
 }
 

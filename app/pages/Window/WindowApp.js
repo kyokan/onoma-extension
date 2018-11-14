@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { HashRouter, Switch, Route, Redirect } from 'react-router-dom'
 import SubHeader from '../../components/SubHeader';
-import Account from '../Account';
-import GetCoins from '../GetCoins';
+import Account from './Account';
+import GetCoins from './GetCoins';
 import './window.scss';
 
 @connect(
