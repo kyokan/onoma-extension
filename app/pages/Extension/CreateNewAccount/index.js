@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
 import Terms from '../Terms/index';
 import CreatePassword from '../CreatePassword/index';
 import CopySeed from '../CopySeed/index';
 import ConfirmSeed from '../ConfirmSeed/index';
 import client from '../../../utils/client';
+import { GET_WALLET } from '../../../../chrome/extension/background/actionTypes';
 
 const TERM_OF_USE = 0;
 const CREATE_PASSWORD = 1;
@@ -45,7 +45,7 @@ export default class CreateNewAccount extends Component {
             onNext={() => {
               const { password, confirmPassword } = this.state;
               if (password === confirmPassword) {
-                client.dispatch({ type: 'createWallet', payload: password })
+                client.dispatch({ type: GET_WALLET, payload: password })
                   .then(({ address, seed }) => {
                     this.setState({
                       address,

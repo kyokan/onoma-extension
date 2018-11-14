@@ -1,45 +1,62 @@
 /* eslint-disable no-use-before-define */
 import startnode from './background/startnode';
-// import selectors from './background/selectors';
+import { getWallet } from './background/selectors';
+import {
+  GET_WALLET,
+} from './background/actionTypes';
+
 const chrome = global.chrome;
 
 // Initialize Node
 (async function startBackground() {
   const node = await startnode();
   // eslint-disable-next-line no-console
-  initControllers(node).catch(console.error.bind(console));
-}());
-
-async function initControllers(node) {
-  const port = await connect();
-  listenToPort(port, (err, action) => {
+  onConnect((err, port) => {
     if (err) {
       // eslint-disable-next-line no-console
       console.error(err);
       return;
     }
 
-    const { type, payload } = action;
+    initControllers(node, port);
+  });
+}());
+
+function initControllers(node, port) {
+  const send = createSend(port);
+
+  onMessage(port, async (err, action) => {
+    if (err) {
+      // eslint-disable-next-line no-console
+      console.error(err);
+      return;
+    }
+
+    const { type, payload, id } = action;
 
     switch (type) {
-      // case ''
+      case GET_WALLET:
+        return send({
+          id,
+          payload: await getWallet(node),
+        });
+      default:
+        return null;
     }
   });
 }
 
-function connect() {
-  return new Promise((resolve, reject) => {
-    try {
-      chrome.extension.onConnect.addListener(port => {
-        resolve(port);
-      });
-    } catch (err) {
-      reject(err);
-    }
-  });
+function onConnect(cb) {
+  try {
+    chrome.extension.onConnect.addListener(port => {
+      cb(null, port);
+    });
+  } catch (err) {
+    cb(err, null);
+  }
 }
 
-function listenToPort(port, cb) {
+function onMessage(port, cb) {
   try {
     port.onMessage.addListener(async msg => {
       const action = await parseAction(msg);
@@ -56,6 +73,12 @@ function parseAction(action) {
   } catch (err) {
     return {};
   }
+}
+
+function createSend(port) {
+  return function send(response) {
+    port.postMessage(JSON.stringify(response));
+  };
 }
 
 //

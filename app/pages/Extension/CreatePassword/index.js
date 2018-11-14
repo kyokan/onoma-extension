@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// import classNames from 'classnames';
 import StatusBar from '../../../components/StatusBar/index';
 import './create.scss';
 
 @connect()
 export default class CreatePassword extends Component {
-
   static propTypes = {
     currentStep: PropTypes.number.isRequired,
     totalSteps: PropTypes.number.isRequired,

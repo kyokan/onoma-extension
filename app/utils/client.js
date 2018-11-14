@@ -4,6 +4,7 @@ class Client {
     this.id = 0;
     this.defers = {};
     this.port.onMessage.addListener(msg => {
+      console.log(msg);
       const { id, payload, error } = JSON.parse(msg);
       const { resolve, reject } = this.defers[id] || {};
 
