@@ -1,11 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function moment(date) {
-  // todo
-  return JSON.stringify(date);
-}
-
 function bidding({
   date,
   block,
@@ -17,7 +12,7 @@ function bidding({
         {`Bidding ${type}`}
       </div>
       <div className="auction__large">
-        { moment(date) }
+        { date.toDateString() }
       </div>
       <div className="auction__block">
         { `block #${block}` }

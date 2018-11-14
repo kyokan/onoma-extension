@@ -92,6 +92,7 @@ export const ACTION_PROCESS = {
   `
 };
 
+
 const isLimitedTimeRemaining = (biddingCloseDate) => {
   const TODO = true || biddingCloseDate;
   return TODO;
@@ -103,9 +104,6 @@ const defaultBiddingClose = (
     <div>If no bids are placed 7 days after auction opens, this TLD will be randomly assigned a new auction open date to prevent squatting.</div>
   </React.Fragment>
 );
-
-// TODO
-const moment = date => date;
 
 const statusToMessage = status => ({
   AVAILABLE: 'Available',
@@ -168,7 +166,7 @@ export default withRouter(class Auction extends Component {
         </div>
         <div>
           {/* if should display*/}
-          { `Hidden until ${moment(this.state.biddingCloseDate)}` }
+          { `Hidden until ${this.state.biddingCloseDate.toDateString()}` }
         </div>
         <div>
           { `${this.state.bids.length} bids` }
@@ -200,7 +198,7 @@ export default withRouter(class Auction extends Component {
           this.state.bids.map(bid => (
             <React.Fragment>
               <div>
-                { moment(bid.timePlaced) }
+                { bid.timePlaced.toDateString() }
               </div>
               <div>
                 { bid.bidder }
@@ -229,6 +227,7 @@ export default withRouter(class Auction extends Component {
         <div className="auction__domain">
           { `${domain}/` }
         </div>
+        <div className="auction__underline"></div>
         <div className="auction__left">
           {
             isSold && <div>`Visit link would go here ${domain}`</div>
@@ -237,20 +236,22 @@ export default withRouter(class Auction extends Component {
             <div className="auction__title">
               Status
             </div>
-            <div className="auction_status">
-              { statusMessage }
-            </div>
-            <div>
-              {
-                isLimitedTimeRemaining(biddingCloseDate)
-                  ? 'limited time remaining'
-                  : null
-              }
+            <div className="auction__status">
+              <div className="auction__status-message">
+                { statusMessage }
+              </div>
+              <div className="auction__limited-time">
+                {
+                  isLimitedTimeRemaining(biddingCloseDate)
+                    ? 'limited time remaining' // TODO add a clock symbol too
+                    : null
+                }
+              </div>
             </div>
             {
               sellAmount
                 ? <div>`for ${sellAmount}`</div>
-                : <div>`${bids} bids`</div>
+                : <a className="auction__bid-amount">{`${bids} bids`}</a>
             }
           </div>
           <BiddingOpen
@@ -266,8 +267,10 @@ export default withRouter(class Auction extends Component {
   render() {
     return (
       <div className="auction">
-        {this.renderAuctionLeft()}
-        {this.renderAuctionRight()}
+        <div className="auction__top">
+          {this.renderAuctionLeft()}
+          {this.renderAuctionRight()}
+        </div>
         {this.renderAuctionBottom()}
       </div>
     );
