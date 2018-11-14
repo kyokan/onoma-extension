@@ -14,6 +14,7 @@
 }
 
 .auction__bottom {
+  background-color: white;
   border-width: 1px;
   border-style: solid;
   padding: 2rem;
@@ -36,12 +37,17 @@
 }
 
 .auction__top {
+  background-color: white;
   display: grid;
   grid-template-columns: 6fr 4fr;
   border: 1px solid rgba($black, .1);
   border-radius: .25rem;
   box-shadow: 0 2px 2px 0 rgba($black, .15);
   padding: 2rem;
+}
+
+.auction__block {
+  font-size: .8rem;
 }
 
 .auction__domain {
@@ -58,35 +64,49 @@
 
 .auction__group {
   display: grid;
-  grid-template-rows: 1rem 2rem auto;
+  grid-template-rows: auto auto auto;
   align-items: center;
+  margin: .4rem;
 }
 
 .auction__large {
   font-size: 1.2rem;
   font-weight: 450;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 .auction__status {
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: auto 1fr;
+  align-items: center;
   text-justify: center;
-  color: greenyellow;
 }
 
-.auction___title {
-  font-weight: 550;
-  font-size: 1.1rem;
+.auction__limited-time__clock {
+  background-color: #f2f2f2;
+  border-radius: .4rem;
+  padding: .2rem .4rem .2rem .4rem;
+  display: inline;
+}
+
+.auction__title {
+  font-weight: 450;
+  font-size: .75rem;
 }
 
 .auction__status-message {
-  color: limegreen;
+  display: inline;
+  color: #33CF66;
   font-size: 1.1rem;
+  font-weight: 500;
 }
 
 .auction__limited-time {
+  padding-left: .4rem;
+  display: inline;
   color: #777777;
-  font-size: .7rem;
+  font-size: .65rem;
 }
 
 .auction__bid-amount {

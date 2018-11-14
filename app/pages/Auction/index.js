@@ -243,7 +243,7 @@ export default withRouter(class Auction extends Component {
               <div className="auction__limited-time">
                 {
                   isLimitedTimeRemaining(biddingCloseDate)
-                    ? 'limited time remaining' // TODO add a clock symbol too
+                    ? <div className="auction__limited-time__clock">limited time remaining!</div> // TODO add a clock symbol too
                     : null
                 }
               </div>
