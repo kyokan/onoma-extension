@@ -1,3 +1,6 @@
+import * as walletTypes from '../../../app/ducks/wallet';
+const { EXTENSION } = walletTypes;
+
 export async function getWallet(node) {
   const { wdb } = node.require('walletdb');
   const wallet = await wdb.get('extension');
@@ -15,5 +18,5 @@ export async function getWallet(node) {
   const receive = account.receiveAddress();
   const address = receive.toString(node.network);
 
-  return { address };
+  return { address, type: EXTENSION };
 }

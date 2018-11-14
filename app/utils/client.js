@@ -4,8 +4,8 @@ class Client {
     this.id = 0;
     this.defers = {};
     this.port.onMessage.addListener(msg => {
-      console.log(msg);
-      const { id, payload, error } = JSON.parse(msg);
+      // eslint-disable-next-line no-use-before-define
+      const { id, payload, error } = parseAction(msg);
       const { resolve, reject } = this.defers[id] || {};
 
       if (error && reject) {
@@ -17,7 +17,6 @@ class Client {
       if (resolve) {
         resolve(payload);
         this.defers[id] = null;
-        return;
       }
     });
   }
@@ -33,9 +32,18 @@ class Client {
     });
 
     this.port.postMessage(JSON.stringify(data));
+    // eslint-disable-next-line no-plusplus
     this.id++;
     return promise;
   }
 }
 
 export default new Client();
+
+function parseAction(msg) {
+  try {
+    return JSON.parse(msg);
+  } catch (err) {
+    return {};
+  }
+}

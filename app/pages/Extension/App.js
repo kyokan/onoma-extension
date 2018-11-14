@@ -1,111 +1,59 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
+import client from '../../utils/client';
 import { VIEW_TYPES } from '../../ducks/extension';
-import ExtensionDefault from './Default/index';
-import FundAccessOptions from './FundAccessOptions/index';
-import CreateNewAccount from './CreateNewAccount/index';
+import { GET_WALLET } from '../../../chrome/extension/background/actionTypes';
+import * as walletActions from '../../ducks/wallet';
 
-// import client from '../utils/client';
-
-// import ExtensionCreatePassword from '../components/Extension/CreatePassword';
-// import ExtensionAccessFundsOptions from '../components/Extension/FundAccessOptions';
-// import ExtensionTerms from '../components/Extension/Terms';
-// import ExtensionConnectLedger from '../components/Extension/ConnectLedger';
-// import ImportSeedWarning from '../components/Extension/ImportSeedWarning';
-// import ImportSeedEnterPassphrase from '../components/Extension/ImportSeedEnterPassphrase';
-// import ImportSeedLedgerWarning from '../components/Extension/ImportSeedLedgerWarning';
-// import Account from '../components/Extension/Account';
-// import AccountLogin from '../components/Extension/AccountLogin';
-
+import ExtensionDefault from './Default';
+import Account from './Account';
+import FundAccessOptions from './FundAccessOptions';
+import CreateNewAccount from './CreateNewAccount';
 
 import './App.scss';
 
 @connect(
-  function mapStateToProps(state) {
-    return {
-      currentView: state.extension.currentView,
-    };
-  },
+  state => ({
+    currentView: state.extension.currentView,
+    address: state.wallet.address,
+    initialized: state.wallet.initialized,
+  }),
   dispatch => ({
-    actions: bindActionCreators({}, dispatch),
+    setWallet: ({ address, type }) => dispatch(walletActions.setWallet({ address, type })),
   })
 )
 export default class App extends Component {
   static propTypes = {
+    address: PropTypes.string.isRequired,
+    setWallet: PropTypes.func.isRequired,
     currentView: PropTypes.string,
+    initialized: PropTypes.bool.isRequired,
   };
 
+  componentWillMount() {
+    client.dispatch({ type: GET_WALLET })
+      .then(this.props.setWallet);
+  }
+
   render() {
-    const { currentView } = this.props;
+    const { currentView, address, initialized } = this.props;
+
+    if (!initialized) {
+      return <noscript />;
+    }
 
     switch (currentView) {
       case VIEW_TYPES.DEFAULT:
-        return <ExtensionDefault />;
+        return address
+          ? <Account />
+          : <ExtensionDefault />;
       case VIEW_TYPES.CREATE_ACCOUNT_OPTIONS:
         return <FundAccessOptions />;
       case VIEW_TYPES.CREATE_NEW_ACCOUNT:
         return <CreateNewAccount />;
+      default:
+        return <div>View Not Yet Defined</div>;
     }
-
-    // return (
-    //   <AccountLogin />
-    // );
-
-    // return (
-    //   <Account />
-    // );
-
-    // return (
-    //   <ImportSeedLedgerWarning />
-    // );
-
-    // if (currentView === 'import-seed-enter-passphrase') {
-    //   return (
-    //     <ImportSeedEnterPassphrase />
-    //   );
-    // }
-    //
-    // if (currentView === 'seed-phrase-warning') {
-    //   return (
-    //     <ImportSeedWarning />
-    //   );
-    // }
-    //
-    // if (currentView === 'connect-ledger') {
-    //   return (
-    //     <ExtensionConnectLedger />
-    //   );
-    // }
-    //
-    // if (currentView === 'terms-and-conditions') {
-    //   return (
-    //     <ExtensionTerms />
-    //   );
-    // }
-
-    // if (currentView === 'access-funds-show-options') {
-    //   return (
-    //     <ExtensionAccessFundsOptions />
-    //   );
-    // }
-
-    // if (currentView === 'create-password') {
-    //   return (
-    //     <ExtensionCreatePassword />
-    //   );
-    // }
-    //
-    // if (currentView === 'default') {
-    //   return (
-    //     <ExtensionDefault />
-    //   )
-    // }
-
-    return (
-      <div> View Not Yet Defined </div>
-    );
   }
 }

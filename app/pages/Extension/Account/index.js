@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import classNames from 'classnames';
-import actions from '../../../actions/extension.js';
+import * as actions from '../../../ducks/extension';
 import '../extension.scss';
 import './loggedin.scss';
 
 @connect(
-  state => ({
-  }),
+  null,
   dispatch => ({
-    actions: bindActionCreators({
+    ...bindActionCreators({
       setView: actions.setView,
     }, dispatch)
   })
@@ -20,7 +18,7 @@ export default class App extends Component {
   static propTypes = {};
 
   render() {
-
+    console.log(this.props)
     return (
       <div>
         <div className='extension_primary_section'>
