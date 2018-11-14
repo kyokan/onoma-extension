@@ -120,9 +120,8 @@ function getSellAmount(status, bids) {
 }
 
 export default withRouter(class Auction extends Component {
-  constructor(props) {
-    super(props);
-
+  // TODO this should be nuked and all uses if this should be changed to normal props
+  get dummyProps() {
     const domain = this.getDomain();
 
     const dummyStates = [
@@ -132,12 +131,15 @@ export default withRouter(class Auction extends Component {
       dummyStatePony,
     ];
 
-    // TODO get this from actual place
-    this.state = dummyStates.find(
+    const dummyProps = dummyStates.find(
       dummyState => dummyState.domain === domain
     ) || { ...dummyStateCryptocurrency, domain };
-  }
 
+    return {
+      ...this.props,
+      ...dummyProps,
+    };
+  }
   static propTypes = {
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
@@ -150,10 +152,10 @@ export default withRouter(class Auction extends Component {
   getDomain = () => this.props.location.pathname.split('/')[2]
 
   renderBiddingClose = () => (
-    this.state.bids.length
+    this.dummyProps.bids.length
       ? <BiddingClose
-        date={this.state.biddingCloseDate}
-        block={this.state.biddingCloseBlock}
+        date={this.dummyProps.biddingCloseDate}
+        block={this.dummyProps.biddingCloseBlock}
       />
       : defaultBiddingClose
   )
@@ -166,10 +168,10 @@ export default withRouter(class Auction extends Component {
         </div>
         <div>
           {/* if should display*/}
-          { `Hidden until ${this.state.biddingCloseDate.toDateString()}` }
+          { `Hidden until ${this.dummyProps.biddingCloseDate.toDateString()}` }
         </div>
         <div>
-          { `${this.state.bids.length} bids` }
+          { `${this.dummyProps.bids.length} bids` }
         </div>
         <div>
           Your bid:
@@ -188,14 +190,14 @@ export default withRouter(class Auction extends Component {
     return (
       <div className="auction__bottom">
         <div className="auction__history__title">
-          { `Bid history (${this.state.bids.length})`}
+          { `Bid history (${this.dummyProps.bids.length})`}
         </div>
         {/* css grid this into a table*/}
         <div className="auction__title">Time placed</div>
         <div className="auction__title">Bidder</div>
         <div className="auction__title">Bid amount</div>
         {
-          this.state.bids.map(bid => (
+          this.dummyProps.bids.map(bid => (
             <React.Fragment>
               <div>
                 { bid.timePlaced.toDateString() }
@@ -215,12 +217,12 @@ export default withRouter(class Auction extends Component {
   }
 
   renderAuctionLeft = () => {
-    const isSold = this.state.status === 'SOLD';
+    const isSold = this.dummyProps.status === 'SOLD';
     const domain = this.getDomain();
-    const statusMessage = statusToMessage(this.state.status);
-    const sellAmount = getSellAmount(this.state.status, this.state.bids);
-    const biddingCloseDate = this.state.biddingCloseDate;
-    const bids = this.state.bids.length;
+    const statusMessage = statusToMessage(this.dummyProps.status);
+    const sellAmount = getSellAmount(this.dummyProps.status, this.dummyProps.bids);
+    const biddingCloseDate = this.dummyProps.biddingCloseDate;
+    const bids = this.dummyProps.bids.length;
 
     return (
       <React.Fragment>
@@ -243,20 +245,20 @@ export default withRouter(class Auction extends Component {
               <div className="auction__limited-time">
                 {
                   isLimitedTimeRemaining(biddingCloseDate)
-                    ? <div className="auction__limited-time__clock">limited time remaining!</div> // TODO add a clock symbol too
+                    ? <div href="#" className="auction__limited-time__clock">limited time remaining!</div> // TODO add a clock symbol too
                     : null
                 }
               </div>
             </div>
             {
               sellAmount
-                ? <div>`for ${sellAmount}`</div>
+                ? <div>{`for ${sellAmount}`}</div>
                 : <a className="auction__bid-amount">{`${bids} bids`}</a>
             }
           </div>
           <BiddingOpen
-            date={this.state.biddingOpenDate}
-            block={this.state.biddingOpenBlock}
+            date={this.dummyProps.biddingOpenDate}
+            block={this.dummyProps.biddingOpenBlock}
           />
           { this.renderBiddingClose() }
         </div>

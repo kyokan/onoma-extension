@@ -15,7 +15,7 @@ function bidding({
         { date.toDateString() }
       </div>
       <div className="auction__block">
-        { `block #${block}` }
+        { `Block #${block}` }
       </div>
     </div>
   );
