@@ -10,30 +10,37 @@ const logger = new Logger({
   console: true
 });
 
-const node = new SPVNode({
-  hash: true,
-  query: true,
-  prune: true,
-  network: 'testnet',
-  memory: false,
-  coinCache: 30,
-  logConsole: true,
-  workers: true,
-  workerFile: '/worker.js',
-  createSocket: (port, host) => ProxySocket.connect('ws://localhost:8080', port, host),
-  logger,
-  plugins: [plugin]
-});
-
-
 // const { wdb } = node.require('walletdb');
 // wdb.options.witness = true;
 // node.chain.on('block', console.log.bind(console));
 
-export default async function () {
+let cachedNode = null;
+
+export default async function startNode() {
+  if (cachedNode) {
+    return cachedNode;
+  }
+
+  const node = new SPVNode({
+    hash: true,
+    query: true,
+    prune: true,
+    network: 'testnet',
+    memory: false,
+    coinCache: 30,
+    logConsole: true,
+    workers: true,
+    workerFile: '/worker.js',
+    createSocket: (port, host) => ProxySocket.connect('ws://localhost:8080', port, host),
+    logger,
+    plugins: [plugin]
+  });
+
   await node.ensure();
   await node.open();
   await node.connect();
   node.startSync();
-  return node;
+
+  cachedNode = node;
+  return cachedNode;
 };

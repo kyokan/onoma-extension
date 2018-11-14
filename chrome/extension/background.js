@@ -8,19 +8,16 @@ import {
 const chrome = global.chrome;
 
 // Initialize Node
-(async function startBackground() {
-  const node = await startnode();
-  // eslint-disable-next-line no-console
-  onConnect((err, port) => {
-    if (err) {
-      // eslint-disable-next-line no-console
-      console.error(err);
-      return;
-    }
+onConnect(async (err, port) => {
+  if (err) {
+    // eslint-disable-next-line no-console
+    console.error(err);
+    return;
+  }
 
-    initControllers(node, port);
-  });
-}());
+  const node = await startnode();
+  initControllers(node, port);
+});
 
 function initControllers(node, port) {
   const send = createSend(port);
