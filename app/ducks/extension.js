@@ -1,31 +1,26 @@
-import * as ActionTypes from '../constants/ActionTypes';
+export const SET_VIEW = 'app/extension/setView';
+
+export const VIEW_TYPES = {
+  DEFAULT: 'default',
+  CREATE_ACCOUNT_OPTIONS: 'create_account_options',
+  CREATE_NEW_ACCOUNT: 'create_new_account',
+};
 
 const initialState = {
-  currentView: 'default',
+  currentView: VIEW_TYPES.DEFAULT,
   resolverOn: false,
 };
 
-const actionsMap = {
-  [ActionTypes.EXTENSION_TOGGLE_RESOLVER](state, action) {
-    return state;
-  },
-  [ActionTypes.EXTENSION_SET_VIEW](state, action) {
+export const setView = viewType => ({
+  type: SET_VIEW,
+  payload: viewType,
+});
 
-    return Object.assign({},
-      state,
-      {
-        currentView: action.view,
-      }
-    );
-  },
-};
-
-export default function extension(state = initialState, action) {
-  const reduceFn = actionsMap[action.type];
-  let finalState = state;
-  if (reduceFn) {
-    finalState = reduceFn(state, action);
-  };
-
-  return finalState;
+export default function extension(state = initialState, { type, payload }) {
+  switch (type) {
+    case SET_VIEW:
+      return { ...state, currentView: payload };
+    default:
+      return state;
+  }
 }

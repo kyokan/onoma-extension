@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import { VIEW_TYPES } from '../ducks/extension';
 import ExtensionDefault from '../components/Extension/Default';
 import FundAccessOptions from '../components/Extension/FundAccessOptions';
 import CreateNewAccount from '../components/Extension/CreateNewAccount';
 
-import client from '../utils/client';
+// import client from '../utils/client';
 
 // import ExtensionCreatePassword from '../components/Extension/CreatePassword';
 // import ExtensionAccessFundsOptions from '../components/Extension/FundAccessOptions';
@@ -37,30 +38,15 @@ export default class App extends Component {
     currentView: PropTypes.string,
   };
 
-  componentWillMount() {
-    // client.dispatch({ type: 'getState' })
-    //   .then(({ address }) => {
-    //     if (!address) {
-    //       return client.dispatch({
-    //         type: 'createWallet',
-    //         payload: 'asdfasdf',
-    //       });
-    //     }
-    //     return address;
-    //   })
-    //   .then(console.log.bind(console));
-  }
-
   render() {
     const { currentView } = this.props;
 
-
     switch (currentView) {
-      case 'default':
+      case VIEW_TYPES.DEFAULT:
         return <ExtensionDefault />;
-      case 'create-account-options':
+      case VIEW_TYPES.CREATE_ACCOUNT_OPTIONS:
         return <FundAccessOptions />;
-      case 'create-new-account':
+      case VIEW_TYPES.CREATE_NEW_ACCOUNT:
         return <CreateNewAccount />;
     }
 
