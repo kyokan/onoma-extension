@@ -48,6 +48,10 @@
     line-height: 1rem;
     font-weight: 500;
     color: rgba($black, .4);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-family: 'Roboto Mono', monospace;
   }
 
   &__status {

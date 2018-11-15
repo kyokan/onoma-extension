@@ -9,6 +9,8 @@ const { VIEW_TYPES } = extensionActions;
 
 @connect(
   state => ({
+    height: state.chain.height,
+    currentHash: state.chain.currentHash,
   }),
   dispatch => ({
     unlockWallet: passphrase => {
@@ -21,6 +23,8 @@ export default class CreatePassword extends Component {
 
   static propTypes = {
     unlockWallet: PropTypes.func.isRequired,
+    currentHash: PropTypes.string.isRequired,
+    height: PropTypes.number.isRequired,
   };
 
   state = {
@@ -28,6 +32,7 @@ export default class CreatePassword extends Component {
   };
 
   render() {
+    const { currentHash, height } = this.props;
     const { passphrase } = this.state;
 
     return (
@@ -57,8 +62,12 @@ export default class CreatePassword extends Component {
         </div>
 
         <div className="login_background_text_wrapper">
-          <div className="extension_background_text login_background">Current Height: #3952</div>
-          <div className="extension_background_text login_background">Current Hash: 0fj48fj30fuw-0fj48fj30fuw-0fj48fj30fuw</div>
+          <div className="account__info-text login_background">
+            {`Current Height: #${height}`}
+          </div>
+          <div className="account__info-text login_background">
+            {`Current Hash: ${currentHash.slice(0, 10)}...${currentHash.slice(-10)}`}
+          </div>
         </div>
 
         <div className="extension_primary_line_break login_line_break" />

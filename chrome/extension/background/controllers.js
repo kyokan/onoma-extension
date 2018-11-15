@@ -79,6 +79,28 @@ export async function isWalletLocked(node) {
   }
 }
 
+export async function getChainInfo(req, res) {
+  const { node } = req;
+  const { chain: { height, getHash } } = node;
+  try {
+    const buffer = await getHash.call(node.chain, height);
+    const currentHash = buffer.toString('hex');
+    res.send({
+      id: req.id,
+      payload: {
+        height,
+        currentHash,
+      },
+    });
+  } catch (error) {
+    res.send({
+      id: req.id,
+      error: true,
+      payload: error.message,
+    });
+  }
+}
+
 // eslint-disable-next-line no-underscore-dangle
 async function _getWallet(node) {
   const { wdb } = node.require('walletdb');
