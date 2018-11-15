@@ -31,7 +31,7 @@ export default async function startNode() {
     logConsole: true,
     workers: true,
     workerFile: '/worker.js',
-    createSocket: (port, host) => ProxySocket.connect('ws://localhost:8080', port, host),
+    createSocket: (port, host) => ProxySocket.connect('ws://hnsd-1.dev.kyokan.io:8081', port, host),
     logger,
     plugins: [plugin]
   });
