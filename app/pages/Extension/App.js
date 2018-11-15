@@ -23,7 +23,7 @@ import './App.scss';
   dispatch => ({
     fetchWallet: () => dispatch(walletActions.fetchWallet()),
     getChainInfo: () => dispatch(chainActions.getChainInfo()),
-  })
+  }),
 )
 export default class App extends Component {
   static propTypes = {

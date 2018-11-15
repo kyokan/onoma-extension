@@ -15,6 +15,7 @@ import {
   GET_CHAIN_INFO,
 } from './background/actionTypes';
 
+
 const chrome = global.chrome;
 
 (async () => await startnode())();
@@ -73,7 +74,6 @@ function initControllers(node, port) {
       case LOCK_WALLET:
         return lockWallet(req, res);
       case GET_CHAIN_INFO:
-        console.log(req);
         return getChainInfo(req, res);
       default:
         return null;

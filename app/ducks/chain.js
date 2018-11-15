@@ -6,7 +6,7 @@ const SET_CHAIN_INFO = 'app/chain/setChainInfo';
 const initialState = {
   height: 0,
   currentHash: '',
-}
+};
 
 export const getChainInfo = () => dispatch => {
   client
