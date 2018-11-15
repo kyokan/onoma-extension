@@ -83,10 +83,29 @@
   text-justify: center;
 }
 
+.auction__clock-svg {
+  background: url('/img/baseline-timer-24px.svg');
+  height: .8rem;
+  width: 1rem;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.auction__clock-svg-wrapper {
+  display: inline;
+}
+
 .auction__limited-time__clock {
+  width: 8.3rem;
+  display: flex;
+  margin-left: .4rem;
+  flex-flow: row nowrap;
   background-color: #f2f2f2;
   border-radius: .4rem;
   padding: .2rem .4rem .2rem .4rem;
+}
+
+.auction__limited-time__text {
   display: inline;
 }
 
@@ -104,7 +123,6 @@
 
 .auction__limited-time {
   padding-left: .4rem;
-  display: inline;
   color: #777777;
   font-size: .65rem;
 }

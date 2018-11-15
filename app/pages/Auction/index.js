@@ -242,13 +242,17 @@ export default withRouter(class Auction extends Component {
               <div className="auction__status-message">
                 { statusMessage }
               </div>
-              <div className="auction__limited-time">
-                {
-                  isLimitedTimeRemaining(biddingCloseDate)
-                    ? <div href="#" className="auction__limited-time__clock">limited time remaining!</div> // TODO add a clock symbol too
-                    : null
-                }
-              </div>
+              {
+                isLimitedTimeRemaining(biddingCloseDate) && (
+                  // TODO refactor these css names that got confusing and wierd through iteration
+                  <div
+                    className="auction__limited-time__clock auction__limited-time"
+                  >
+                    <div className="auction__clock-svg" />
+                    <div className="auction__limited-time__text">limited time remaining!</div>
+                  </div>
+                )
+              }
             </div>
             {
               sellAmount
