@@ -55,11 +55,32 @@ export const dummyStatePony = {
 export const dummyStateExchange = {
   domain: 'exchange/', // would imagine this comes from react router
   status: 'SOLD', // would imagine this can be calculated based on biddingOpenBlocks
-  biddingOpenDate: new Date('October 19, 2018'), // is this estimated based on the openBlock?
+  biddingOpenDate: new Date('October 1, 2018'), // is this estimated based on the openBlock?
   biddingOpenBlock: 2305,
   biddingCloseDate: new Date('October 23, 2018'),
   biddingCloseBlock: 3209,
-  bids: [/*TODO 7 bids with a winner.  The price he pays is the 2nd bid or 0*/],
+  bids: [
+    {
+      timePlaced: new Date('October 6, 2018'), // Date,
+      bidder: 'you', // you or hexString,
+      bidAmount: 2500.5 // number HNS
+    },
+    {
+      timePlaced: new Date('October 3, 2018'), // Date,
+      bidder: '0x9349arbitraryhex', // you or hexString,
+      bidAmount: 1200 // number HNS
+    },
+    {
+      timePlaced: new Date('October 4, 2018'), // Date,
+      bidder: '0x342arbitraryhex', // you or hexString,
+      bidAmount: 940, // number HNS
+    },
+    {
+      timePlaced: new Date('October 2, 2018'), // Date,
+      bidder: '0x342arbitraryhex', // you or hexString,
+      bidAmount: 880, // number HNS
+    },
+  ],
   userBid: 0,
 };
 
@@ -122,7 +143,8 @@ const defaultBiddingClose = (
 );
 
 const statusToMessage = status => ({
-  AVAILABLE: 'Available',
+  AVAILABLE: <div className="auction__green">Available</div>,
+  SOLD: <div className="auction__red">Sold</div>,
 })[status];
 
 function getSellAmount(status, bids) {
@@ -178,7 +200,29 @@ export default withRouter(class Auction extends Component {
 
   renderAuctionRight = () => {
     const openDate = this.dummyProps.biddingOpenDate
+
+    if (this.dummyProps.status === 'SOLD') {
+      return (
+        <div className="auction__right">
+          <div className="auction__bid-box-sold">
+            <div className="auction__bidding-not-open">
+              Domain sold
+            </div>
+            <div className="auction__title auction__col-1-to-3">Sold to</div>
+            { /* TODO handle for only 1 bid*/}
+            <div className="auction__set-reminder auction__col-1-to-3">{ this.dummyProps.bids.length > 1 && this.dummyProps.bids[this.dummyProps.bids.length - 1].bidder}</div>
+            <div className="auction__title auction__col-1-to-3">Sold for</div>
+            <div className="auction__large auction__col-1-to-3">{ getSellAmount(this.dummyProps.status, this.dummyProps.bids) }</div>
+
+            {/*TODO this needs to be a different message if there is only one bid.  Also learn more needs to open a modal that doesn't currently exist.*/}
+            <div className="auction__bidding-not-open auction__small-text">Winner pays the 2nd highest bid price.  Handshake uses the Vickrey Auction. Learn more</div>
+          </div>
+        </div>
+      );
+    }
+
     const isBiddingOpen = openDate.getTime() > new Date().getTime()
+
     if (isBiddingOpen) {
       return (
         <div className="auction__right">
@@ -243,20 +287,33 @@ export default withRouter(class Auction extends Component {
           <div className="auction__title auction__title__history">Bidder</div>
           <div className="auction__title auction__title__history">Bid amount</div>
           {
-            this.dummyProps.bids.map(bid => (
-              <React.Fragment>
-                <div className="auction__time-placed auction__history-item">
-                  { `${bid.timePlaced.toDateString()}` }
-                </div>
-                <a className="auction__bidder auction__history-item">
-                  { bid.bidder }
-                </a>
-                <div className="auction__history-item">
-                  {/* this can be hidden*/}
-                  { renderBidAmount(bid.bidAmount) }
-                </div>
-              </React.Fragment>
-            ))
+            this.dummyProps.bids.map((bid, i) => {
+              let winnerClass = '';
+              if (this.dummyProps.status === 'SOLD') {
+                // TODO handle for only 1 bid
+                if (i === 0) {
+                  winnerClass = ' auction__winner';
+                }
+                if (i === 1) {
+                  winnerClass = ' auction__winner-price';
+                }
+              }
+
+              return (
+                <React.Fragment>
+                  <div className={`auction__time-placed auction__history-item${winnerClass}`}>
+                    { `${bid.timePlaced.toDateString()}` }
+                  </div>
+                  <a className={`auction__bidder auction__history-item${winnerClass}`}>
+                    { bid.bidder }
+                  </a>
+                  <div className={`auction__history-item${winnerClass}`}>
+                    {/* this can be hidden*/}
+                    { renderBidAmount(bid.bidAmount) }
+                  </div>
+                </React.Fragment>
+              );
+            })
           }
         </div>
       ) : (
@@ -290,11 +347,12 @@ export default withRouter(class Auction extends Component {
         <div className="auction__domain">
           { `${domain}/` }
         </div>
+          {
+            // TODO the actual design is Visit and then an icon
+            isSold && <div className="auction__visit">{`Visit ${domain}`}</div>
+          }
         <div className="auction__underline"></div>
         <div className="auction__left">
-          {
-            isSold && <div>`Visit link would go here ${domain}`</div>
-          }
           <div className="auction__group">
             <div className="auction__title">
               Status
@@ -304,14 +362,16 @@ export default withRouter(class Auction extends Component {
                 { statusMessage }
               </div>
               {
+                // TODO this function confusingly is also true if already sold
                 isLimitedTimeRemaining(biddingCloseDate) && (
                   // TODO refactor these css names that got confusing and wierd through iteration
-                  <div
-                    className="auction__limited-time__clock auction__limited-time"
-                  >
-                    <div className="auction__clock-svg" />
-                    <div className="auction__limited-time__text">limited time remaining!</div>
-                  </div>
+                  this.dummyProps.status !== 'SOLD' &&
+                    <div
+                      className="auction__limited-time__clock auction__limited-time"
+                    >
+                      <div className="auction__clock-svg" />
+                      <div className="auction__limited-time__text">limited time remaining!</div>}
+                    </div>
                 )
               }
             </div>

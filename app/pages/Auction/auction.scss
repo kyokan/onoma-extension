@@ -36,6 +36,12 @@
   grid-column-end: 3;
 }
 
+.auction__visit {
+  color: blue;
+  cursor: pointer;
+  justify-self: right;
+}
+
 .auction__top {
   background-color: white;
   display: grid;
@@ -67,6 +73,18 @@
   grid-template-rows: auto auto auto;
   align-items: center;
   margin: .4rem;
+}
+
+.auction__red {
+  color: red;
+}
+
+.auction__green {
+  color: #33CF66;
+}
+
+.auction__red {
+  color: #eb2832;
 }
 
 .auction__large {
@@ -119,6 +137,33 @@
   grid-column-start: 1;
   grid-column-end: 3;
   color: #777777;
+}
+
+.auction__bid-box-sold {
+  background-color: #f7f7f7;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  border-top: .3rem solid gray;
+  border-radius: 0.3rem;
+  width: 18rem;
+  height: 6rem;
+  padding: 1.5rem;
+  box-shadow: 0 2px 2px 0 rgba($black, .15);
+}
+
+.auction__winner {
+  background-color: #eaf1fe;
+}
+
+.auction__winner-border {
+  border-top: .3rem solid gray;
+  border-radius: 0.3rem;
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+
+.auction__winner-price {
+  background-color: #e8faf0;
 }
 
 .auction__bid-box-gray {
