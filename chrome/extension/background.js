@@ -1,9 +1,16 @@
 /* eslint-disable no-use-before-define */
 import startnode from './background/startnode';
-import { getWallet, createWallet } from './background/controllers';
+import {
+  getWallet,
+  createWallet,
+  unlockWallet,
+  lockWallet,
+} from './background/controllers';
 import {
   CREATE_WALLET,
   GET_WALLET,
+  UNLOCK_WALLET,
+  LOCK_WALLET,
 } from './background/actionTypes';
 
 const chrome = global.chrome;
@@ -27,6 +34,8 @@ onConnect(async (err, port) => {
 function initControllers(node, port) {
   const send = createSend(port);
 
+
+
   onMessage(port, async (err, action) => {
     if (err) {
       // eslint-disable-next-line no-console
@@ -35,13 +44,17 @@ function initControllers(node, port) {
     }
 
     const { type, payload, id } = action;
+    const req = { node, type, payload, id };
+    const res = { send };
 
     switch (type) {
       case GET_WALLET:
+        // TODO: Refactor to use req/res pattern similar to unlock
         return send({
           id,
           payload: await getWallet(node),
         });
+        // TODO: Refactor to use req/res pattern similar to unlock
       case CREATE_WALLET:
         try {
           return send({
@@ -55,7 +68,10 @@ function initControllers(node, port) {
             payload: error.message,
           });
         }
-
+      case UNLOCK_WALLET:
+        return unlockWallet(req, res);
+      case LOCK_WALLET:
+        return lockWallet(req, res);
       default:
         return null;
     }

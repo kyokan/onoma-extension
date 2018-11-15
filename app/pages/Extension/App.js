@@ -22,6 +22,7 @@ import './App.scss';
     isLocked: state.wallet.isLocked,
   }),
   dispatch => ({
+    fetchWallet: () => dispatch(walletActions.fetchWallet()),
     setWallet: ({ address, type, isLocked }) => {
       dispatch(walletActions.setWallet({ address, type, isLocked }));
     },
@@ -30,14 +31,14 @@ import './App.scss';
 export default class App extends Component {
   static propTypes = {
     address: PropTypes.string.isRequired,
-    setWallet: PropTypes.func.isRequired,
+    fetchWallet: PropTypes.func.isRequired,
     currentView: PropTypes.string,
     initialized: PropTypes.bool.isRequired,
+    isLocked: PropTypes.bool.isRequired,
   };
 
   componentWillMount() {
-    client.dispatch({ type: GET_WALLET })
-      .then(this.props.setWallet);
+    this.props.fetchWallet();
   }
 
   render() {

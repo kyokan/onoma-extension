@@ -42,6 +42,34 @@ export async function createWallet(node, passphrase) {
   };
 }
 
+export async function unlockWallet(req, res) {
+  const wallet = await _getWallet(req.node);
+  try {
+    await wallet.unlock(req.payload, 86400);
+    res.send({ id: req.id });
+  } catch (err) {
+    res.send({
+      id: req.id,
+      error: true,
+      payload: err.message,
+    });
+  }
+}
+
+export async function lockWallet(req, res) {
+  const wallet = await _getWallet(req.node);
+  try {
+    await wallet.lock();
+    res.send({ id: req.id });
+  } catch (err) {
+    res.send({
+      id: req.id,
+      error: true,
+      payload: err.message,
+    });
+  }
+}
+
 export async function isWalletLocked(node) {
   const wallet = await _getWallet(node);
   try {

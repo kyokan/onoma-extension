@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import * as actions from '../../../ducks/extension';
+import * as walletActions from '../../../ducks/wallet';
 import AccountDropdown from '../../../components/AccountDropdown';
 import '../extension.scss';
 import './loggedin.scss';
@@ -10,15 +9,14 @@ import './loggedin.scss';
 @connect(
   null,
   dispatch => ({
-    ...bindActionCreators({
-      setView: actions.setView,
-    }, dispatch)
-  })
+    lockWallet: () => dispatch(walletActions.lockWallet()),
+  }),
 )
 export default class App extends Component {
 
   static propTypes = {
     isSynchronized: PropTypes.bool.isRequired,
+    lockWallet: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -30,7 +28,7 @@ export default class App extends Component {
   };
 
   render() {
-    const { isSynchronized } = this.props;
+    const { isSynchronized, lockWallet } = this.props;
 
     return (
       <div className="account">
@@ -38,7 +36,7 @@ export default class App extends Component {
           <div className="account__title">handshake wallet</div>
           <button
             className="account__logout-btn"
-            onClick={() => console.log('logging out')}
+            onClick={lockWallet}
           >
             Logout
           </button>
