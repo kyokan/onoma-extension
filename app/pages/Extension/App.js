@@ -10,6 +10,7 @@ import ExtensionDefault from './Default';
 import Account from './Account';
 import FundAccessOptions from './FundAccessOptions';
 import CreateNewAccount from './CreateNewAccount';
+import AccountLogin from './AccountLogin';
 
 import './App.scss';
 
@@ -18,9 +19,12 @@ import './App.scss';
     currentView: state.extension.currentView,
     address: state.wallet.address,
     initialized: state.wallet.initialized,
+    isLocked: state.wallet.isLocked,
   }),
   dispatch => ({
-    setWallet: ({ address, type }) => dispatch(walletActions.setWallet({ address, type })),
+    setWallet: ({ address, type, isLocked }) => {
+      dispatch(walletActions.setWallet({ address, type, isLocked }));
+    },
   })
 )
 export default class App extends Component {
@@ -37,10 +41,14 @@ export default class App extends Component {
   }
 
   render() {
-    const { currentView, address, initialized } = this.props;
+    const { currentView, address, initialized, isLocked } = this.props;
 
     if (!initialized) {
       return <noscript />;
+    }
+
+    if (isLocked) {
+      return <AccountLogin />;
     }
 
     switch (currentView) {

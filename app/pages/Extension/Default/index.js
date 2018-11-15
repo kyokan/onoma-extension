@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// import classNames from 'classnames';
 import * as extensionDuck from '../../../ducks/extension';
 import '../extension.scss';
 import './default.scss';
@@ -11,8 +10,8 @@ const { VIEW_TYPES } = extensionDuck;
 
 @connect(
   state => ({
-    address: state.wallet.address,
-    walletType: state.wallet.type,
+    // address: state.wallet.address,
+    // walletType: state.wallet.type,
   }),
   dispatch => ({
     setView: viewType => dispatch(extensionDuck.setView(viewType)),
@@ -21,13 +20,11 @@ const { VIEW_TYPES } = extensionDuck;
 export default class App extends Component {
 
   static propTypes = {
-    address: PropTypes.string,
-    walletType: PropTypes.string.isRequired,
     setView: PropTypes.func.isRequired,
   };
 
   render() {
-    const { setView, address, walletType } = this.props;
+    const { setView  } = this.props;
 
     return (
       <div className="default">

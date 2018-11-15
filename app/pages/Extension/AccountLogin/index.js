@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import classNames from 'classnames';
-import actions from '../../../actions/extension.js';
-import StatusBar from '../../../components/StatusBar/index.js';
+import * as actions from '../../../ducks/extension';
+// import StatusBar from '../../../components/StatusBar/index.js';
 import './login.scss';
 
 @connect(

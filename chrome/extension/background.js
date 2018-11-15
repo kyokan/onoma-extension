@@ -1,11 +1,14 @@
 /* eslint-disable no-use-before-define */
 import startnode from './background/startnode';
-import { getWallet } from './background/selectors';
+import { getWallet, createWallet } from './background/controllers';
 import {
+  CREATE_WALLET,
   GET_WALLET,
 } from './background/actionTypes';
 
 const chrome = global.chrome;
+
+(async () => await startnode())();
 
 // Initialize Node
 onConnect(async (err, port) => {
@@ -16,6 +19,8 @@ onConnect(async (err, port) => {
   }
 
   const node = await startnode();
+  // TODO: Remove this before prod
+  window.node = node;
   initControllers(node, port);
 });
 
@@ -37,6 +42,20 @@ function initControllers(node, port) {
           id,
           payload: await getWallet(node),
         });
+      case CREATE_WALLET:
+        try {
+          return send({
+            id,
+            payload: await createWallet(node, payload)
+          });
+        } catch (error) {
+          return send({
+            id,
+            error: true,
+            payload: error.message,
+          });
+        }
+
       default:
         return null;
     }
