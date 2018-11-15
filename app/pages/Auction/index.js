@@ -210,7 +210,7 @@ export default withRouter(class Auction extends Component {
             </div>
             <div className="auction__title auction__col-1-to-3">Sold to</div>
             { /* TODO handle for only 1 bid*/}
-            <div className="auction__set-reminder auction__col-1-to-3">{ this.dummyProps.bids.length > 1 && this.dummyProps.bids[this.dummyProps.bids.length - 1].bidder}</div>
+            <div className="auction__set-reminder auction__col-1-to-3">{ this.dummyProps.bids.length > 1 && this.dummyProps.bids[0].bidder}</div>
             <div className="auction__title auction__col-1-to-3">Sold for</div>
             <div className="auction__large auction__col-1-to-3">{ getSellAmount(this.dummyProps.status, this.dummyProps.bids) }</div>
 
@@ -370,7 +370,7 @@ export default withRouter(class Auction extends Component {
                       className="auction__limited-time__clock auction__limited-time"
                     >
                       <div className="auction__clock-svg" />
-                      <div className="auction__limited-time__text">limited time remaining!</div>}
+                      <div className="auction__limited-time__text">limited time remaining!</div>
                     </div>
                 )
               }
