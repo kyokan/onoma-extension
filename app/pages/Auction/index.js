@@ -22,8 +22,23 @@ export const dummyStateCryptocurrency = {
   biddingOpenBlock: 2305,
   biddingCloseDate: new Date('October 23, 2018'),
   biddingCloseBlock: 4395,
-  bids: [/*TODO 3 bids*/],
-  userBid: 0,
+  bids: [
+    {
+      timePlaced: new Date('October 6, 2018'), // Date,
+      bidder: 'you', // you or hexString,
+      bidAmount: 1 // number HNS
+    },
+    {
+      timePlaced: new Date('October 4, 2018'), // Date,
+      bidder: '0x9349arbitraryhex', // you or hexString,
+      bidAmount: 'HIDDEN' // number HNS
+    },
+    {
+      timePlaced: new Date('October 5, 2018'), // Date,
+      bidder: '0x342arbitraryhex', // you or hexString,
+      bidAmount: 'HIDDEN', // number HNS
+    },
+  ],
 };
 
 export const dummyStatePony = {
@@ -191,27 +206,37 @@ export default withRouter(class Auction extends Component {
   }
 
   renderAuctionBottom = () => {
+    // TODO move this out
+    const renderBidAmount = (bidAmount/*: number*/) => {
+      if (bidAmount === 'HIDDEN') {
+        return `Hidden until ${this.dummyProps.biddingCloseDate.getDate()}`
+      }
+      const n = bidAmount.toFixed(5);
+      return `${n} HNS`;
+    }
+
+
     return (
       <div className="auction__bottom">
         <div className="auction__large">
           { `Bid history (${this.dummyProps.bids.length})`}
         </div>
         <div className="auction__history-grid">
-          <div className="auction__title">Time placed</div>
-          <div className="auction__title">Bidder</div>
-          <div className="auction__title">Bid amount</div>
+          <div className="auction__title auction__title__history">Time placed</div>
+          <div className="auction__title auction__title__history">Bidder</div>
+          <div className="auction__title auction__title__history">Bid amount</div>
           {
             this.dummyProps.bids.map(bid => (
               <React.Fragment>
-                <div>
-                  { bid.timePlaced.toDateString() }
+                <div className="auction__time-placed auction__history-item">
+                  { `${bid.timePlaced.toDateString()} TODO moment` }
                 </div>
-                <div>
+                <a className="auction__bidder auction__history-item">
                   { bid.bidder }
-                </div>
-                <div>
+                </a>
+                <div className="auction__history-item">
                   {/* this can be hidden*/}
-                  { bid.bidAmount }
+                  { renderBidAmount(bid.bidAmount) }
                 </div>
               </React.Fragment>
             ))

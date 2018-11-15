@@ -99,6 +99,12 @@
   font-size: .7rem;
 }
 
+.auction__history-item {
+  background-color: #f7f7fa;
+  padding: .6rem;
+  justify-items: center;
+}
+
 .auction__limited-time__clock {
   width: 8.3rem;
   display: flex;
@@ -113,6 +119,11 @@
   margin-top: 2rem;
   display: grid;
   grid-template-columns: auto auto auto;
+  grid-row-gap: .6rem;
+}
+
+.auction__title__history {
+  padding-left: .5rem;
 }
 
 .auction__limited-time__text {
@@ -129,6 +140,11 @@
 
 .auction__hidden-message {
   font-size: .7rem;
+}
+
+.auction__bidder {
+  color: blue;
+  cursor: pointer;
 }
 
 .auction__col-1-to-3 {
@@ -193,8 +209,9 @@
 }
 
 .auction__bid-amount {
-  font-size: .7rem;
   text-decoration: none;
+  color: blue;
+  cursor: pointer;
 }
 
 .auction__underline {
