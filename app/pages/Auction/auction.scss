@@ -115,6 +115,30 @@
   padding: .2rem .4rem .2rem .4rem;
 }
 
+.auction__bidding-not-open {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  color: #777777;
+}
+
+.auction__bid-box-gray {
+  background-color: lightgray;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  border-top: .3rem solid gray;
+  border-radius: 0.3rem;
+  width: 18rem;
+  height: 6rem;
+  padding: 1.5rem;
+  box-shadow: 0 2px 2px 0 rgba($black, .15);
+}
+
+.auction__set-reminder {
+  color: blue;
+  cursor: pointer;
+  grid-column-start: 1;
+}
+
 .auction__history-grid {
   margin-top: 2rem;
   display: grid;
@@ -139,6 +163,8 @@
 }
 
 .auction__hidden-message {
+  color: #8f8e94;
+  font-style: italic;
   font-size: .7rem;
 }
 

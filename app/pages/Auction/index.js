@@ -5,12 +5,12 @@ import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 export const dummyStateLee = {
-  domain: 'cryptocurrency/',
+  domain: 'lee/',
   status: 'AVAILABLE',
-  biddingOpenDate: new Date('October 19, 2018'), // is this estimated based on the openBlock?
+  biddingOpenDate: new Date('October 19, 2019'), // is this estimated based on the openBlock?
   biddingOpenBlock: 2305,
-  biddingCloseDate: 0, // 5 days after the 1st bid
-  biddingCloseBlock: 0, // n blocks after the first bid?
+  biddingCloseDate: new Date('October 23, 2019'),
+  biddingCloseBlock: 4395,
   bids: [],
   userBid: 0,
 };
@@ -148,7 +148,7 @@ export default withRouter(class Auction extends Component {
     ];
 
     const dummyProps = dummyStates.find(
-      dummyState => dummyState.domain === domain
+      dummyState => dummyState.domain === `${domain}/`
     ) || { ...dummyStateCryptocurrency, domain };
 
     return {
@@ -177,6 +177,23 @@ export default withRouter(class Auction extends Component {
   )
 
   renderAuctionRight = () => {
+    const openDate = this.dummyProps.biddingOpenDate
+    const isBiddingOpen = openDate.getTime() > new Date().getTime()
+    if (isBiddingOpen) {
+      return (
+        <div className="auction__right">
+          <div className="auction__bid-box-gray">
+            <div className="auction__bidding-not-open">
+              {`Bidding for this domain name opens on ${openDate.toDateString()}`}
+            </div>
+            <div className="auction__set-reminder">
+              Set reminder
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     const closeDate = this.dummyProps.biddingCloseDate;
     return (
       <div className="auction__right">
@@ -209,18 +226,18 @@ export default withRouter(class Auction extends Component {
     // TODO move this out
     const renderBidAmount = (bidAmount/*: number*/) => {
       if (bidAmount === 'HIDDEN') {
-        return `Hidden until ${this.dummyProps.biddingCloseDate.getDate()}`
+        return `Hidden until ${this.dummyProps.biddingCloseDate.toDateString()}`
       }
       const n = bidAmount.toFixed(5);
       return `${n} HNS`;
     }
 
+    const bidHistorySuffix = this.dummyProps.bids.length
+      ? ` (${this.dummyProps.bids.length})`
+      : '';
 
-    return (
-      <div className="auction__bottom">
-        <div className="auction__large">
-          { `Bid history (${this.dummyProps.bids.length})`}
-        </div>
+    const body = this.dummyProps.bids.length
+      ? (
         <div className="auction__history-grid">
           <div className="auction__title auction__title__history">Time placed</div>
           <div className="auction__title auction__title__history">Bidder</div>
@@ -229,7 +246,7 @@ export default withRouter(class Auction extends Component {
             this.dummyProps.bids.map(bid => (
               <React.Fragment>
                 <div className="auction__time-placed auction__history-item">
-                  { `${bid.timePlaced.toDateString()} TODO moment` }
+                  { `${bid.timePlaced.toDateString()}` }
                 </div>
                 <a className="auction__bidder auction__history-item">
                   { bid.bidder }
@@ -242,6 +259,20 @@ export default withRouter(class Auction extends Component {
             ))
           }
         </div>
+      ) : (
+        <div className="auction__bidding-open-message auction__history-item auction__hidden-message">
+          { this.dummyProps.biddingOpenDate.getTime() >
+             new Date().getTime() ? `Bidding opens on ${this.dummyProps.biddingOpenDate.toDateString()}.` : 'No bids!'}
+        </div>
+      );
+
+
+    return (
+      <div className="auction__bottom">
+        <div className="auction__large">
+          { `Bid History${bidHistorySuffix}`}
+        </div>
+        { body }
       </div>
     );
   }
@@ -301,6 +332,7 @@ export default withRouter(class Auction extends Component {
   }
 
   render() {
+    console.log('props', this.dummyProps)
     return (
       <div className="auction">
         <div className="auction__top">
