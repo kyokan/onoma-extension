@@ -138,7 +138,8 @@ const defaultBiddingClose = (
   <div className="auction__group">
     <div className="auction__title">Bidding close</div>
     <div className="auction__large">5 days after the 1st bid</div>
-    <div className="auction__small-text">If no bids are placed 7 days after auction opens, this TLD will be randomly assigned a new auction open date to prevent squatting.</div>
+    <div className="auction__block">block #thisishardcoded</div>
+    <div className="auction__small-text auction__limited-time">If no bids are placed 7 days after auction opens, this TLD will be randomly assigned a new auction open date to prevent squatting.</div>
   </div>
 );
 
@@ -392,7 +393,6 @@ export default withRouter(class Auction extends Component {
   }
 
   render() {
-    console.log('props', this.dummyProps)
     return (
       <div className="auction">
         <div className="auction__top">
