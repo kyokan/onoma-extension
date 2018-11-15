@@ -30,19 +30,19 @@ export default class ConnectLedger extends Component {
 
   renderStatusBar() {
     const { currentStep , totalSteps } = this.props;
-    let elements = [];
-    for (let i = 0; i < this.props.totalSteps; i++) {
+    const elements = [];
+    for (let i = 0; i < totalSteps; i++) {
       elements.push(
         <span
+          key={i}
           className={
             classNames([
               'status_bar_element',
               i < currentStep ? 'status_bar_element__active' : false
             ])
           }
-        >
-        </span>
-      )
+        />
+      );
     }
 
     return elements;

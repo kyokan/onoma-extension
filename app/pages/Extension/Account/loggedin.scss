@@ -1,0 +1,135 @@
+@import '../../../variables';
+@import '../extension';
+
+.account {
+  @extend %col-nowrap;
+  height: 100%;
+
+  &__title {
+    flex: 1 0 auto;
+  }
+
+  &__logout-btn {
+    @extend %btn-secondary;
+    font-size: .75rem;
+    padding: .125rem .5rem;
+    font-weight: 700;
+    border-radius: 3px;
+    box-shadow: 0 0 0 1px $azure-blue;
+
+    &:focus,
+    &:hover {
+      box-shadow: 0 0 0 1px lighten($azure-blue, 10);
+    }
+
+    &:active {
+      box-shadow: 0 0 0 1px darken($azure-blue, 10);
+    }
+  }
+
+  &__header-content {
+    padding: 0 1.4rem 1.4rem;
+    border-bottom: 1px solid $grey;
+  }
+
+  &__options {
+    @extend %col-nowrap;
+    padding: 1.2rem 1.4rem;
+    flex: 1 0 auto;
+    border-bottom: 1px solid $grey;
+  }
+
+  &__footer {
+    padding: 1.4rem 1.4rem;
+  }
+
+  &__info-text {
+    font-size: .65rem;
+    line-height: 1rem;
+    font-weight: 500;
+    color: rgba($black, .4);
+  }
+
+  &__status {
+    margin-bottom: 1rem;
+  }
+
+  &__status-text {
+    @extend %row-nowrap;
+    align-items: center;
+    font-size: .8rem;
+    line-height: 1rem;
+    font-weight: 500;
+
+    &:before {
+      display: inline-block;
+      content: ' ';
+      height: 1rem;
+      width: 1rem;
+      margin-right: .5rem;
+      background-size: cover;
+      background-position: center;
+    }
+
+    span + span {
+      margin-left: 1rem;
+    }
+
+    span:nth-of-type(2) {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    &--sync {
+      color: $caribbean-green;
+      &:before {
+        background-image: url('/img/check-square.svg');
+      }
+    }
+
+    &--not-sync {
+      color: $orange-red;
+
+      &:before {
+        background-image: url('/img/x-square.svg');
+      }
+    }
+  }
+}
+
+.account_header {
+  @extend %row-nowrap;
+  margin: 1.2rem 1.4rem 0;
+}
+
+.account_subheader{
+}
+
+.account_cta {
+  margin-bottom: 12px;
+}
+
+.account_option {
+  margin-bottom: .75rem;
+  cursor: pointer;
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+}
+
+.account_background {
+  margin: 5px 0px;
+}
+
+.account_resolver_switch {
+  display: flex;
+  flex-flow: row nowrap;
+  align-content: flex-start;
+}
+
+.account_line_break {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: -25px;
+}

@@ -16,10 +16,14 @@ class SubHeader extends Component {
     }),
   };
 
-  state = {
-    isShowingSendModal: false,
-    isShowingReceiveModal: false,
-  };
+  constructor(props) {
+    super(props);
+    const { location: { pathname } } = props;
+    this.state = {
+      isShowingSendModal: /send/.test(pathname),
+      isShowingReceiveModal: /receive/.test(pathname),
+    };
+  }
 
   openSendModal = () => this.setState({ isShowingSendModal: true, isShowingReceiveModal: false });
   openReceiveModal = () => this.setState({ isShowingSendModal: false, isShowingReceiveModal: true });
@@ -55,7 +59,7 @@ class SubHeader extends Component {
           <div className="subheader__actions">
             <a
               className={c('subheader__action', {
-                'subheader__action--selected': !isShowingModal && /account/.test(pathname),
+                'subheader__action--selected': !isShowingModal && /account|send|receive/.test(pathname),
               })}
               onClick={() => push('/account')}
             >
