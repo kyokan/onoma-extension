@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import extension from 'extensionizer';
 import * as walletActions from '../../../ducks/wallet';
 import AccountDropdown from '../../../components/AccountDropdown';
 import '../extension.scss';
 import './loggedin.scss';
+
 
 @connect(
   null,
@@ -27,8 +29,17 @@ export default class App extends Component {
     currentIndex: 0,
   };
 
+  goto = (path = '') => {
+    const url = extension.runtime.getURL('window.html');
+    extension.tabs.create({
+      url: `${url}#${path}`,
+    });
+  };
+
   render() {
     const { isSynchronized, lockWallet } = this.props;
+
+    const accOptionClassName = 'extension_option_text account_option';
 
     return (
       <div className="account">
@@ -52,19 +63,19 @@ export default class App extends Component {
           />
         </div>
         <div className="account__options">
-          <div className="extension_option_text account_option">
+          <div className={accOptionClassName} onClick={() => this.goto('/send')}>
             Send
           </div>
-          <div className="extension_option_text account_option">
+          <div className={accOptionClassName} onClick={() => this.goto('/receive')}>
             Receive
           </div>
-          <div className="extension_option_text account_option">
+          <div className={accOptionClassName} onClick={() => this.goto('/get_coins')}>
             Submit Proof
           </div>
           <div className="extension_option_text account_option">
             Browse Domains
           </div>
-          <div className="extension_option_text account_option">
+          <div className={accOptionClassName} onClick={() => this.goto('/settings')}>
             Settings
           </div>
           <div className="extension_option_text account_option">

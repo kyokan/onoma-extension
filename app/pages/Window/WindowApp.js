@@ -24,6 +24,8 @@ export default class WindowApp extends Component {
           <div className="window-app__content">
             <Switch>
               <Route path="/account" component={Account} />
+              <Route path="/send" component={Account} />
+              <Route path="/receive" component={Account} />
               <Route path="/get_coins" component={GetCoins} />
               <Route path="/settings" component={() => <div>Settings</div>} />
               <Redirect to="/account" />
