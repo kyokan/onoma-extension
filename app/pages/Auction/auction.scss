@@ -95,6 +95,10 @@
   display: inline;
 }
 
+.auction__small-text {
+  font-size: .7rem;
+}
+
 .auction__limited-time__clock {
   width: 8.3rem;
   display: flex;
@@ -105,13 +109,70 @@
   padding: .2rem .4rem .2rem .4rem;
 }
 
+.auction__history-grid {
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+
 .auction__limited-time__text {
   display: inline;
+}
+
+.auction__col-1 {
+  grid-column-start: 1;
+}
+
+.auction__col-2 {
+  grid-column-start: 2;
+}
+
+.auction__hidden-message {
+  font-size: .7rem;
+}
+
+.auction__col-1-to-3 {
+  grid-column-start: 1;
+  grid-column-end: 3;
 }
 
 .auction__title {
   font-weight: 450;
   font-size: .75rem;
+}
+
+.auction__input {
+  height: 1.9rem;
+  padding: 0.25em;
+  margin: .5rem;
+  margin-left: 0;
+}
+
+.auction__button {
+  margin: .5rem;
+  background: #4f73fe;
+  height: 2.5rem;
+  color: white;
+  font-size: 1rem;
+  padding: 0.25em;
+  border: 1px solid gray;
+  border-radius: 8px;
+  &:hover {
+    background: #597fff;
+    cursor: pointer;
+  }
+}
+
+.auction__bid-box {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  border-top: .3rem solid #33cf66;
+  border-radius: 0.3rem;
+  width: 18rem;
+  height: 11rem;
+  padding: 1.5rem;
+  background-color: #f7f7f7;
+  box-shadow: 0 2px 2px 0 rgba($black, .15);
 }
 
 .auction__status-message {
@@ -125,6 +186,10 @@
   padding-left: .4rem;
   color: #777777;
   font-size: .65rem;
+}
+
+.action__align-end {
+  text-align: end;
 }
 
 .auction__bid-amount {

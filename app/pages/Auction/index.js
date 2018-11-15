@@ -99,10 +99,11 @@ const isLimitedTimeRemaining = (biddingCloseDate) => {
 };
 
 const defaultBiddingClose = (
-  <React.Fragment>
-    <div>5 days after the 1st bid</div>
-    <div>If no bids are placed 7 days after auction opens, this TLD will be randomly assigned a new auction open date to prevent squatting.</div>
-  </React.Fragment>
+  <div className="auction__group">
+    <div className="auction__title">Bidding close</div>
+    <div className="auction__large">5 days after the 1st bid</div>
+    <div className="auction__small-text">If no bids are placed 7 days after auction opens, this TLD will be randomly assigned a new auction open date to prevent squatting.</div>
+  </div>
 );
 
 const statusToMessage = status => ({
@@ -161,26 +162,29 @@ export default withRouter(class Auction extends Component {
   )
 
   renderAuctionRight = () => {
+    const closeDate = this.dummyProps.biddingCloseDate;
     return (
       <div className="auction__right">
-        <div>
-          Highest bid:
-        </div>
-        <div>
-          {/* if should display*/}
-          { `Hidden until ${this.dummyProps.biddingCloseDate.toDateString()}` }
-        </div>
-        <div>
-          { `${this.dummyProps.bids.length} bids` }
-        </div>
-        <div>
-          Your bid:
-        </div>
-        <div>
-          this is actually an input where you can place a bid
-        </div>
-        <div>
-          {'Winner pays 2nd highest bid price. If there is only one bidder, bidder gets this name for free.'}
+        <div className="auction__bid-box">
+          <div className="auction__title auction__col-1">
+            Highest bid:
+          </div>
+          <div className="auction__hidden-message auction__col-1">
+            {/* if should display*/}
+            { `Hidden until ${closeDate.getMonth() + 1}/${closeDate.getDate()}/${closeDate.getFullYear()}` }
+          </div>
+          <div className="auction__align-end auction__bid-amount auction__col-2">
+            { `${this.dummyProps.bids.length} bids` }
+          </div>
+          <div className="auction__large">
+            Your bid:
+          </div>
+          <input className="auction__input auction__col-1"></input>
+          <button className="auction__button auction__col-2">Place Bid</button>
+          {/*TODO change auction__limited-time name in css*/}
+          <div className="auction__limited-time auction__small-text auction__col-1-to-3">
+            {'Winner pays 2nd highest bid price. If there is only one bidder, bidder gets this name for free.'}
+          </div>
         </div>
       </div>
     );
@@ -189,29 +193,30 @@ export default withRouter(class Auction extends Component {
   renderAuctionBottom = () => {
     return (
       <div className="auction__bottom">
-        <div className="auction__history__title">
+        <div className="auction__large">
           { `Bid history (${this.dummyProps.bids.length})`}
         </div>
-        {/* css grid this into a table*/}
-        <div className="auction__title">Time placed</div>
-        <div className="auction__title">Bidder</div>
-        <div className="auction__title">Bid amount</div>
-        {
-          this.dummyProps.bids.map(bid => (
-            <React.Fragment>
-              <div>
-                { bid.timePlaced.toDateString() }
-              </div>
-              <div>
-                { bid.bidder }
-              </div>
-              <div>
-                {/* this can be hidden*/}
-                { bid.bidAmount }
-              </div>
-            </React.Fragment>
-          ))
-        }
+        <div className="auction__history-grid">
+          <div className="auction__title">Time placed</div>
+          <div className="auction__title">Bidder</div>
+          <div className="auction__title">Bid amount</div>
+          {
+            this.dummyProps.bids.map(bid => (
+              <React.Fragment>
+                <div>
+                  { bid.timePlaced.toDateString() }
+                </div>
+                <div>
+                  { bid.bidder }
+                </div>
+                <div>
+                  {/* this can be hidden*/}
+                  { bid.bidAmount }
+                </div>
+              </React.Fragment>
+            ))
+          }
+        </div>
       </div>
     );
   }
