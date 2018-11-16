@@ -6,7 +6,8 @@ import SendModal from '../SendModal';
 import ReceiveModal from '../ReceiveModal';
 import './subheader.scss';
 
-class SubHeader extends Component {
+@withRouter
+export default class SubHeader extends Component {
   static propTypes = {
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
@@ -40,13 +41,17 @@ class SubHeader extends Component {
       return;
     }
 
-    this.props.history.push(`/auction/${name}`);
+    this.props.history.push(`/domain/${name}`);
   };
 
   openSendModal = () => this.setState({ isShowingSendModal: true, isShowingReceiveModal: false });
-  openReceiveModal = () => this.setState({ isShowingSendModal: false, isShowingReceiveModal: true });
-  closeModal = () => this.setState({ isShowingSendModal: false, isShowingReceiveModal: false });
 
+  openReceiveModal = () => this.setState({
+    isShowingSendModal: false,
+    isShowingReceiveModal: true,
+  });
+
+  closeModal = () => this.setState({ isShowingSendModal: false, isShowingReceiveModal: false });
 
   renderModal = () => {
     const { isShowingReceiveModal, isShowingSendModal } = this.state;
@@ -133,5 +138,3 @@ class SubHeader extends Component {
     )
   }
 };
-
-export default withRouter(SubHeader);

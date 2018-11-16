@@ -12,7 +12,7 @@ function bidding({
         {`Bidding ${type}`}
       </div>
       <div className="auction__large">
-        { date.toDateString() }
+        { date ? date.toDateString() : '' }
       </div>
       <div className="auction__block">
         { `Block #${block}` }

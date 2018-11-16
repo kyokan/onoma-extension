@@ -19,7 +19,7 @@ export const setView = viewType => ({
   payload: viewType,
 });
 
-export const toggleResolve = () => dispatch => {
+export const toggleResolve = () => () => {
   client.dispatch({ type: rpc.TOGGLE_RESOLVE });
   window.close();
 };

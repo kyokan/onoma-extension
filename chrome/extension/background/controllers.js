@@ -146,6 +146,26 @@ export async function toggleResolve() {
   window.location.reload();
 }
 
+export async function rpcRequest(req, res) {
+  const { node } = req;
+  const { method, params } = req.payload;
+
+  try {
+    const result = await node.rpc.execute({ method, params });
+    res.send({
+      id: req.id,
+      payload: result,
+    });
+  } catch (err) {
+    res.send({
+      id: req.id,
+      error: true,
+      payload: err.message,
+    });
+  }
+
+}
+
 // eslint-disable-next-line no-underscore-dangle
 async function _getWallet(node) {
   const { wdb } = node.require('walletdb');

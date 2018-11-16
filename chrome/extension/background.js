@@ -8,7 +8,7 @@ import {
   UNLOCK_WALLET,
   LOCK_WALLET,
   GET_CHAIN_INFO,
-  SEND, TOGGLE_RESOLVE,
+  SEND, TOGGLE_RESOLVE, RPC_REQUEST,
 } from './background/actionTypes';
 
 const chrome = global.chrome;
@@ -74,6 +74,8 @@ function initControllers(node, port) {
         return controllers.send(req, res);
       case TOGGLE_RESOLVE:
         return controllers.toggleResolve(req, res);
+      case RPC_REQUEST:
+        return controllers.rpcRequest(req, res);
       default:
         return null;
     }

@@ -99,7 +99,7 @@ var pac = {
 
   onIpChange: function (domain, ips, existed) {
     if (!ips.length) {
-      // Non-existent domains are handled (cancelled) by onBeforeRequest.
+      // Non-existent domains.js are handled (cancelled) by onBeforeRequest.
       // They don't reach PAC.
       return;
     }
@@ -120,7 +120,7 @@ var pac = {
     });
   },
 
-  // No need to update PAC on domains missing (deleted) from cache since they
+  // No need to update PAC on domains.js missing (deleted) from cache since they
   // will be reprocessed by onBeforeRequest before PAC is queried.
   onDomainDelete: function (domain) { },
 };
