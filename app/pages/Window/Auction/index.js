@@ -137,8 +137,6 @@ function getSellAmount(status, bids) {
 function getStatus(domain = {}, bids = []) {
   const closeDate = getCloseDate(domain, bids);
 
-  return SOLD;
-
   if (domain.start && domain.start.reserved) {
     return RESERVE;
   }
@@ -159,7 +157,7 @@ function getCloseDate(domain = {}, bids = []) {
     return null;
   }
 
-  if (true || domain.info && domain.info.owner) {
+  if (domain.info && domain.info.owner) {
     return bids[0] && bids[0].timePlaced;
   }
 
@@ -175,11 +173,11 @@ function getCloseDate(domain = {}, bids = []) {
   (state, ownProps) => {
     const domain = state.domains[ownProps.match.params.name] || {};
     const bids = [
-      {
-        timePlaced: new Date('October 6, 2018'), // Date,
-        bidder: 'you', // you or hexString,
-        bidAmount: 2500.5 // number HNS
-      },
+      // {
+      //   timePlaced: new Date('October 6, 2018'), // Date,
+      //   bidder: 'you', // you or hexString,
+      //   bidAmount: 2500.5 // number HNS
+      // },
     ];
     return {
       status: getStatus(domain),
@@ -189,7 +187,7 @@ function getCloseDate(domain = {}, bids = []) {
       biddingCloseDate: getCloseDate(domain, bids),
       biddingCloseBlock: null,
       paidValue: 120 || domain.info && domain.info.value,
-      owner: 'ts1qg9v8g9ccht2nvslkxd0h2aujcvglfxnjme8x6s' || domain.info && domain.info.owner,
+      owner: domain.info && domain.info.owner,
     };
   },
   dispatch => ({
