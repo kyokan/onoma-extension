@@ -32,8 +32,6 @@ export default class CreateNewAccount extends Component {
 
   state = {
     currentStep: TERM_OF_USE,
-    password: '',
-    confirmPassword: '',
     seedphrase: '',
     address: '',
   };
@@ -53,23 +51,17 @@ export default class CreateNewAccount extends Component {
           <CreatePassword
             currentStep={2}
             totalSteps={4}
-            onBack={() => this.setState({ currentStep: TERM_OF_USE })}
-            onNext={() => {
-              const { password, confirmPassword } = this.state;
-              if (password === confirmPassword) {
-                client.dispatch({ type: CREATE_WALLET, payload: password })
-                  .then(({ address, seed }) => {
-                    this.setState({
-                      address,
-                      seedphrase: seed,
-                      currentStep: COPY_SEEDPHRASE,
-                    });
-                  })
-                  .catch(console.error.bind(console));
-              }
+            onBack={() => this.setState({currentStep: TERM_OF_USE})}
+            onNext={(password) => {
+              client.dispatch({type: CREATE_WALLET, payload: password})
+                .then(({address, seed}) => {
+                  this.setState({
+                    address,
+                    seedphrase: seed,
+                    currentStep: COPY_SEEDPHRASE,
+                  });
+                }).catch(console.error.bind(console));
             }}
-            onPasswordChange={password => this.setState({ password })}
-            onConfirmPasswordChange={confirmPassword => this.setState({ confirmPassword })}
           />
         );
       case COPY_SEEDPHRASE:
