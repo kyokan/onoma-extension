@@ -1,18 +1,13 @@
 /* eslint-disable no-use-before-define */
 import startnode from './background/startnode';
-import {
-  getWallet,
-  createWallet,
-  unlockWallet,
-  lockWallet,
-  getChainInfo,
-} from './background/controllers';
+import * as controllers from './background/controllers';
 import {
   CREATE_WALLET,
   GET_WALLET,
   UNLOCK_WALLET,
   LOCK_WALLET,
   GET_CHAIN_INFO,
+  SEND,
 } from './background/actionTypes';
 
 
@@ -53,14 +48,14 @@ function initControllers(node, port) {
         // TODO: Refactor to use req/res pattern similar to unlock
         return send({
           id,
-          payload: await getWallet(node),
+          payload: await controllers.getWallet(node),
         });
         // TODO: Refactor to use req/res pattern similar to unlock
       case CREATE_WALLET:
         try {
           return send({
             id,
-            payload: await createWallet(node, payload)
+            payload: await controllers.createWallet(node, payload)
           });
         } catch (error) {
           return send({
@@ -70,11 +65,13 @@ function initControllers(node, port) {
           });
         }
       case UNLOCK_WALLET:
-        return unlockWallet(req, res);
+        return controllers.unlockWallet(req, res);
       case LOCK_WALLET:
-        return lockWallet(req, res);
+        return controllers.lockWallet(req, res);
       case GET_CHAIN_INFO:
-        return getChainInfo(req, res);
+        return controllers.getChainInfo(req, res);
+      case SEND:
+        return controllers.send(req, res);
       default:
         return null;
     }

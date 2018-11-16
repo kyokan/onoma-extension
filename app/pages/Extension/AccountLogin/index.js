@@ -20,20 +20,25 @@ export default class CreatePassword extends Component {
 
   static propTypes = {
     unlockWallet: PropTypes.func.isRequired,
+    className: PropTypes.string.isRequired,
     currentHash: PropTypes.string.isRequired,
     height: PropTypes.number.isRequired,
   };
+
+  static defaultProps = {
+    className: '',
+  }
 
   state = {
     passphrase: '',
   };
 
   render() {
-    const { currentHash, height } = this.props;
+    const { currentHash, height, className } = this.props;
     const { passphrase } = this.state;
 
     return (
-      <div className="extension_primary_section">
+      <div className={`extension_primary_section ${className}`}>
         <div className="header_text"> Log in to your wallet </div>
         <div>
           <input

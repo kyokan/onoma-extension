@@ -1,5 +1,7 @@
 /* eslint-disable no-use-before-define */
+
 import * as walletTypes from '../../../app/ducks/wallet';
+import Amount from '../../../node_modules/hsd/lib/ui/amount';
 const { EXTENSION, NONE } = walletTypes;
 
 export async function getWallet(node) {
@@ -101,6 +103,37 @@ export async function getChainInfo(req, res) {
       payload: error.message,
     });
   }
+}
+
+export async function send(req, res) {
+  const { node } = req;
+  const wallet = await _getWallet(node);
+  const options = {
+    outputs: [
+      {
+        address: req.payload.address,
+        value: Amount.value(req.payload.value),
+      },
+    ],
+  };
+
+  try {
+    const mtx = await wallet.createTX(options);
+    await wallet.sign(mtx);
+    await node.relay(mtx.toTX());
+    res.send({
+      id: req.id,
+      payload: mtx.toJSON()
+    });
+  } catch (error) {
+    res.send({
+      id: req.id,
+      error: true,
+      payload: error.message,
+    });
+  }
+
+
 }
 
 // eslint-disable-next-line no-underscore-dangle

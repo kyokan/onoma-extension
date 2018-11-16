@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { BigNumber as bn } from 'bignumber.js';
+import { connect } from 'react-redux';
 import Modal from '../Modal';
 import './send.scss';
+import * as walletActions from '../../ducks/wallet';
 
 const SLOW = 'Slow';
 const STANDARD = 'Standard';
@@ -14,20 +16,26 @@ const GAS_TO_ESTIMATES = {
   [FAST]: 'less than 5 mins',
 }
 
+@connect(
+  state => ({
+    address: state.wallet.address,
+  }),
+  dispatch => ({
+    send: ({ address, value }) => dispatch(walletActions.send({ address, value })),
+  }),
+)
 export default class SendModal extends Component {
   static propTypes = {
-    address: PropTypes.string.isRequired,
     onClose: PropTypes.func.isRequired,
-  };
-
-  static defaultProps = {
-    address: '3P3QsMVK89JBNqZQv5zMAKG8FK3kJM4rjt',
+    send: PropTypes.func.isRequired,
+    address: PropTypes.string.isRequired,
   };
 
   state = {
     gasFee: bn(0.00027),
     selectedGasOption: STANDARD,
     isConfirming: false,
+    isSending: false,
     toAddress: '',
     amount: '',
   };
@@ -45,9 +53,28 @@ export default class SendModal extends Component {
     return { isValid: true };
   }
 
+  send = () => {
+    const { toAddress: address, amount: value, isSending } = this.state;
+    const { send, onClose } = this.props;
+
+    if (isSending) {
+      return;
+    }
+
+    this.setState({ isSending: true, errorMessage: '' });
+
+    send({ address, value })
+      .then(tx => {
+        // TODO: Need Pending Tx UI/UX
+        console.log(tx);
+        this.setState({ isSending: false }, onClose);
+      })
+      .catch(errorMessage => this.setState({ errorMessage, isSending: false }));
+  };
+
   renderSend() {
     const { selectedGasOption, gasFee, amount, toAddress } = this.state;
-    const { address, onClose } = this.props;
+    const { onClose } = this.props;
     const { isValid } = this.validate();
 
     return (
@@ -123,9 +150,15 @@ export default class SendModal extends Component {
   }
 
   renderConfirm() {
-    const { selectedGasOption, gasFee, amount, toAddress } = this.state;
+    const {
+      selectedGasOption,
+      gasFee,
+      amount,
+      toAddress,
+      errorMessage,
+      isSending,
+    } = this.state;
     const { address, onClose } = this.props;
-    const { isValid } = this.validate();
 
     return (
       <div className="send__container">
@@ -163,22 +196,29 @@ export default class SendModal extends Component {
             </div>
             <div className="send__confirm__summary-total">
               <div className="send__confirm__summary-label">Total:</div>
-              <div className="send__confirm__summary-value">{`${amount + 0.00005} HNS`}</div>
+              <div className="send__confirm__summary-value">{`${bn(amount).plus(0.00005).toString()} HNS`}</div>
             </div>
           </div>
+        </div>
+        <div className="send__confirm__error-message">
+          {errorMessage}
         </div>
         <div className="send__confirm__actions">
           <button
             className="send__confirm__cancel-btn"
             onClick={onClose}
+            disabled={isSending}
           >
             Cancel
           </button>
           <button
             key="confirm"
             className="send__confirm__cta-btn"
+            onClick={this.send}
+            disabled={isSending}
+
           >
-            Confirm
+            { isSending ? <div className="send__confirm__spinner" /> : 'Confirm' }
           </button>
         </div>
       </div>
