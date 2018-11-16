@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import extension from 'extensionizer';
 import * as extensionDuck from '../../../ducks/extension';
 import '../extension.scss';
 import './default.scss';
-import extension from 'extensionizer';
 
 const { VIEW_TYPES } = extensionDuck;
 

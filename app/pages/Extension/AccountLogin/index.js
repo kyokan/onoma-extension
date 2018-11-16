@@ -27,7 +27,7 @@ export default class CreatePassword extends Component {
 
   static defaultProps = {
     className: '',
-  }
+  };
 
   state = {
     passphrase: '',
@@ -43,6 +43,7 @@ export default class CreatePassword extends Component {
         <div>
           <input
             className="login_password_input"
+            type="password"
             placeholder="Your password"
             onChange={e => this.setState({ passphrase: e.target.value })}
             value={passphrase}
