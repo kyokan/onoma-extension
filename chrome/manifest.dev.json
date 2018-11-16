@@ -24,7 +24,13 @@
     "management",
     "tabs",
     "storage",
-    "https://github.com/*"
+    "https://github.com/*",
+    "webRequest",
+    "webRequestBlocking",
+    "proxy",
+    "notifications",
+    "alarms",
+    "<all_urls>"
   ],
   "content_security_policy": "default-src 'self'; script-src 'self' http://localhost:3000 https://localhost:3000 'unsafe-eval'; connect-src *; style-src * 'unsafe-inline' 'self' blob:; img-src 'self' data:; font-src *;"
 }

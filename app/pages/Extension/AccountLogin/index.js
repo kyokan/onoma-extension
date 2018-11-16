@@ -14,6 +14,7 @@ const { VIEW_TYPES } = extensionActions;
   }),
   dispatch => ({
     unlockWallet: passphrase => dispatch(walletActions.unlockWallet(passphrase)),
+    toggleResolve: () => dispatch(extensionActions.toggleResolve()),
   }),
 )
 export default class CreatePassword extends Component {
@@ -78,11 +79,19 @@ export default class CreatePassword extends Component {
         <div className="login_resolver_switch">
           <span>
             <label className="switch">
-              <input type="checkbox" />
+              <input
+                type="checkbox"
+                defaultChecked={!!localStorage.getItem('shouldResovleOnHandshake')}
+                onChange={() => {
+                  this.props.toggleResolve();
+                }}
+              />
               <span className="slider round" />
             </label>
           </span>
-          <span className="switch-text login_switch_text">Resolve on Handshake</span>
+          <span className="switch-text login_switch_text">
+            Resolve on Handshake
+          </span>
         </div>
       </div>
     );

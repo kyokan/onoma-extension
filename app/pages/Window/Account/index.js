@@ -129,6 +129,6 @@ class Account extends Component {
 
 export default connect(
   state => ({
-
+    balance: bn(state.wallet.balance.confirmed),
   }),
 )(Account);

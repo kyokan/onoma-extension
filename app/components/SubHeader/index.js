@@ -31,7 +31,7 @@ class SubHeader extends Component {
     this.setState(() => ({
       inputValue: value
     }));
-  }
+  };
 
   handleSearchClick = () => {
     const name = this.state.inputValue;
@@ -41,7 +41,7 @@ class SubHeader extends Component {
     }
 
     this.props.history.push(`/auction/${name}`);
-  }
+  };
 
   openSendModal = () => this.setState({ isShowingSendModal: true, isShowingReceiveModal: false });
   openReceiveModal = () => this.setState({ isShowingSendModal: false, isShowingReceiveModal: true });
@@ -60,7 +60,7 @@ class SubHeader extends Component {
     }
 
     return null;
-  }
+  };
 
   render() {
     const { history: { push }, location: { pathname } } = this.props;
@@ -77,6 +77,7 @@ class SubHeader extends Component {
               type="text"
               value={this.state.inputValue}
               onChange={this.handleInputValueChange}
+              onKeyDown={e => e.key === 'Enter' && this.handleSearchClick()}
               placeholder="Lookup top-level domain"
             />
             <div

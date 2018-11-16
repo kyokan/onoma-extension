@@ -21,10 +21,16 @@ export async function getWallet(node) {
   const receive = account.receiveAddress();
   const address = receive.toString(node.network);
 
+  const balance = await wallet.getBalance('default');
+
   return {
     address,
     type: EXTENSION,
     isLocked: await isWalletLocked(node),
+    balance: {
+      confirmed: Amount.coin(balance.confirmed),
+      unconfirmed: Amount.coin(balance.unconfirmed),
+    }
   };
 }
 
@@ -132,8 +138,12 @@ export async function send(req, res) {
       payload: error.message,
     });
   }
+}
 
-
+export async function toggleResolve() {
+  const shouldResovleOnHandshake = localStorage.getItem('shouldResovleOnHandshake');
+  localStorage.setItem('shouldResovleOnHandshake', shouldResovleOnHandshake ? '' : '1');
+  window.location.reload();
 }
 
 // eslint-disable-next-line no-underscore-dangle
