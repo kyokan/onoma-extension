@@ -81,15 +81,17 @@ export async function isWalletLocked(node) {
 
 export async function getChainInfo(req, res) {
   const { node } = req;
-  const { chain: { height, getHash } } = node;
+  const { chain: { height, getHash, synced } } = node;
   try {
     const buffer = await getHash.call(node.chain, height);
     const currentHash = buffer.toString('hex');
+
     res.send({
       id: req.id,
       payload: {
         height,
         currentHash,
+        synced,
       },
     });
   } catch (error) {

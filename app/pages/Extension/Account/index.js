@@ -12,6 +12,7 @@ import './loggedin.scss';
   state => ({
     height: state.chain.height,
     currentHash: state.chain.currentHash,
+    isSynchronized: state.chain.synced,
   }),
   dispatch => ({
     lockWallet: () => dispatch(walletActions.lockWallet()),

@@ -13,10 +13,7 @@ const { VIEW_TYPES } = extensionActions;
     currentHash: state.chain.currentHash,
   }),
   dispatch => ({
-    unlockWallet: passphrase => {
-      dispatch(walletActions.unlockWallet(passphrase))
-        .then(() => dispatch(extensionActions.setView(VIEW_TYPES.DEFAULT)));
-    },
+    unlockWallet: passphrase => dispatch(walletActions.unlockWallet(passphrase)),
   }),
 )
 export default class CreatePassword extends Component {
