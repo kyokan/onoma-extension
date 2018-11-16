@@ -2,11 +2,20 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import c from 'classnames';
+import { connect } from 'react-redux';
 import SendModal from '../SendModal';
 import ReceiveModal from '../ReceiveModal';
 import './subheader.scss';
+import * as domainActions from '../../ducks/domains';
 
-class SubHeader extends Component {
+@withRouter
+@connect(
+  null,
+  dispatch => ({
+    getNameInfo: tld => dispatch(domainActions.getNameInfo(tld)),
+  })
+)
+export default class SubHeader extends Component {
   static propTypes = {
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
@@ -14,6 +23,7 @@ class SubHeader extends Component {
     location: PropTypes.shape({
       pathname: PropTypes.string.isRequired,
     }),
+    getNameInfo: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -31,7 +41,7 @@ class SubHeader extends Component {
     this.setState(() => ({
       inputValue: value
     }));
-  }
+  };
 
   handleSearchClick = () => {
     const name = this.state.inputValue;
@@ -40,13 +50,18 @@ class SubHeader extends Component {
       return;
     }
 
-    this.props.history.push(`/auction/${name}`);
-  }
+    this.props.getNameInfo(name);
+    this.props.history.push(`/domain/${name}`);
+  };
 
   openSendModal = () => this.setState({ isShowingSendModal: true, isShowingReceiveModal: false });
-  openReceiveModal = () => this.setState({ isShowingSendModal: false, isShowingReceiveModal: true });
-  closeModal = () => this.setState({ isShowingSendModal: false, isShowingReceiveModal: false });
 
+  openReceiveModal = () => this.setState({
+    isShowingSendModal: false,
+    isShowingReceiveModal: true,
+  });
+
+  closeModal = () => this.setState({ isShowingSendModal: false, isShowingReceiveModal: false });
 
   renderModal = () => {
     const { isShowingReceiveModal, isShowingSendModal } = this.state;
@@ -60,7 +75,7 @@ class SubHeader extends Component {
     }
 
     return null;
-  }
+  };
 
   render() {
     const { history: { push }, location: { pathname } } = this.props;
@@ -77,6 +92,7 @@ class SubHeader extends Component {
               type="text"
               value={this.state.inputValue}
               onChange={this.handleInputValueChange}
+              onKeyDown={e => e.key === 'Enter' && this.handleSearchClick()}
               placeholder="Lookup top-level domain"
             />
             <div
@@ -132,5 +148,3 @@ class SubHeader extends Component {
     )
   }
 };
-
-export default withRouter(SubHeader);

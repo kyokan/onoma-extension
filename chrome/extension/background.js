@@ -1,4 +1,5 @@
 /* eslint-disable no-use-before-define */
+import './background/resolver/resolve';
 import startnode from './background/startnode';
 import * as controllers from './background/controllers';
 import {
@@ -7,9 +8,8 @@ import {
   UNLOCK_WALLET,
   LOCK_WALLET,
   GET_CHAIN_INFO,
-  SEND,
+  SEND, TOGGLE_RESOLVE, RPC_REQUEST,
 } from './background/actionTypes';
-
 
 const chrome = global.chrome;
 
@@ -72,6 +72,10 @@ function initControllers(node, port) {
         return controllers.getChainInfo(req, res);
       case SEND:
         return controllers.send(req, res);
+      case TOGGLE_RESOLVE:
+        return controllers.toggleResolve(req, res);
+      case RPC_REQUEST:
+        return controllers.rpcRequest(req, res);
       default:
         return null;
     }

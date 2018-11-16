@@ -43,7 +43,7 @@ class Account extends Component {
     const { domains } = this.props;
 
     return !domains.length
-      ? this.renderEmpty('You have no domains')
+      ? this.renderEmpty('You have no domains.js')
       : domains.map(tx => <div>I am a domain</div>);
   }
 
@@ -129,6 +129,6 @@ class Account extends Component {
 
 export default connect(
   state => ({
-
+    balance: bn(state.wallet.balance.confirmed),
   }),
 )(Account);

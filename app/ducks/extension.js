@@ -1,3 +1,6 @@
+import client from '../utils/client';
+import * as rpc from '../../chrome/extension/background/actionTypes';
+
 export const SET_VIEW = 'app/extension/setView';
 
 export const VIEW_TYPES = {
@@ -15,6 +18,11 @@ export const setView = viewType => ({
   type: SET_VIEW,
   payload: viewType,
 });
+
+export const toggleResolve = () => () => {
+  client.dispatch({ type: rpc.TOGGLE_RESOLVE });
+  window.close();
+};
 
 export default function extension(state = initialState, { type, payload }) {
   switch (type) {

@@ -12,19 +12,19 @@ function bidding({
         {`Bidding ${type}`}
       </div>
       <div className="auction__large">
-        { date.toDateString() }
+        { date ? date.toDateString() : '' }
       </div>
       <div className="auction__block">
-        { `Block #${block}` }
+        { block ? `Block #${block}` : '' }
       </div>
     </div>
   );
 }
 
 bidding.propTypes = {
-  type: PropTypes.string.isRequired,
-  date: PropTypes.instanceOf(Date).isRequired,
-  block: PropTypes.number.isRequired,
+  type: PropTypes.string,
+  date: PropTypes.instanceOf(Date),
+  block: PropTypes.number,
 };
 
 export function BiddingOpen({
@@ -39,8 +39,8 @@ export function BiddingOpen({
 }
 
 BiddingOpen.propTypes = {
-  date: PropTypes.instanceOf(Date).isRequired,
-  block: PropTypes.number.isRequired,
+  date: PropTypes.instanceOf(Date),
+  block: PropTypes.number,
 };
 
 export function BiddingClose({
@@ -55,6 +55,6 @@ export function BiddingClose({
 }
 
 BiddingClose.propTypes = {
-  date: PropTypes.instanceOf(Date).isRequired,
-  block: PropTypes.number.isRequired,
+  date: PropTypes.instanceOf(Date),
+  block: PropTypes.number,
 };

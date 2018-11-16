@@ -17,20 +17,33 @@ const initialState = {
   type: NONE,
   isLocked: true,
   initialized: false,
+  balance: {
+    confirmed: '0',
+    unconfirmed: '0',
+  },
 };
 
 export const fetchWallet = () => dispatch => {
   client.dispatch({ type: rpc.GET_WALLET })
-    .then(({ address, type, isLocked }) => dispatch(setWallet({ address, type, isLocked })));
+    .then(({ address, type, isLocked, balance }) => {
+      dispatch(setWallet({
+        address,
+        type,
+        isLocked,
+        balance,
+      }));
+    });
+
 };
 
-export const setWallet = ({ address = '', type = NONE, isLocked = false }) => {
+export const setWallet = ({ address = '', type = NONE, isLocked = false, balance = {} }) => {
   return {
     type: SET_WALLET,
     payload: {
       address,
       type,
       isLocked,
+      balance,
     },
   };
 };
@@ -67,6 +80,11 @@ export default function walletReducer(state = initialState, { type, payload }) {
         address: payload.address,
         type: payload.type,
         isLocked: payload.isLocked,
+        balance: {
+          ...state.balance,
+          confirmed: payload.balance.confirmed || '',
+          unconfirmed: payload.balance.unconfirmed || '',
+        },
         initialized: true,
       };
     case UNLOCK_WALLET:
