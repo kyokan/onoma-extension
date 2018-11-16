@@ -186,7 +186,7 @@ function getCloseDate(domain = {}, bids = []) {
       biddingOpenBlock: domain.start && domain.start.start,
       biddingCloseDate: getCloseDate(domain, bids),
       biddingCloseBlock: null,
-      paidValue: 120 || domain.info && domain.info.value,
+      paidValue: domain.info && domain.info.value,
       owner: domain.info && domain.info.owner,
     };
   },
