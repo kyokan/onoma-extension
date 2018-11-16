@@ -9,7 +9,7 @@ module.exports = {
   entry: {
     popup: [customPath, path.join(__dirname, '../chrome/extension/popup')],
     background: [customPath, path.join(__dirname, '../chrome/extension/background')],
-    inject: [customPath, path.join(__dirname, '../chrome/extension/inject')]
+    window: [customPath, path.join(__dirname, '../chrome/extension/window')],
   },
   output: {
     path: path.join(__dirname, '../build/js'),
@@ -19,12 +19,12 @@ module.exports = {
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.IgnorePlugin(/[^/]+\/[\S]+.dev$/),
-    new webpack.optimize.UglifyJsPlugin({
-      comments: false,
-      compressor: {
-        warnings: false
-      }
-    }),
+    // new webpack.optimize.UglifyJsPlugin({
+    //   comments: false,
+    //   compressor: {
+    //     warnings: false
+    //   }
+    // }),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('production')
