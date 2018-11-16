@@ -6,17 +6,16 @@ import * as domainActions from '../../../ducks/domains';
 import { BiddingOpen, BiddingClose } from './Bidding';
 import { CloseInfo, OpenInfo, SoldInfo } from './info';
 import './auction.scss';
+import { AUCTION_STATE } from '../../../ducks/domains';
 
 const AVAILABLE = 0;
 const SOLD = 1;
 const RESERVE = 2;
 
-const LAUNCH_DATE = new Date('December 1, 2018');
+const LAUNCH_DATE = new Date('October 1, 2018');
 
 function addDays(start = new Date(), days = 0) {
-  const ret = new Date();
-  ret.setDate(start.getDate() + days);
-  return ret;
+  return new Date(start.getTime() + (days * 24 * 60 * 60 * 1000));
 }
 
 function isEarlierThan(startDate, endDate) {
@@ -105,7 +104,7 @@ const isLimitedTimeRemaining = (biddingCloseDate) => {
     return false;
   }
 
-  return isEarlierThan(addDays(new Date(), 7), biddingCloseDate);
+  return isEarlierThan(biddingCloseDate, addDays(new Date(), 7));
 };
 
 const defaultBiddingClose = (
@@ -135,7 +134,11 @@ function getSellAmount(status, bids) {
   return `${bids[1].bidAmount} HNS`;
 }
 
-function getStatus(domain = {}) {
+function getStatus(domain = {}, bids = []) {
+  const closeDate = getCloseDate(domain, bids);
+
+  return SOLD;
+
   if (domain.start && domain.start.reserved) {
     return RESERVE;
   }
@@ -144,21 +147,49 @@ function getStatus(domain = {}) {
     return SOLD;
   }
 
+  if (closeDate && isEarlierThan(closeDate, new Date())) {
+    // TODO: Is there a state for when a TLD has past 7 days without bids?
+  }
+
   return AVAILABLE;
+}
+
+function getCloseDate(domain = {}, bids = []) {
+  if (!domain.start) {
+    return null;
+  }
+
+  if (true || domain.info && domain.info.owner) {
+    return bids[0] && bids[0].timePlaced;
+  }
+
+  if (bids.length === 0) {
+    return addDays(LAUNCH_DATE, (domain.start.week * 7) + 7);
+  } else {
+    return addDays(bids[0].timePlaced, 5);
+  }
 }
 
 @withRouter
 @connect(
   (state, ownProps) => {
     const domain = state.domains[ownProps.match.params.name] || {};
-
+    const bids = [
+      {
+        timePlaced: new Date('October 6, 2018'), // Date,
+        bidder: 'you', // you or hexString,
+        bidAmount: 2500.5 // number HNS
+      },
+    ];
     return {
       status: getStatus(domain),
-      bids: [],
-      biddingOpenDate: domain.start ? addDays(LAUNCH_DATE, domain.start.week * 7) : '',
+      bids,
+      biddingOpenDate: domain.start ? addDays(LAUNCH_DATE, domain.start.week * 7) : null,
       biddingOpenBlock: domain.start && domain.start.start,
-      // TODO: Question - how do we get Close Block?
-      biddingCloseBlock: '',
+      biddingCloseDate: getCloseDate(domain, bids),
+      biddingCloseBlock: null,
+      paidValue: 120 || domain.info && domain.info.value,
+      owner: 'ts1qg9v8g9ccht2nvslkxd0h2aujcvglfxnjme8x6s' || domain.info && domain.info.owner,
     };
   },
   dispatch => ({
@@ -186,22 +217,20 @@ export default class Auction extends Component {
         bidAmount: PropTypes.string,
       })
     ).isRequired,
-    status: PropTypes.oneOf(AVAILABLE, SOLD, RESERVE),
+    status: PropTypes.oneOf([AVAILABLE, SOLD, RESERVE]),
     biddingCloseBlock: PropTypes.number,
     biddingOpenBlock: PropTypes.number,
+    paidValue: PropTypes.number,
+    owner: PropTypes.string,
     biddingCloseDate: PropTypes.instanceOf(Date),
     biddingOpenDate: PropTypes.instanceOf(Date),
   };
 
-  static defaultProps = {
-    biddingCloseBlock: '',
-  };
-
-  getDomain = () => this.props.match.params.name;
-
   componentWillMount() {
     this.props.getNameInfo(this.getDomain());
   }
+
+  getDomain = () => this.props.match.params.name;
 
   renderBiddingClose = () => {
     const { bids, biddingCloseDate, biddingCloseBlock } = this.props;
@@ -221,10 +250,12 @@ export default class Auction extends Component {
       biddingCloseDate,
       status,
       bids,
+      paidValue,
+      owner,
     }= this.props;
 
     if (status === SOLD) {
-      return <SoldInfo bids={bids} status={status} />;
+      return <SoldInfo owner={owner} paidValue={paidValue} />;
     }
 
     const isBiddingOpen = biddingOpenDate && (biddingOpenDate.getTime() > new Date().getTime());
@@ -322,12 +353,12 @@ export default class Auction extends Component {
       biddingCloseDate,
       biddingOpenDate,
       biddingOpenBlock,
+      paidValue,
     } = this.props;
 
     const isSold = status === SOLD;
     const domain = this.getDomain();
     const statusMessage = statusToMessage(status);
-    const sellAmount = getSellAmount(status, bids);
 
     return (
       <React.Fragment>
@@ -335,8 +366,12 @@ export default class Auction extends Component {
           { `${domain}/` }
         </div>
           {
-            // TODO the actual design is Visit and then an icon
-            isSold && <div className="auction__visit">{`Visit ${domain}`}</div>
+            isSold && (
+              <div className="auction__visit" onClick={() => window.open(`http://.${domain}`, '_blank')}>
+                <span>Visit</span>
+                <span className="auction__visit-icon"></span>
+              </div>
+            )
           }
         <div className="auction__underline" />
         <div className="auction__left">
@@ -350,21 +385,22 @@ export default class Auction extends Component {
               </div>
               {
                 // TODO this function confusingly is also true if already sold
-                isLimitedTimeRemaining(biddingCloseDate) && (
-                  // TODO refactor these css names that got confusing and wierd through iteration
-                  status !== 'SOLD' &&
+                isLimitedTimeRemaining(biddingCloseDate) && !isSold
+                  ? (
+                    // TODO refactor these css names that got confusing and wierd through iteration
                     <div
                       className="auction__limited-time__clock auction__limited auction__limited-time--small"
                     >
                       <div className="auction__clock-svg" />
                       <div className="auction__limited-time__text">limited time remaining!</div>
                     </div>
-                )
+                  )
+                  : null
               }
             </div>
             {
-              sellAmount
-                ? <div>{`for ${sellAmount}`}</div>
+              paidValue && isSold
+                ? <div className="auction__paid-bid">{`for ${paidValue} HNS`}</div>
                 : <a className="auction__bid-amount">{`${bids.length} bids`}</a>
             }
           </div>

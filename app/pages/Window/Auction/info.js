@@ -1,27 +1,23 @@
 /* eslint-disable react/prop-types,no-use-before-define */
 import React from 'react';
 
-const AVAILABLE = 0;
-const SOLD = 1;
-const RESERVE = 2;
-
-export const SoldInfo = ({ bids }) => (
+export const SoldInfo = ({ owner, paidValue }) => (
   <div className="auction__right">
-    <div className="auction__bid-box-sold">
-      <div className="auction__bidding-not-open">
+    <div className="auction__bid-box--sold">
+      <div className="auction__bid-box--sold__title">
         Domain sold
       </div>
-      <div className="auction__title auction__col-1-to-3">Sold to</div>
+      <div className="auction__bid-box--sold__label auction__col-1-to-3">Sold to</div>
       { /* TODO handle for only 1 bid*/}
-      <div className="auction__set-reminder auction__col-1-to-3">
-        { bids.length > 1 && bids[0].bidder}
+      <div className="auction__bid-box--sold__owner auction__col-1-to-3">
+        { owner }
       </div>
-      <div className="auction__title auction__col-1-to-3">Sold for</div>
+      <div className="auction__bid-box--sold__label auction__col-1-to-3">Sold for</div>
       <div className="auction__large auction__col-1-to-3">
-        { getSellAmount(status, bids) }
+        {`${paidValue} HNS`}
       </div>
       {/*TODO this needs to be a different message if there is only one bid.  Also learn more needs to open a modal that doesn't currently exist.*/}
-      <div className="auction__bidding-not-open auction__small-text">
+      <div className="auction__bid-box--sold__description auction__small-text">
         Winner pays the 2nd highest bid price.  Handshake uses the Vickrey Auction. Learn more
       </div>
     </div>
@@ -76,13 +72,3 @@ export const CloseInfo = ({ biddingCloseDate, bids }) => (
     </div>
   </div>
 );
-
-function getSellAmount(status, bids) {
-  if (status !== SOLD) {
-    return null;
-  }
-  if (bids.length === 1) {
-    return '0.00000 HNS';
-  }
-  return `${bids[1].bidAmount} HNS`;
-}

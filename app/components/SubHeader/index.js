@@ -2,11 +2,19 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import c from 'classnames';
+import { connect } from 'react-redux';
 import SendModal from '../SendModal';
 import ReceiveModal from '../ReceiveModal';
 import './subheader.scss';
+import * as domainActions from '../../ducks/domains';
 
 @withRouter
+@connect(
+  null,
+  dispatch => ({
+    getNameInfo: tld => dispatch(domainActions.getNameInfo(tld)),
+  })
+)
 export default class SubHeader extends Component {
   static propTypes = {
     history: PropTypes.shape({
@@ -15,6 +23,7 @@ export default class SubHeader extends Component {
     location: PropTypes.shape({
       pathname: PropTypes.string.isRequired,
     }),
+    getNameInfo: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -41,6 +50,7 @@ export default class SubHeader extends Component {
       return;
     }
 
+    this.props.getNameInfo(name);
     this.props.history.push(`/domain/${name}`);
   };
 

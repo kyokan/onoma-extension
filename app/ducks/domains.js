@@ -5,8 +5,7 @@ const SET_NAME_INFO = 'app/domain/setNameInfo';
 
 const initialState = {};
 
-
-const AUCTION_STATE = {
+export const AUCTION_STATE = {
   NULL: null,
   BIDDING: 'BIDDING',
   REVEAL: 'REVEAL',
@@ -19,6 +18,7 @@ function makeInfo(opts) {
   return {
     state: AUCTION_STATE.NULL,
     owner: null,
+    value: null,
     ...opts || {},
   };
 }

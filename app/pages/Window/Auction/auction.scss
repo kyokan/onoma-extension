@@ -36,12 +36,6 @@
   grid-column-end: 3;
 }
 
-.auction__visit {
-  color: blue;
-  cursor: pointer;
-  justify-self: right;
-}
-
 .auction__top {
   background-color: white;
   display: grid;
@@ -128,18 +122,6 @@
   color: rgba($black, .35);
   font-size: 1.25rem;
   font-weight: 500;
-}
-
-.auction__bid-box-sold {
-  background-color: #f7f7f7;
-  display: grid;
-  grid-template-columns: 50% 50%;
-  border-top: .3rem solid gray;
-  border-radius: 0.3rem;
-  width: 18rem;
-  height: 6rem;
-  padding: 1.5rem;
-  box-shadow: 0 2px 2px 0 rgba($black, .15);
 }
 
 .auction__winner {
@@ -268,6 +250,24 @@
     grid-column-end: 2;
   }
 
+  &__visit {
+    @extend %link;
+    @extend %row-nowrap;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  &__visit-icon {
+    @extend %link;
+    background-image: url(/img/open-new-window.svg);
+    height: 1rem;
+    width: 1rem;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-left: .25rem;
+  }
+
   &__input {
     @extend %box-input;
     @extend %row-nowrap;
@@ -336,5 +336,56 @@
     font-size: .65rem;
     line-height: .75rem;
     margin-right: 1rem;
+  }
+
+  &__group {
+    margin: .4rem .4rem .75rem;
+  }
+
+  &__paid-bid {
+    font-size: .7rem;
+    font-weight: 500;
+  }
+
+  &__bid-box {
+    &--sold {
+      background-color: #f7f7f7;
+      display: grid;
+      grid-template-columns: 50% 50%;
+      border-top: .3rem solid gray;
+      border-radius: 0.3rem;
+      width: 18rem;
+      padding: 1.5rem;
+      box-shadow: 0 2px 2px 0 rgba($black, .15);
+
+      &__title {
+        grid-column-start: 1;
+        grid-column-end: 3;
+        color: rgba($black, .35);
+        font-size: 1.25rem;
+        font-weight: 500;
+        margin-bottom: 1rem;
+      }
+
+      &__label {
+        font-weight: 600;
+        font-size: .85rem;
+      }
+
+      &__owner {
+        @extend %link;
+        font-size: .75rem;
+        line-height: 1.25rem;
+        margin-bottom: 2rem;
+      }
+
+      &__description {
+        grid-column-start: 1;
+        grid-column-end: 3;
+        font-size: .65rem;
+        line-height: .75rem;
+        font-weight: 500;
+      }
+    }
   }
 }
