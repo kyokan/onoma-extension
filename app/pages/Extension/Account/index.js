@@ -9,7 +9,11 @@ import './loggedin.scss';
 
 
 @connect(
-  null,
+  state => ({
+    height: state.chain.height,
+    currentHash: state.chain.currentHash,
+    isSynchronized: state.chain.synced,
+  }),
   dispatch => ({
     lockWallet: () => dispatch(walletActions.lockWallet()),
   }),
@@ -19,6 +23,8 @@ export default class App extends Component {
   static propTypes = {
     isSynchronized: PropTypes.bool.isRequired,
     lockWallet: PropTypes.func.isRequired,
+    currentHash: PropTypes.string.isRequired,
+    height: PropTypes.number.isRequired,
   };
 
   static defaultProps = {
@@ -37,7 +43,7 @@ export default class App extends Component {
   };
 
   render() {
-    const { isSynchronized, lockWallet } = this.props;
+    const { isSynchronized, lockWallet, height, currentHash } = this.props;
 
     const accOptionClassName = 'extension_option_text account_option';
 
@@ -101,10 +107,10 @@ export default class App extends Component {
           </div>
           <div className="account_background_text_wrapper">
             <div className="account__info-text">
-              Current Height: #3952
+              {`Current Height: #${height}`}
             </div>
             <div className="account__info-text">
-              Current Hash: 0fj48fj30fuw0fj48fj30fuw0fj4
+              {`Current Hash: ${currentHash.slice(0, 10)}...${currentHash.slice(-10)}`}
             </div>
           </div>
         </div>

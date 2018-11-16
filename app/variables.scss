@@ -125,6 +125,14 @@ $orange-red: #ff2f1f;
     color: darken($azure-blue, 10);
     box-shadow: none;
   }
+
+  &:disabled {
+    //border-color: darken($azure-blue, 10);
+    border-color: $grey;
+    //background-color: $grey;
+    color: $grey;
+    cursor: default;
+  }
 }
 
 %panel {

@@ -50,6 +50,15 @@ export const lockWallet = () => dispatch => {
     .then(() => dispatch({ type: LOCK_WALLET }));
 };
 
+export const send = ({ address, value }) => () => {
+  return client
+    .dispatch({
+      type: rpc.SEND,
+      payload: { address, value },
+    })
+    .then(console.log.bind(console));
+};
+
 export default function walletReducer(state = initialState, { type, payload }) {
   switch (type) {
     case SET_WALLET:

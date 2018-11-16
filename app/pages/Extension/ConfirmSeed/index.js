@@ -68,11 +68,11 @@ export default class ConfirmSeed extends Component {
               placeholder="Type your seedphrase here"
               onKeyDown={this.handleKeyDown}
               onChange={e => this.setState({ words: e.target.value })}
-              onPaste={e => {
-                e.preventDefault();
-                this.setState({ pasteAttempted: true });
-                setTimeout(() => this.setState({ pasteAttempted: false }), 1000);
-              }}
+              // onPaste={e => {
+              //   e.preventDefault();
+              //   this.setState({ pasteAttempted: true });
+              //   setTimeout(() => this.setState({ pasteAttempted: false }), 1000);
+              // }}
               value={this.state.words}
             />
           </div>
@@ -83,7 +83,8 @@ export default class ConfirmSeed extends Component {
             if (this.state.words === this.props.seedphrase) {
               onNext();
             } else {
-              alert('Seed Phrase does not match');
+              this.setState({ pasteAttempted: true });
+              setTimeout(() => this.setState({ pasteAttempted: false }), 1000);
             }
           }}
         >

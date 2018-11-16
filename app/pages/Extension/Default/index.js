@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import extension from 'extensionizer';
 import * as extensionDuck from '../../../ducks/extension';
 import '../extension.scss';
 import './default.scss';
-import extension from 'extensionizer';
 
 const { VIEW_TYPES } = extensionDuck;
 
 @connect(
   state => ({
-    // address: state.wallet.address,
-    // walletType: state.wallet.type,
+    height: state.chain.height,
+    currentHash: state.chain.currentHash,
   }),
   dispatch => ({
     setView: viewType => dispatch(extensionDuck.setView(viewType)),
@@ -21,10 +21,12 @@ export default class App extends Component {
 
   static propTypes = {
     setView: PropTypes.func.isRequired,
+    currentHash: PropTypes.string.isRequired,
+    height: PropTypes.number.isRequired,
   };
 
   render() {
-    const { setView  } = this.props;
+    const { setView, height, currentHash } = this.props;
 
     return (
       <div className="default">
@@ -69,14 +71,11 @@ export default class App extends Component {
             <span className="switch-text">Resolve on Handshake</span>
           </div>
           <div className="default_background_text_wrapper">
-            <div className="extension_background_text default_background">
-              Version 1.0
+            <div className="account__info-text">
+              {`Current Height: #${height}`}
             </div>
-            <div className="extension_background_text default_background">
-              Current Height: #3952
-            </div>
-            <div className="extension_background_text default_background">
-              Current Hash: 0fj48fj30fuw-0fj48fj30fuw-0fj48fj30fuw
+            <div className="account__info-text">
+              {`Current Hash: ${currentHash.slice(0, 10)}...${currentHash.slice(-10)}`}
             </div>
           </div>
         </div>

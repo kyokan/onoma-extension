@@ -36,6 +36,10 @@ export default async function startNode() {
     plugins: [plugin]
   });
 
+  // const { wdb } = node.require('walletdb');
+  // wdb.options.witness = true;
+  // node.chain.on('block', console.log.bind(console));
+
   await node.ensure();
   await node.open();
   await node.connect();

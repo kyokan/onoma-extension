@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import client from '../../utils/client';
 import { VIEW_TYPES } from '../../ducks/extension';
-import { GET_WALLET } from '../../../chrome/extension/background/actionTypes';
 import * as walletActions from '../../ducks/wallet';
+import * as chainActions from '../../ducks/chain';
 
 import ExtensionDefault from './Default';
 import Account from './Account';
@@ -23,15 +22,14 @@ import './App.scss';
   }),
   dispatch => ({
     fetchWallet: () => dispatch(walletActions.fetchWallet()),
-    setWallet: ({ address, type, isLocked }) => {
-      dispatch(walletActions.setWallet({ address, type, isLocked }));
-    },
-  })
+    getChainInfo: () => dispatch(chainActions.getChainInfo()),
+  }),
 )
 export default class App extends Component {
   static propTypes = {
     address: PropTypes.string.isRequired,
     fetchWallet: PropTypes.func.isRequired,
+    getChainInfo: PropTypes.func.isRequired,
     currentView: PropTypes.string,
     initialized: PropTypes.bool.isRequired,
     isLocked: PropTypes.bool.isRequired,
@@ -39,6 +37,7 @@ export default class App extends Component {
 
   componentWillMount() {
     this.props.fetchWallet();
+    this.props.getChainInfo();
   }
 
   render() {

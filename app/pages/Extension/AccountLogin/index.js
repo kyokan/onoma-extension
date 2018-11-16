@@ -9,18 +9,24 @@ const { VIEW_TYPES } = extensionActions;
 
 @connect(
   state => ({
+    height: state.chain.height,
+    currentHash: state.chain.currentHash,
   }),
   dispatch => ({
-    unlockWallet: passphrase => {
-      dispatch(walletActions.unlockWallet(passphrase))
-        .then(() => dispatch(extensionActions.setView(VIEW_TYPES.DEFAULT)));
-    },
+    unlockWallet: passphrase => dispatch(walletActions.unlockWallet(passphrase)),
   }),
 )
 export default class CreatePassword extends Component {
 
   static propTypes = {
     unlockWallet: PropTypes.func.isRequired,
+    className: PropTypes.string.isRequired,
+    currentHash: PropTypes.string.isRequired,
+    height: PropTypes.number.isRequired,
+  };
+
+  static defaultProps = {
+    className: '',
   };
 
   state = {
@@ -28,14 +34,16 @@ export default class CreatePassword extends Component {
   };
 
   render() {
+    const { currentHash, height, className } = this.props;
     const { passphrase } = this.state;
 
     return (
-      <div className="extension_primary_section">
+      <div className={`extension_primary_section ${className}`}>
         <div className="header_text"> Log in to your wallet </div>
         <div>
           <input
             className="login_password_input"
+            type="password"
             placeholder="Your password"
             onChange={e => this.setState({ passphrase: e.target.value })}
             value={passphrase}
@@ -57,8 +65,12 @@ export default class CreatePassword extends Component {
         </div>
 
         <div className="login_background_text_wrapper">
-          <div className="extension_background_text login_background">Current Height: #3952</div>
-          <div className="extension_background_text login_background">Current Hash: 0fj48fj30fuw-0fj48fj30fuw-0fj48fj30fuw</div>
+          <div className="account__info-text login_background">
+            {`Current Height: #${height}`}
+          </div>
+          <div className="account__info-text login_background">
+            {`Current Hash: ${currentHash.slice(0, 10)}...${currentHash.slice(-10)}`}
+          </div>
         </div>
 
         <div className="extension_primary_line_break login_line_break" />

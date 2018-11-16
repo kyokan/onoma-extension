@@ -1,17 +1,15 @@
 /* eslint-disable no-use-before-define */
 import startnode from './background/startnode';
-import {
-  getWallet,
-  createWallet,
-  unlockWallet,
-  lockWallet,
-} from './background/controllers';
+import * as controllers from './background/controllers';
 import {
   CREATE_WALLET,
   GET_WALLET,
   UNLOCK_WALLET,
   LOCK_WALLET,
+  GET_CHAIN_INFO,
+  SEND,
 } from './background/actionTypes';
+
 
 const chrome = global.chrome;
 
@@ -34,8 +32,6 @@ onConnect(async (err, port) => {
 function initControllers(node, port) {
   const send = createSend(port);
 
-
-
   onMessage(port, async (err, action) => {
     if (err) {
       // eslint-disable-next-line no-console
@@ -52,14 +48,14 @@ function initControllers(node, port) {
         // TODO: Refactor to use req/res pattern similar to unlock
         return send({
           id,
-          payload: await getWallet(node),
+          payload: await controllers.getWallet(node),
         });
         // TODO: Refactor to use req/res pattern similar to unlock
       case CREATE_WALLET:
         try {
           return send({
             id,
-            payload: await createWallet(node, payload)
+            payload: await controllers.createWallet(node, payload)
           });
         } catch (error) {
           return send({
@@ -69,9 +65,13 @@ function initControllers(node, port) {
           });
         }
       case UNLOCK_WALLET:
-        return unlockWallet(req, res);
+        return controllers.unlockWallet(req, res);
       case LOCK_WALLET:
-        return lockWallet(req, res);
+        return controllers.lockWallet(req, res);
+      case GET_CHAIN_INFO:
+        return controllers.getChainInfo(req, res);
+      case SEND:
+        return controllers.send(req, res);
       default:
         return null;
     }
@@ -112,73 +112,3 @@ function createSend(port) {
     port.postMessage(JSON.stringify(response));
   };
 }
-
-//
-// startnode()
-// .then(async node => {
-//   let wallet, account, raddr = '';
-//
-//   const { wdb } = node.require('walletdb');
-//
-//   wallet = await wdb.get('extension');
-//
-//   if (wallet) {
-//     account = await wallet.getAccount('default');
-//     if (account) {
-//       const receive = account.receiveAddress();
-//       raddr = receive.toString(node.network);
-//     }
-//   }
-//
-//   chrome.extension.onConnect.addListener(port => {
-//     port.onMessage.addListener(async msg => {
-//       try {
-//         const { type, payload, id } = JSON.parse(msg);
-//         switch (type) {
-//           case 'test':
-//             return port.postMessage(JSON.stringify({
-//               id: id,
-//               payload: `this is from ${id}`,
-//             }));
-//           case 'getState':
-//             return port.postMessage(JSON.stringify({
-//               id: id,
-//               payload: {
-//                 address: raddr,
-//               },
-//             }));
-//           case 'createWallet':
-//             try {
-//               if (!payload) {
-//                 throw new Error('No passphrase');
-//               }
-//
-//               wallet = await wdb.create({ id: 'extension', passphrase: payload });
-//               await wallet.master.unlock(payload, 5000);
-//               wallet.master.mnemonic.toSeed(payload);
-//               account = await wallet.getAccount('default');
-//               raddr = account.receiveAddress().toString(node.network);
-//
-//               return port.postMessage(JSON.stringify({
-//                 id: id,
-//                 payload: {
-//                   address: raddr,
-//                   seed: wallet.master.mnemonic.phrase,
-//                 },
-//               }));
-//             } catch (err) {
-//               return port.postMessage(JSON.stringify({
-//                 id: id,
-//                 error: true,
-//                 payload: err.message,
-//               }));
-//             }
-//
-//         }
-//       } catch (err) {
-//         console.error(err);
-//       }
-//       // port.postMessage("Hi Popup.js");
-//     });
-//   });
-// });

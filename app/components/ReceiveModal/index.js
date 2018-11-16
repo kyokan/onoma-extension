@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import QRCode from 'qrcode.react';
 import copy from 'copy-to-clipboard';
@@ -6,6 +7,11 @@ import c from 'classnames';
 import Modal from '../Modal';
 import './receive.scss';
 
+@connect(
+  state => ({
+    address: state.wallet.address,
+  }),
+)
 export default class ReceiveModal extends Component {
   static propTypes = {
     onClose: PropTypes.func.isRequired,

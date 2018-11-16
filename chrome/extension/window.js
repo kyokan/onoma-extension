@@ -1,15 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import WindowRoot from '../../app/pages/Window/WindowRoot';
+import createStore from '../../app/store/configureStore';
 
-chrome.storage.local.get('state', (obj) => {
-  const { state } = obj;
-  const initialState = JSON.parse(state || '{}');
-
-  const createStore = require('../../app/store/configureStore');
-
-  ReactDOM.render(
-    <WindowRoot store={createStore(initialState)} />,
-    document.querySelector('#root')
-  );
-});
+ReactDOM.render(
+  <WindowRoot store={createStore()} />,
+  document.querySelector('#root')
+);
