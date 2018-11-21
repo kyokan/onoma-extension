@@ -137,6 +137,7 @@ function getSellAmount(status, bids) {
 function getStatus(domain = {}, bids = []) {
   const closeDate = getCloseDate(domain, bids);
 
+  return SOLD
   if (domain.start && domain.start.reserved) {
     return RESERVE;
   }
@@ -173,21 +174,23 @@ function getCloseDate(domain = {}, bids = []) {
   (state, ownProps) => {
     const domain = state.domains[ownProps.match.params.name] || {};
     const bids = [
-      // {
-      //   timePlaced: new Date('October 6, 2018'), // Date,
-      //   bidder: 'you', // you or hexString,
-      //   bidAmount: 2500.5 // number HNS
-      // },
+      {
+        timePlaced: new Date('October 6, 2018'), // Date,
+        bidder: 'you', // you or hexString,
+        bidAmount: 2500.5 // number HNS
+      },
     ];
+
     return {
       status: getStatus(domain),
       bids,
       biddingOpenDate: domain.start ? addDays(LAUNCH_DATE, domain.start.week * 7) : null,
+      biddingOpenWeek: domain.start ? domain.start.week : null,
       biddingOpenBlock: domain.start && domain.start.start,
       biddingCloseDate: getCloseDate(domain, bids),
       biddingCloseBlock: null,
-      paidValue: domain.info && domain.info.value,
-      owner: domain.info && domain.info.owner,
+      paidValue: 1000000000 || domain.info && domain.info.value,
+      owner: '0x1a2b3c4d' || domain.info && domain.info.owner,
     };
   },
   dispatch => ({
@@ -222,6 +225,7 @@ export default class Auction extends Component {
     owner: PropTypes.string,
     biddingCloseDate: PropTypes.instanceOf(Date),
     biddingOpenDate: PropTypes.instanceOf(Date),
+    biddingOpenWeek: PropTypes.number,
   };
 
   componentWillMount() {
@@ -336,13 +340,13 @@ export default class Auction extends Component {
 
     return (
       <div className="auction__bottom">
-        <div className="auction__large">
+        <div className="auction__bid-history__title">
           { `Bid History${bidHistorySuffix}`}
         </div>
         { body }
       </div>
     );
-  }
+  };
 
   renderAuctionLeft = () => {
     const {
@@ -350,6 +354,7 @@ export default class Auction extends Component {
       bids,
       biddingCloseDate,
       biddingOpenDate,
+      biddingOpenWeek,
       biddingOpenBlock,
       paidValue,
     } = this.props;
@@ -363,14 +368,14 @@ export default class Auction extends Component {
         <div className="auction__domain">
           { `${domain}/` }
         </div>
-          {
-            isSold && (
-              <div className="auction__visit" onClick={() => window.open(`http://.${domain}`, '_blank')}>
-                <span>Visit</span>
-                <span className="auction__visit-icon"></span>
-              </div>
-            )
-          }
+        {
+          isSold && (
+            <div className="auction__visit" onClick={() => window.open(`http://.${domain}`, '_blank')}>
+              <span>Visit</span>
+              <span className="auction__visit-icon" />
+            </div>
+          )
+        }
         <div className="auction__underline" />
         <div className="auction__left">
           <div className="auction__group">
@@ -398,8 +403,8 @@ export default class Auction extends Component {
             </div>
             {
               paidValue && isSold
-                ? <div className="auction__paid-bid">{`for ${paidValue} HNS`}</div>
-                : <a className="auction__bid-amount">{`${bids.length} bids`}</a>
+                ? <div className="auction__paid-bid">{`${paidValue} HNS`}</div>
+                : <a className="auction__bid-open-week">{`Week ${biddingOpenWeek}`}</a>
             }
           </div>
           <BiddingOpen
