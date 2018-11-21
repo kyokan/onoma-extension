@@ -13,22 +13,19 @@ $caribbean-green: #00e591;
 $orange-red: #ff2f1f;
 
 // Extends
-%arrow {
-  i {
-    border: solid black;
-    border-width: 0 1.5px 1.5px 0;
-    display: inline-block;
-    padding: 3px;
-  }
+i.arrow {
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 1.25rem;
+  width: 1.25rem;
+  display: inline-block;
 
-  .right {
+  &.right {
     transform: rotate(-45deg);
-    -webkit-transform: rotate(-45deg);
   }
 
-  .left {
-    transform: rotate(135deg);
-    -webkit-transform: rotate(135deg);
+  &.left {
+    background-image: url('/img/arrow-back-blue.svg');
   }
 }
 
