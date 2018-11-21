@@ -34,7 +34,6 @@
   width: 100%;
   background-color: $white;
   color: $azure-blue;
-  margin: 10px 0px 10px 0px;
   border: 1.5px solid #E2E2E2;
   border-radius: 12px;
   box-shadow: 0 5px 10px 0 #E2E9F2;
@@ -42,9 +41,14 @@
   flex-flow: column nowrap;
   align-items: center;
   justify-content: center;
-  margin-bottom: 10px;
+  margin: 10px 0px;
   cursor: pointer;
   transition: 250ms ease-in-out;
+
+  .circle-check-container {
+    transition: opacity 250ms ease-in-out;
+    opacity: 0;
+  }
 
   &:focus {
     border: 1.5px solid $azure-blue;
@@ -59,6 +63,10 @@
     border-radius: 12px;
     background-color: #FFFFFF;
     box-shadow: 0 5px 10px 0 #E2E9F2;
+
+    .circle-check-container {
+      opacity: 1;
+    }
   }
 
   &:active {

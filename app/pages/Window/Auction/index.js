@@ -190,7 +190,7 @@ function getCloseDate(domain = {}, bids = []) {
       biddingCloseDate: getCloseDate(domain, bids),
       biddingCloseBlock: null,
       paidValue: 1000000000 || domain.info && domain.info.value,
-      owner: '0x1a2b3c4d' || domain.info && domain.info.owner,
+      owner: 'ts1qg9v8g9ccht2nvslkxd0h2aujcvglfxnjme8x6s' || domain.info && domain.info.owner,
     };
   },
   dispatch => ({
