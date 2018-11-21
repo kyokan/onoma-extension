@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import c from 'classnames';
 import StatusBar from '../../../components/StatusBar/index';
 import './create.scss';
 
@@ -13,13 +14,10 @@ export default class CreatePassword extends Component {
     totalSteps: PropTypes.number.isRequired,
     onBack: PropTypes.func.isRequired,
     onNext: PropTypes.func.isRequired,
-    onPasswordChange: PropTypes.func.isRequired,
-    onConfirmPasswordChange: PropTypes.func.isRequired,
   };
 
   constructor(props) {
     super(props);
-
     this.state = {
       password: '',
       passwordError: '',
@@ -31,7 +29,8 @@ export default class CreatePassword extends Component {
   onClickNext = () => {
     if (this.state.password.length < 8) {
       this.setState({
-        passwordError: 'Password must be at least 8 characters long.'
+        passwordError: 'Password must be at least 8 characters long.',
+        passwordConfirmationError: '',
       });
       return;
     }
@@ -44,14 +43,30 @@ export default class CreatePassword extends Component {
       return;
     }
 
-    this.props.onNext(this.state.password)
+    this.props.onNext(this.state.password);
   };
 
   onChange = (name) => (e) => {
     this.setState({
-      [name]: e.target.value
+      [name]: e.target.value,
+      passwordError: '',
+      passwordConfirmationError: '',
     });
   };
+
+  renderError(key) {
+    const err = this.state[key];
+    let msg = '';
+    if (err && err !== HIGHLIGHT_ONLY) {
+      msg = err;
+    }
+
+    return (
+      <div className="create-password__error">
+        {msg}
+      </div>
+    );
+  }
 
   render() {
     const {
@@ -61,33 +76,37 @@ export default class CreatePassword extends Component {
     } = this.props;
 
     return (
-      <div className="extension_primary_section create-password">
-        <div
-          className="subheader_text clickable"
-          onClick={onBack}
-        >
-          <span className="directional_symbol create_back">
-            <i className="arrow left" />
+      <div className="create-password">
+        <div className="create-password__header">
+          <i className="arrow left clickable" onClick={onBack} />
+          <span className="create-password__cancel">
+            Cancel
           </span>
-          <span>Back</span>
+        </div>
+        <div className="create-password__status-bar">
+          <StatusBar currentStep={currentStep} totalSteps={totalSteps} />
         </div>
         <div className="create-password__content">
-          <div className="create_status_bar">
-            <StatusBar currentStep={currentStep} totalSteps={totalSteps} />
+          <div className="create-password__header_text">
+            Set up a password
           </div>
-          <div className="header_text">Encrypt your wallet with a password.</div>
           <div
-            className={"create-password__input " + (this.state.passwordError ? 'create-password__input--error' : '')}>
+            className={c('create-password__input', {
+              'create-password__input--error': this.state.passwordError,
+            })}
+          >
             <input
               type="password"
               placeholder="Enter Password"
               value={this.state.password}
               onChange={this.onChange('password')}
             />
-            {this.renderError('passwordError')}
           </div>
+          {this.renderError('passwordError')}
           <div
-            className={"create-password__input " + (this.state.passwordConfirmationError ? 'create-password__input--error' : '')}
+            className={c('create-password__input', {
+              'create-password__input--error': this.state.passwordConfirmationError,
+            })}
           >
             <input
               type="password"
@@ -95,28 +114,17 @@ export default class CreatePassword extends Component {
               value={this.state.passwordConfirmation}
               onChange={this.onChange('passwordConfirmation')}
             />
-            {this.renderError('passwordConfirmationError')}
           </div>
+          {this.renderError('passwordConfirmationError')}
         </div>
-        <button
-          className="extension_cta_button create_cta"
-          onClick={this.onClickNext}
-        >
-          Next
-        </button>
-      </div>
-    );
-  }
-
-  renderError(key) {
-    const err = this.state[key];
-    if (!err || err === HIGHLIGHT_ONLY) {
-      return null;
-    }
-
-    return (
-      <div className="create-password__error">
-        {err}
+        <div className="create-password__footer">
+          <button
+            className="extension_cta_button create_cta"
+            onClick={this.onClickNext}
+          >
+            Next
+          </button>
+        </div>
       </div>
     );
   }

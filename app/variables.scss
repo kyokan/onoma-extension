@@ -3,6 +3,8 @@ $white: #fff;
 $black: #000;
 $grey: #e6e6e6;
 $dark-grey: #c2c2c2;
+$athens-gray: #F1F1F3;
+$manatee-gray: #909095;
 
 // Blue
 $azure-blue: #007eff;
@@ -140,10 +142,11 @@ i.arrow {
 }
 
 %box-input {
-  box-shadow: 0 0 0 1.25px rgba($black, .1);
-  padding: .75rem;
+  box-shadow: 0 0 0 1.25px $athens-gray;
+  background-color: $athens-gray;
+  padding: .6rem .75rem;
   border-radius: .25rem;
-  font-size: 1rem;
+  font-size: .85rem;
   outline: none;
   width: 6rem;
   transition: 200ms ease-in-out;
@@ -161,8 +164,9 @@ i.arrow {
     outline: none;
     flex: 1 1 auto;
     width: 0;
-    font-size: .9rem;
+    font-size: .85rem;
     border: none;
+    background-color: $athens-gray;
 
     &::-webkit-input-placeholder {
       font-weight: 400;

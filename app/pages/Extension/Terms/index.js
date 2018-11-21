@@ -59,6 +59,7 @@ export default class CreatePassword extends Component {
           <button
             className="extension_cta_button terms_cta"
             onClick={onAccept}
+            disabled={!hasAccepted}
           >
             Accept
           </button>

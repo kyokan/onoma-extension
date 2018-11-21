@@ -4,6 +4,9 @@
   &__step-number {
     flex: 0 0 auto;
     margin-left: 1rem;
+    font-size: .75rem;
+    font-weight: 600;
+    color: $manatee-gray;
   }
 }
 
