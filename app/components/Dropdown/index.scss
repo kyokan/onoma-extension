@@ -1,6 +1,6 @@
 @import '../../variables';
 
-.account-selector {
+.dropdown {
   position: relative;
 
   &__current-item {
@@ -40,6 +40,7 @@
     padding: .5rem 0;
     border-bottom-left-radius: .5rem;
     border-bottom-right-radius: .5rem;
+    box-sizing: border-box;
   }
 
   &__option {
@@ -59,7 +60,7 @@
   }
 
   &--opened {
-    .account-selector {
+    .dropdown {
       &__current-item {
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
@@ -72,6 +73,20 @@
       &__options {
         @extend %col-nowrap;
         background-color: lighten($grey, 5);
+      }
+    }
+  }
+
+  &--reversed {
+    .dropdown {
+      &__current-item {
+        background-color: white;
+        border: 1px solid $grey;
+      }
+
+      &__options {
+        background-color: white;
+        border: 1px solid $grey;
       }
     }
   }

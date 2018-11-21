@@ -1,0 +1,68 @@
+@import "../../../variables";
+
+.import-seed-modal__instructions {
+  color: #111;
+  font-size: 14px;
+  line-height: 16px;
+  margin-bottom: 23px;
+}
+
+.import-seed-modal__checkbox {
+  overflow: auto;
+  margin-bottom: 16px;
+}
+
+.import-seed-modal__checkbox-wrap {
+  display: block;
+  width: 20px;
+  height: 20px;
+  float: left;
+  position: relative;
+  z-index: 100;
+  margin-top: 2px;
+
+  input {
+    opacity: 0;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    z-index: 100;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+
+    &:checked + .import-seed-modal__check {
+      background: $grey;
+    }
+  }
+}
+
+.import-seed-modal__check {
+  width: 20px;
+  height: 20px;
+  z-index: 90;
+  position: absolute;
+  border: 2px solid $grey;
+  border-radius: 2px;
+  box-sizing: border-box;
+}
+
+.import-seed-modal__checkbox-label {
+  margin-left: 37px;
+  font-size: 14px;
+  color: #909095;
+  font-weight: 500;
+  line-height: 18px;
+}
+
+.import-seed-modal__submit-button {
+  @extend %btn-primary;
+  margin-top: 18px;
+  width: 100%;
+
+  &:disabled {
+    background-color: #2480FD;
+    opacity: 0.3;
+    color: white;
+  }
+}

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { HashRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { HashRouter, Redirect, Route, Switch } from 'react-router-dom';
 import SubHeader from '../../components/SubHeader';
 import Account from './Account';
 import Auction from './Auction';
@@ -10,6 +10,7 @@ import './window.scss';
 import * as walletActions from '../../ducks/wallet';
 import * as chainActions from '../../ducks/chain';
 import AccountLogin from '../Extension/AccountLogin';
+import Settings from './Settings';
 
 
 @connect(
@@ -46,7 +47,7 @@ export default class WindowApp extends Component {
 
     // TODO: Add Desktop Onboarding
     if (!address) {
-      return <div>Create Acount First</div>
+      return <div>Create Account First</div>
     }
 
     if (isLocked) {
@@ -63,7 +64,7 @@ export default class WindowApp extends Component {
               <Route path="/send" component={Account} />
               <Route path="/receive" component={Account} />
               <Route path="/get_coins" component={GetCoins} />
-              <Route path="/settings" component={() => <div>Settings</div>} />
+              <Route path="/settings" component={Settings} />
               <Route path="/domain/:name?" component={Auction} />
               <Redirect to="/account" />
             </Switch>
