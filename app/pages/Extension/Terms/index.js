@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import c from 'classnames';
 import { connect } from 'react-redux';
 import * as actions from '../../../ducks/extension';
-import StatusBar from '../../../components/StatusBar/index';
 import './terms.scss';
 
 @connect(
@@ -15,51 +15,54 @@ export default class CreatePassword extends Component {
 
   static propTypes = {
     setView: PropTypes.func.isRequired,
-    currentStep: PropTypes.number.isRequired,
-    totalSteps: PropTypes.number.isRequired,
     onAccept: PropTypes.func.isRequired,
   };
+
+  state = {
+    hasAccepted: false,
+  };
+
+  toggleTerms = () => this.setState({ hasAccepted: !this.state.hasAccepted });
 
   render() {
     const {
       setView,
-      currentStep,
-      totalSteps,
       onAccept,
     } = this.props;
 
+    const { hasAccepted } = this.state;
+
     return (
-      <div className="extension_primary_section">
+      <div className="terms">
         <div
-          className="subheader_text clickable"
+          className="terms__header clickable"
           onClick={() => setView('default')}
         >
-          <span className="directional_symbol terms_back">
-            <i className="arrow left" />
-          </span>
-          <span>Back</span>
+          <i className="arrow left" />
         </div>
-        <div className="terms__status-bar">
-          <StatusBar currentStep={currentStep} totalSteps={totalSteps} />
+        <div className="terms__content">
+          <div className="header_text">
+            Terms of Use
+          </div>
+          <div className="subheader_text terms_subheader">
+            {'Please review and agree to the Handshake wallet\'s terms of use.'}
+          </div>
+          <button
+            className={c('terms__button', { 'terms__button--accepted': hasAccepted })}
+            onClick={this.toggleTerms}
+          >
+            <span>Terms of Use</span>
+            <span className="directional_symbol terms_forward_arrow">
+              <i className="right" />
+            </span>
+          </button>
+          <button
+            className="extension_cta_button terms_cta"
+            onClick={onAccept}
+          >
+            Accept
+          </button>
         </div>
-        <div className="header_text">
-          Terms of Use
-        </div>
-        <div className="subheader_text terms_subheader">
-          {'Please review and agree to the Handshake wallet\'s terms of use.'}
-        </div>
-        <button className="terms_button clickable">
-          <span>Terms of Use</span>
-          <span className="directional_symbol terms_forward_arrow">
-            <i className="right" />
-          </span>
-        </button>
-        <button
-          className="extension_cta_button terms_cta"
-          onClick={onAccept}
-        >
-          Accept
-        </button>
       </div>
     );
   }

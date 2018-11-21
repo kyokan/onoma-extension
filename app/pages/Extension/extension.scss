@@ -6,10 +6,6 @@
   box-sizing: border-box;
 }
 
-.directional_symbol {
-  @extend %arrow;
-}
-
 //Extends
 
 %description_text {
