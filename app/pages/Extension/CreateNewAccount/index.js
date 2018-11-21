@@ -41,16 +41,14 @@ export default class CreateNewAccount extends Component {
       case TERM_OF_USE:
         return (
           <Terms
-            currentStep={1}
-            totalSteps={4}
             onAccept={() => this.setState({ currentStep: CREATE_PASSWORD })}
           />
         );
       case CREATE_PASSWORD:
         return (
           <CreatePassword
-            currentStep={2}
-            totalSteps={4}
+            currentStep={1}
+            totalSteps={3}
             onBack={() => this.setState({currentStep: TERM_OF_USE})}
             onNext={(password) => {
               client.dispatch({type: CREATE_WALLET, payload: password})

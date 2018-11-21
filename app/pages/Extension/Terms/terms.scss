@@ -4,10 +4,6 @@
   @extend %col-nowrap;
   height: 100%;
 
-  &__status-bar {
-    margin-bottom: 1rem;
-  }
-
   &__header {
     padding: 1.125rem 1.625rem;
     border-bottom: 1px solid $grey;
@@ -37,6 +33,7 @@
     outline: 0;
     border: 1px solid $grey;
     box-shadow: 0 0 0 .5px $grey;
+    transition: 200ms ease-in-out;
 
     &--accepted {
       border-color: $azure-blue;
