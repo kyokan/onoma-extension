@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import c from 'classnames';
 import './index.scss';
 
-export default class AccountDropdown extends Component {
+export default class Dropdown extends Component {
   static propTypes = {
     items: PropTypes.arrayOf(
       PropTypes.shape({
@@ -12,6 +12,7 @@ export default class AccountDropdown extends Component {
     ).isRequired,
     currentIndex: PropTypes.number,
     onChange: PropTypes.func,
+    reversed: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -36,20 +37,21 @@ export default class AccountDropdown extends Component {
 
     return (
       <div
-        className={c('account-selector', {
-          'account-selector--opened': this.state.isOpen,
+        className={c('dropdown', {
+          'dropdown--opened': this.state.isOpen,
+          'dropdown--reversed': this.props.reversed,
         })}
       >
-        <div className="account-selector__current-item" onClick={this.toggle}>
-          <div className="account-selector__current-item__text">
+        <div className="dropdown__current-item" onClick={this.toggle}>
+          <div className="dropdown__current-item__text">
             {currentLabel}
           </div>
         </div>
-        <div className="account-selector__options">
+        <div className="dropdown__options">
           {items.map(({ label }, i) => (
             <div
               key={i}
-              className="account-selector__option"
+              className="dropdown__option"
               onClick={() => this.select(i)}
             >
               {label}
