@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import extension from 'extensionizer';
 import * as walletActions from '../../../ducks/wallet';
-import AccountDropdown from '../../../components/AccountDropdown';
+import AccountDropdown from '../../../components/Dropdown';
 import '../extension.scss';
 import './loggedin.scss';
 
