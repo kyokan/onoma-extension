@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Terms from '../Terms/index';
-import CreatePassword from '../CreatePassword/index';
-import CopySeed from '../CopySeed/index';
-import ConfirmSeed from '../ConfirmSeed/index';
+import CreatePassword from '../CreatePassword';
+import BackUpSeedWarning from '../BackUpSeedWarning';
+import CopySeed from '../CopySeed';
+import ConfirmSeed from '../ConfirmSeed';
 import client from '../../../utils/client';
 import { CREATE_WALLET } from '../../../../chrome/extension/background/actionTypes';
 import * as walletActions from '../../../ducks/wallet';
@@ -13,8 +14,9 @@ import * as extensionDuck from '../../../ducks/extension';
 const { VIEW_TYPES } = extensionDuck;
 const TERM_OF_USE = 0;
 const CREATE_PASSWORD = 1;
-const COPY_SEEDPHRASE = 2;
-const CONFIRM_SEEDPHRASE = 3;
+const BACK_UP_SEED_WARNING = 2;
+const COPY_SEEDPHRASE = 3;
+const CONFIRM_SEEDPHRASE = 4;
 
 @connect(
   null,
@@ -51,15 +53,26 @@ export default class CreateNewAccount extends Component {
             totalSteps={3}
             onBack={() => this.setState({currentStep: TERM_OF_USE})}
             onNext={(password) => {
-              client.dispatch({type: CREATE_WALLET, payload: password})
-                .then(({address, seed}) => {
+              // client.dispatch({type: CREATE_WALLET, payload: password})
+              //   .then(({address, seed}) => {
                   this.setState({
-                    address,
-                    seedphrase: seed,
-                    currentStep: COPY_SEEDPHRASE,
+                    // address,
+                    // seedphrase: seed,
+                    address: '0xhello',
+                    seedphrase: ['a', 'b', 'c', 'd'],
+                    currentStep: BACK_UP_SEED_WARNING,
                   });
-                }).catch(console.error.bind(console));
+            //     }).catch(console.error.bind(console));
             }}
+          />
+        );
+      case BACK_UP_SEED_WARNING:
+        return (
+          <BackUpSeedWarning
+            currentStep={2}
+            totalSteps={3}
+            onBack={() => ({})}
+            onNext={() => ({})}
           />
         );
       case COPY_SEEDPHRASE:
