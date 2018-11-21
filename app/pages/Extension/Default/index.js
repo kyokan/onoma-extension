@@ -15,12 +15,14 @@ const { VIEW_TYPES } = extensionDuck;
   }),
   dispatch => ({
     setView: viewType => dispatch(extensionDuck.setView(viewType)),
+    toggleResolve: () => dispatch(extensionDuck.toggleResolve()),
   }),
 )
 export default class App extends Component {
 
   static propTypes = {
     setView: PropTypes.func.isRequired,
+    toggleResolve: PropTypes.func.isRequired,
     currentHash: PropTypes.string.isRequired,
     height: PropTypes.number.isRequired,
   };
@@ -45,7 +47,7 @@ export default class App extends Component {
           </button>
           <div className="extension_primary_line_break default_line_break" />
         </div>
-        <div className="default__primary-section">
+        <div className="default__primary-section default__content">
           <div
             className="extension_option_text default_option"
             onClick={() => {
@@ -61,22 +63,24 @@ export default class App extends Component {
           <div className="extension_option_text default_option">
             Help
           </div>
-          <div className="resolver_switch">
+        </div>
+        <div className="default__footer">
+          <div className="login_resolver_switch">
             <span>
               <label className="switch">
-                <input type="checkbox" />
+                <input
+                  type="checkbox"
+                  defaultChecked={!!localStorage.getItem('shouldResovleOnHandshake')}
+                  onChange={() => {
+                    this.props.toggleResolve();
+                  }}
+                />
                 <span className="slider round" />
               </label>
             </span>
-            <span className="switch-text">Resolve on Handshake</span>
-          </div>
-          <div className="default_background_text_wrapper">
-            <div className="account__info-text">
-              {`Current Height: #${height}`}
-            </div>
-            <div className="account__info-text">
-              {`Current Hash: ${currentHash.slice(0, 10)}...${currentHash.slice(-10)}`}
-            </div>
+            <span className="switch-text login_switch_text">
+              Resolve on Handshake
+            </span>
           </div>
         </div>
       </div>

@@ -3,11 +3,20 @@
 
 .default {
   @extend %col-nowrap;
+  height: 100%;
 
   &__primary-section {
     padding: 1.2rem 1.4rem 1rem;
-    flex: 1 0 auto;
     box-sizing: border-box;
+  }
+
+  &__content {
+    flex: 1 0 auto;
+  }
+
+  &__footer {
+    padding: 1rem 1.4rem 1rem;
+    border-top: 1px solid $grey;
   }
 }
 
