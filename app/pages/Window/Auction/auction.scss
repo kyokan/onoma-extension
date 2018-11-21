@@ -1,13 +1,10 @@
 @import "../../../variables";
 
 .auction {
-  flex: 1 0 auto;
   overflow-y: auto;
   max-width: 42.5rem;
-  width: 90%;
+  height: 100%;
   margin: 1.5rem auto;
-  height: 0;
-  padding: 0 2rem;
   display: grid;
   grid-template-rows: auto auto auto;
   grid-gap: 1.5rem;
@@ -44,10 +41,6 @@
   border-radius: .25rem;
   box-shadow: 0 2px 2px 0 rgba($black, .15);
   padding: 2rem;
-}
-
-.auction__block {
-  font-size: .7rem;
 }
 
 .auction__group {
@@ -226,11 +219,6 @@
   text-align: end;
 }
 
-.auction__bid-amount {
-  @extend %link;
-  font-size: .75rem;
-}
-
 .auction__underline {
   height: 1rem;
   margin-bottom: 1.1rem;
@@ -329,13 +317,14 @@
     }
   }
 
+  &__bid-open-week,
+  &__block,
   &__open-bid-description {
     font-weight: 500;
     color: $black;
-    margin: 0;
-    font-size: .65rem;
+    font-size: .7rem;
     line-height: .75rem;
-    margin-right: 1rem;
+    margin: 0 1rem 0 0;
   }
 
   &__group {
@@ -386,6 +375,14 @@
         line-height: .75rem;
         font-weight: 500;
       }
+    }
+  }
+
+  &__bid-history {
+    &__title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      padding: 0 1rem 1rem;
     }
   }
 }
