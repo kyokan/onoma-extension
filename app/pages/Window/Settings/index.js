@@ -4,7 +4,8 @@ import Dropdown from '../../../components/Dropdown';
 import './index.scss';
 import { Route, Switch, Link } from 'react-router-dom';
 import AccountIndexModal from './AccountIndexModal';
-import ImportSeedModal from './ImportSeedModal';
+import RevealSeedModal from './RevealSeedModal';
+import InterstitialWarningModal from './InterstitialWarningModal';
 
 export default class Settings extends Component {
   render() {
@@ -40,7 +41,7 @@ export default class Settings extends Component {
           Your recovery seed phrase
         </div>
         <ul className="settings__links">
-          <li><a href="#">Reveal</a></li>
+          <li><Link to="/settings/reveal-seed">Reveal</Link></li>
         </ul>
         <div className="settings__section-head">
           Reset your account
@@ -48,11 +49,13 @@ export default class Settings extends Component {
         <ul className="settings__links">
           <li><a href="#">Connect Ledger device</a></li>
           <li><Link to="/settings/import-seed">Import recovery seed phrase</Link></li>
-          <li><a href="#">Create a new wallet</a></li>
+          <li><Link to="/settings/new-wallet">Create a new wallet</Link></li>
         </ul>
         <Switch>
           <Route path="/settings/account-index" component={AccountIndexModal} />
-          <Route path="/settings/import-seed" component={ImportSeedModal} />
+          <Route path="/settings/import-seed" render={() => <InterstitialWarningModal nextRoute="/account" />} />
+          <Route path="/settings/new-wallet" render={() => <InterstitialWarningModal nextRoute="/account" />} />
+          <Route path="/settings/reveal-seed" component={RevealSeedModal} />
         </Switch>
       </ContentArea>
     );
