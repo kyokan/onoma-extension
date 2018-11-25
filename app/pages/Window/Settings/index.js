@@ -6,7 +6,15 @@ import { Route, Switch, Link } from 'react-router-dom';
 import AccountIndexModal from './AccountIndexModal';
 import RevealSeedModal from './RevealSeedModal';
 import InterstitialWarningModal from './InterstitialWarningModal';
+import { connect } from 'react-redux';
+import * as walletActions from '../../../ducks/wallet';
 
+@connect(
+  () => ({}),
+  dispatch => ({
+    lockWallet: () => dispatch(walletActions.lockWallet())
+  })
+)
 export default class Settings extends Component {
   render() {
     return (
@@ -35,7 +43,7 @@ export default class Settings extends Component {
         </div>
         <ul className="settings__links">
           <li><Link to="/settings/account-index">Change account index</Link></li>
-          <li><a href="#">Log out</a></li>
+          <li><a href="#" onClick={this.props.lockWallet}>Log out</a></li>
         </ul>
         <div className="settings__section-head">
           Your recovery seed phrase
