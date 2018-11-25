@@ -10,45 +10,12 @@
 .interstitial-warning-modal__checkbox {
   overflow: auto;
   margin-bottom: 16px;
-}
-
-.interstitial-warning-modal__checkbox-wrap {
-  display: block;
-  width: 20px;
-  height: 20px;
-  float: left;
-  position: relative;
-  z-index: 100;
-  margin-top: 2px;
-
-  input {
-    opacity: 0;
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    z-index: 100;
-    margin: 0;
-    padding: 0;
-    cursor: pointer;
-
-    &:checked + .interstitial-warning-modal__check {
-      background: $grey;
-    }
-  }
-}
-
-.interstitial-warning-modal__check {
-  width: 20px;
-  height: 20px;
-  z-index: 90;
-  position: absolute;
-  border: 2px solid $grey;
-  border-radius: 2px;
-  box-sizing: border-box;
+  display: flex;
+  align-items: center;
 }
 
 .interstitial-warning-modal__checkbox-label {
-  margin-left: 37px;
+  margin-left: 12px;
   font-size: 14px;
   color: #909095;
   font-weight: 500;

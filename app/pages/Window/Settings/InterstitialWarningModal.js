@@ -3,6 +3,7 @@ import MiniModal from '../../../components/Modal/MiniModal';
 import './interstitial-warning-modal.scss';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import Checkbox from '../../../components/Checkbox';
 
 @withRouter
 export default class InterstitialWarningModal extends Component {
@@ -49,28 +50,19 @@ export default class InterstitialWarningModal extends Component {
           current recovery seed phrase saved somewhere safe before proceeding.
         </div>
         <div className="interstitial-warning-modal__checkbox">
-          <div className="interstitial-warning-modal__checkbox-wrap">
-            <input type="checkbox" onChange={this.toggleCheck(0)} value={this.state.acceptances[0]} />
-            <div className="interstitial-warning-modal__check" />
-          </div>
+          <Checkbox className="interstitial-warning-modal__checkbox-box" onChange={this.toggleCheck(0)} checked={this.state.acceptances[0]}/>
           <div className="interstitial-warning-modal__checkbox-label">
             I have my recovery seed phrase backed up.
           </div>
         </div>
         <div className="interstitial-warning-modal__checkbox">
-          <div className="interstitial-warning-modal__checkbox-wrap">
-            <input type="checkbox" onChange={this.toggleCheck(1)} value={this.state.acceptances[1]} />
-            <div className="interstitial-warning-modal__check" />
-          </div>
+          <Checkbox className="interstitial-warning-modal__checkbox-box" onChange={this.toggleCheck(1)} checked={this.state.acceptances[1]}/>
           <div className="interstitial-warning-modal__checkbox-label">
             I will need my recovery seed phrase to log in again.
           </div>
         </div>
         <div className="interstitial-warning-modal__checkbox">
-          <div className="interstitial-warning-modal__checkbox-wrap">
-            <input type="checkbox" onChange={this.toggleCheck(2)} value={this.state.acceptances[1]} />
-            <div className="interstitial-warning-modal__check" />
-          </div>
+          <Checkbox className="interstitial-warning-modal__checkbox-box" onChange={this.toggleCheck(2)} checked={this.state.acceptances[2]}/>
           <div className="interstitial-warning-modal__checkbox-label">
             There will be no way to recover my seed.
           </div>
