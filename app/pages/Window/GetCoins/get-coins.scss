@@ -8,6 +8,32 @@
   margin: 1.5rem auto;
   padding: 0 .1rem;
 
+  h1 {
+    line-height: 40px;
+    font-size: 34px;
+    font-weight: 500;
+    margin: 0;
+  }
+
+  h2 {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 24px;
+    margin-top: 24px;
+    margin-bottom: 4px;
+  }
+
+  p {
+    font-size: 14px;
+    line-height: 18px;
+    margin-bottom: 4px;
+  }
+
+  a {
+    color: $azure-blue;
+    text-decoration: none;
+  }
+
   &__left {
     @extend %col-nowrap;
     flex: 0 1 auto;
@@ -26,7 +52,7 @@
     box-shadow: 0 2px 4px 0 rgba($black, .35);
     padding: 2rem;
     text-align: center;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
 
     pre {
       @extend %col-nowrap;
@@ -78,7 +104,7 @@
   }
 
   &__step-paragraph {
-    font-size: .85rem;
+    font-size: 14px;
     font-weight: 400;
   }
 
