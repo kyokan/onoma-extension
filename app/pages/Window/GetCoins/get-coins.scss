@@ -2,12 +2,10 @@
 
 .get-coins {
   @extend %row-nowrap;
-  flex: 1 0 auto;
-  overflow-y: auto;
+  display: flex;
   max-width: 42.5rem;
   width: 100%;
   margin: 1.5rem auto;
-  height: 0;
   padding: 0 .1rem;
 
   &__left {
