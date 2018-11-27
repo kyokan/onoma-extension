@@ -8,7 +8,7 @@ import {
   UNLOCK_WALLET,
   LOCK_WALLET,
   GET_CHAIN_INFO,
-  SEND, TOGGLE_RESOLVE, RPC_REQUEST,
+  SEND, TOGGLE_RESOLVE, RPC_REQUEST, REVEAL_SEED,
 } from './background/actionTypes';
 
 const chrome = global.chrome;
@@ -76,6 +76,8 @@ function initControllers(node, port) {
         return controllers.toggleResolve(req, res);
       case RPC_REQUEST:
         return controllers.rpcRequest(req, res);
+      case REVEAL_SEED:
+        return controllers.revealSeed(req, res);
       default:
         return null;
     }

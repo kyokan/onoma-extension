@@ -9,9 +9,17 @@
 .reveal-seed-modal__password {
   @extend %box-input;
   border: 0;
-  margin-bottom: 24px;
   width: 235px;
   box-sizing: border-box;
+  margin-bottom: 12px;
+}
+
+.reveal-seed-modal__error-message {
+  color: $orange-red;
+  font-size: 12px;
+  width: 235px;
+  margin: 0 auto 24px auto;
+  text-align: left;
 }
 
 .reveal-seed-modal__submit {
