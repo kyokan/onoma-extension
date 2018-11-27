@@ -76,6 +76,26 @@ export default class GetCoins extends Component {
               <code>/____//_____/ \____/ \____/  /_/ /_//_/ |_/ /____/   </code>
             </pre>
           </div>
+          <h1>
+            Get Handshake coins
+          </h1>
+          <h2>How it works</h2>
+          <p>Handshake Network’s decentralized airdrop is gifting coins to the top ~175,000 developers on GitHub with
+            valid SSH and/or PGP keys.</p>
+          <p>If you had 15 or more followers on GitHub during the week of 2018-08-27, your GitHub SSH & PGP keys are
+            included in the Handshake network’s merkle tree. Likewise, roughly 30,000 keys from the PGP WOT Strongset
+            have also been included in the tree.</p>
+          <p>You’ll receive 2500 HNS for each proof.</p>
+          <p><a href="https://github.com" target="_blank">See full details on GitHub</a></p>
+          <h2>
+            Redemption instructions
+          </h2>
+          <p>
+            Check your SSH and/or PGP keys for 2500-5000 HNS coins. If you are uncomfortable having third party software
+            access your PGP
+            and/or SSH keys, you are always able to generate this proof on an
+            air-gapped machine.
+          </p>
           <Step
             number={1}
             title="Generate a Handshake Address"
@@ -91,6 +111,24 @@ export default class GetCoins extends Component {
             title="Generate a Handshake Address"
             paragraph="Intently stare at the same spot hiding behind the couch until lured out by a feathery toy make meme, make cute face for play riveting piece on synthesizer keyboard dismember a mouse and then regurgitate parts of it on the family room floor so sleep on keyboard."
           />
+          <p>
+            There are a few gotchas: Handshake does not allow standard PGP signatures on the consensus layer. This is done for simplicity and safety. This means that a regular call to $ gpg --sign will not work for Handshake airdrop proofs. As far as SSH keys go, people typically do not sign arbitrary messages with them.
+          </p>
+          <p><a href="https://github.com" target="_blank">See full instructions on GitHub</a></p>
+          <h2>Privacy (GooSig)</h2>
+          <p>To preserve privacy for the time being, a 32 byte nonce has been encrypted to your PGP or SSH key. No one
+            will be able to identify your key fingerprint in the tree published above until you decide to reveal it
+            on-chain by decrypting the nonce, creating the proof, and publishing it.</p>
+
+          <p>GooSig was created for the Handshake Project to address a very specific problem: an airdrop to Github
+            users' RSA keys allows Github users to be identified on-chain. In order to anonymize who is receiving coins
+            from the airdrop, cryptographic trickery is required: GooSig allows the creation of signatures originating
+            from RSA private keys without revealing the RSA public key.</p>
+
+          <p>GooSig makes use of (G)roups of Unkn(o)wn (O)rder, and implements a cryptographic protocol devised by Dan
+            Boneh and Riad S. Wahby at the Stanford Center for Blockchain Research. It was originally ported from the
+            python reference implementation to javascript, but has since been implemented in C as well.</p>
+          <p><a href="https://github.com" target="_blank">See full details on GitHub</a></p>
         </div>
         <div className="get-coins__right">
           <div className="get-coins__panel">
