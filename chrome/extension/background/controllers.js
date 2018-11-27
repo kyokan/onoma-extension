@@ -2,6 +2,7 @@
 
 import * as walletTypes from '../../../app/ducks/wallet';
 import Amount from '../../../node_modules/hsd/lib/ui/amount';
+import MasterKey from 'hsd/lib/wallet/masterkey';
 const { EXTENSION, NONE } = walletTypes;
 
 export async function getWallet(node) {
@@ -46,7 +47,7 @@ export async function createWallet(node, passphrase) {
 
   return {
     address: account.receiveAddress().toString(node.network),
-    seed: wallet.master.mnemonic.phrase
+    seed: wallet.master.mnemonic.mnemonic
   };
 }
 
@@ -61,6 +62,47 @@ export async function unlockWallet(req, res) {
       error: true,
       payload: err.message,
     });
+  }
+}
+
+export async function revealSeed(req, res) {
+  try {
+    const wallet = await _getWallet(req.node);
+
+    // clone the encrypted version of the key below in order to check the password.
+    // we use a clone since the wallet by default doesn't do anything with subsequent
+    // calls to unlock() after the wallet is already unlocked.
+    const currKey = wallet.master;
+    const clonedKey = new MasterKey({
+      encrypted: true,
+      iv: currKey.iv,
+      ciphertext: currKey.ciphertext,
+      alg: currKey.alg,
+      rounds: currKey.rounds,
+      n: currKey.n,
+      r: currKey.r,
+      p: currKey.p
+    });
+    await clonedKey.unlock(req.payload, 500);
+    res.send({
+      id: req.id,
+      payload: {
+        mnemonic: wallet.master.mnemonic.toString()
+      }
+    })
+  } catch (err) {
+    let message = err.message;
+    if (err.message.match(/bad decrypt/i)) {
+      message = 'Invalid passphrase.';
+    } else if (err.message.match(/no passphrase/i)) {
+      message = 'No passphrase provided.';
+    }
+
+    res.send({
+      id: req.id,
+      error: true,
+      payload: message
+    })
   }
 }
 

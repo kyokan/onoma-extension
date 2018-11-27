@@ -2,6 +2,7 @@
 // Constants
 import client from '../utils/client';
 import * as rpc from '../../chrome/extension/background/actionTypes';
+import { REVEAL_SEED } from '../../chrome/extension/background/actionTypes';
 
 export const NONE = 'NONE';
 export const LEDGER = 'LEDGER';
@@ -61,6 +62,19 @@ export const lockWallet = () => dispatch => {
   client
     .dispatch({ type: rpc.LOCK_WALLET })
     .then(() => dispatch({ type: LOCK_WALLET }));
+};
+
+export const revealSeed = (passphrase) => dispatch => {
+  // note: keeping the action dispatched in case we want to
+  // perform additional actions in the future on seed reveal.
+  // the seed itself is kept out of state to avoid having to
+  // clear it later for security reasons.
+  return client
+    .dispatch({ type: rpc.REVEAL_SEED, payload: passphrase })
+    .then((res) => {
+      dispatch({ type: REVEAL_SEED });
+      return res
+    });
 };
 
 export const send = ({ address, value }) => () => {

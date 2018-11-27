@@ -6,3 +6,4 @@ export const GET_CHAIN_INFO = 'GET_CHAIN_INFO';
 export const SEND = 'SEND';
 export const TOGGLE_RESOLVE = 'TOGGLE_RESOLVE';
 export const RPC_REQUEST = 'RPC_REQUEST';
+export const REVEAL_SEED = 'REVEAL_SEED';
