@@ -31,24 +31,28 @@ export default class App extends Component {
   render() {
     return (
       <div className="default">
-        <div className="default__primary-section">
-          <div className="header_text default_header">
-            handshake wallet
+        <div className="default__header">
+          <div className="default__block-height">
+            <span>Current Height:</span>
+            <span className="default__blue">{height}</span>
           </div>
-          <div className="subheader_text default_subheader">
-            Take control of your Handshake coins and domain names.
+          <div className="default__block-hash">
+            <span>Current Hash:</span>
+            <span className="default__blue">
+              {currentHash.slice(0, 4)}...{currentHash.slice(-5)}
+            </span>
           </div>
+        </div>
+        <div className="default__content">
+          <div className="default__content__title">Allison Animates the Web</div>
           <button
             className="extension_cta_button cta__btn default_cta"
             onClick={() => this.props.history.push('/funding-options')}
           >
-            Get Started
+            Set up my Handshake wallet
           </button>
-          <div className="extension_primary_line_break default_line_break" />
-        </div>
-        <div className="default__primary-section default__content">
           <div
-            className="extension_option_text default_option"
+            className="default__content__link"
             onClick={() => {
               const url = extension.runtime.getURL('window.html');
               extension.tabs.create({ url });
@@ -56,11 +60,8 @@ export default class App extends Component {
           >
             Browse Domains
           </div>
-          <div className="extension_option_text default_option">
-            Information
-          </div>
-          <div className="extension_option_text default_option">
-            Help
+          <div className="default__content__link">
+            FAQ
           </div>
         </div>
         <div className="default__footer">
@@ -80,7 +81,8 @@ export default class App extends Component {
             <span className="switch-text login_switch_text">
               Resolve on Handshake
             </span>
-          </div>
+            <span className="default__info-icon" />
+          </span>
         </div>
       </div>
     );

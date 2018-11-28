@@ -1,14 +1,14 @@
 // BW
 $white: #fff;
 $black: #000;
-$grey: #e6e6e6;
+$grey: #e2e2e2;
 $dark-grey: #c2c2c2;
 $athens-gray: #F1F1F3;
 $manatee-gray: #909095;
 $mischka-gray: #CDCDDE;
 
 // Blue
-$azure-blue: #007eff;
+$azure-blue: #2480FD;
 $turquioise-blue: #63e8b1;
 $caribbean-green: #00e591;
 
@@ -58,36 +58,33 @@ i.arrow {
 
 %btn-primary {
   border: 1px solid $azure-blue;
-  padding: .75rem 1rem;
-  font-size: .9rem;
+  padding: .6875rem 1rem;
+  font-size: .875rem;
   outline: none;
   background-color: $azure-blue;
   color: $white;
-  border-radius: .75rem;
+  border-radius: .5rem;
   cursor: pointer;
   font-weight: 500;
   transition: 200ms ease-in-out;
   user-select: none;
 
   &:focus {
-    border-color: lighten($azure-blue, 10);
-    background-color: lighten($azure-blue, 10);
-    //color: lighten($azure-blue, 10);
+    border-color: lighten($azure-blue, 5);
+    background-color: lighten($azure-blue, 5);
   }
 
   &:hover {
-    border-color: lighten($azure-blue, 10);
-    background-color: lighten($azure-blue, 10);
-    //color: lighten($azure-blue, 10);
+    border-color: lighten($azure-blue, 5);
+    background-color: lighten($azure-blue, 5);
   }
 
   &:active {
-    border-color: darken($azure-blue, 10);
-    background-color: darken($azure-blue, 10);
+    border-color: darken($azure-blue, 5);
+    background-color: darken($azure-blue, 5);
   }
 
   &:disabled {
-    //border-color: darken($azure-blue, 10);
     border-color: $grey;
     background-color: $grey;
     color: rgba($black, .4);
@@ -248,4 +245,28 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+/* Text */
+$monospace: 'Roboto Mono', monospace;
+
+%h7 {
+  font-size: .5625rem;
+  line-height: .5625rem * 1.4;
+}
+
+
+%h6 {
+  font-size: .625rem;
+  line-height: .625rem * 1.4;
+}
+
+%h5 {
+  font-size: .75rem;
+  line-height: .75rem * 1.4;
+}
+
+%h4 {
+  font-size: .875rem;
+  line-height: .875rem * 1.4;
 }

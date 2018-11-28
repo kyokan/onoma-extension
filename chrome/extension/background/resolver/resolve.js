@@ -147,7 +147,7 @@ chrome.webRequest.onBeforeRequest.addListener(function (details) {
       }
     });
 
-    console.log('NHE: #' + details.requestId + ' (' + url.domain + '): resolution finished, returning ' + res); //-
+    console.log('NHE: #' + details.requestId + ' (' + url.domain + '): resolution finished, returning '); //-
   }
 }, allURLs, ["blocking"]);
 
