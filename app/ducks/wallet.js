@@ -12,6 +12,9 @@ export const EXTENSION = 'EXTENSION';
 const SET_WALLET = 'app/wallet/setWallet';
 const UNLOCK_WALLET = 'app/wallet/unlockWallet';
 const LOCK_WALLET = 'app/wallet/lockWallet';
+const REMOVE_WALLET = 'app/wallet/removeWallet';
+const START_POLLING = 'app/wallet/startPolling';
+const STOP_POLLING = 'app/wallet/stopPolling';
 
 const initialState = {
   address: '',
@@ -22,25 +25,57 @@ const initialState = {
     confirmed: '0',
     unconfirmed: '0',
   },
+  isPolling: false,
 };
 
-export const fetchWallet = () => dispatch => {
-  client.dispatch({ type: rpc.GET_WALLET })
-    .then(({ address, type, isLocked, balance }) => {
-      dispatch(setWallet({
-        address,
-        type,
-        isLocked,
-        balance,
-      }));
+export const completeInitialization = () => dispatch => client.dispatch({ type: rpc.COMPLETE_INITIALIZATION })
+  .then(() => dispatch(fetchWallet()));
+
+export const fetchWallet = () => (dispatch) => client.dispatch({type: rpc.GET_WALLET})
+  .then(({initialized, address, type, isLocked, balance}) => {
+    dispatch(setWallet({
+      initialized,
+      address,
+      type,
+      isLocked,
+      balance,
+    }));
+  });
+
+export const startWalletPoller = () => {
+  return async (dispatch, getState) => {
+    dispatch({
+      type: START_POLLING,
     });
 
+    const poll = async () => {
+      if (!getState().wallet.isPolling) {
+        return
+      }
+
+      try {
+        await dispatch(fetchWallet());
+      } catch (e) {
+        console.error('Error fetching wallet, trying again in 1 second.');
+      }
+
+      setTimeout(poll, 1000);
+    };
+    await poll();
+  }
 };
 
-export const setWallet = ({ address = '', type = NONE, isLocked = false, balance = {} }) => {
+export const stopWalletPoller = () => {
+  return {
+    type: STOP_POLLING,
+  }
+};
+
+export const setWallet = ({ initialized = false, address = '', type = NONE, isLocked = false, balance = {} }) => {
   return {
     type: SET_WALLET,
     payload: {
+      initialized,
       address,
       type,
       isLocked,
@@ -86,6 +121,9 @@ export const send = ({ address, value }) => () => {
     .then(console.log.bind(console));
 };
 
+export const removeWallet = () => dispatch => client.dispatch({ type: rpc.REMOVE_WALLET })
+    .then(() => dispatch({ type: REMOVE_WALLET }));
+
 export default function walletReducer(state = initialState, { type, payload }) {
   switch (type) {
     case SET_WALLET:
@@ -99,12 +137,18 @@ export default function walletReducer(state = initialState, { type, payload }) {
           confirmed: payload.balance.confirmed || '',
           unconfirmed: payload.balance.unconfirmed || '',
         },
-        initialized: true,
+        initialized: payload.initialized,
       };
     case UNLOCK_WALLET:
-      return { ...state, isLocked: false };
+      return {...state, isLocked: false};
     case LOCK_WALLET:
-      return { ...state, isLocked: true };
+      return {...state, isLocked: true};
+    case REMOVE_WALLET:
+      return {...initialState, isPolling: state.isPolling};
+    case START_POLLING:
+      return {...state, isPolling: true};
+    case STOP_POLLING:
+      return {...state, isPolling: false};
     default:
       return state;
   }

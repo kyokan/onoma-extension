@@ -5,6 +5,7 @@ import extension from 'extensionizer';
 import * as extensionDuck from '../../../ducks/extension';
 import '../extension.scss';
 import './default.scss';
+import { withRouter } from 'react-router-dom';
 
 const { VIEW_TYPES } = extensionDuck;
 
@@ -18,8 +19,8 @@ const { VIEW_TYPES } = extensionDuck;
     toggleResolve: () => dispatch(extensionDuck.toggleResolve()),
   }),
 )
+@withRouter
 export default class App extends Component {
-
   static propTypes = {
     setView: PropTypes.func.isRequired,
     toggleResolve: PropTypes.func.isRequired,
@@ -28,8 +29,6 @@ export default class App extends Component {
   };
 
   render() {
-    const { setView, height, currentHash } = this.props;
-
     return (
       <div className="default">
         <div className="default__primary-section">
@@ -41,7 +40,7 @@ export default class App extends Component {
           </div>
           <button
             className="extension_cta_button cta__btn default_cta"
-            onClick={() => setView(VIEW_TYPES.CREATE_ACCOUNT_OPTIONS)}
+            onClick={() => this.props.history.push('/funding-options')}
           >
             Get Started
           </button>
@@ -70,7 +69,7 @@ export default class App extends Component {
               <label className="switch">
                 <input
                   type="checkbox"
-                  defaultChecked={!!localStorage.getItem('shouldResovleOnHandshake')}
+                  defaultChecked={!!localStorage.getItem('shouldResolveOnHandshake')}
                   onChange={() => {
                     this.props.toggleResolve();
                   }}

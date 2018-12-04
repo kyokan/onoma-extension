@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 // import classNames from 'classnames';
 import * as actions from '../../../ducks/extension';
 import './access.scss';
+import { Link } from 'react-router-dom';
 
 const { VIEW_TYPES } = actions;
 
@@ -11,15 +11,9 @@ const { VIEW_TYPES } = actions;
   state => ({
   }),
   dispatch => ({
-    setView: viewType => dispatch(actions.setView(viewType)),
   }),
 )
 export default class FundAccessOptions extends Component {
-
-  static propTypes = {
-    setView: PropTypes.func.isRequired,
-  };
-
   renderCheck = () => (
     <div className="circle-check-container">
       <div className="circle-check-symbol" />
@@ -53,21 +47,21 @@ export default class FundAccessOptions extends Component {
             <div className="access_cta_secondary_text"> Recommended </div>
           </button>
 
-          <button className="access_cta_button">
+          <Link className="access_cta_button" to="/import-seed">
             { this.renderCheck() }
             <div className="access_cta_primary_text">
               <span>Import Seed Phrase</span>
             </div>
             <div className="access_cta_secondary_text"> Not Secure </div>
-          </button>
+          </Link>
 
-          <button className="access_cta_button" onClick={() => setView(VIEW_TYPES.CREATE_NEW_ACCOUNT)}>
+          <Link className="access_cta_button" to="/new-wallet">
             { this.renderCheck() }
             <div className="access_cta_primary_text">
               <span> Create A New Wallet </span>
             </div>
             <div className="access_cta_secondary_text"> Not Secure </div>
-          </button>
+          </Link>
         </div>
       </div>
     );

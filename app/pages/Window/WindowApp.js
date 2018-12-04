@@ -11,6 +11,10 @@ import * as walletActions from '../../ducks/wallet';
 import * as chainActions from '../../ducks/chain';
 import AccountLogin from '../Extension/AccountLogin';
 import Settings from './Settings';
+import CreateNewAccount from '../Extension/CreateNewAccount';
+import ExtensionWrapper from '../Extension/ExtensionWrapper';
+import ImportSeedWarning from '../Extension/ImportSeedWarning';
+import FundAccessOptions from '../Extension/FundAccessOptions';
 
 
 @connect(
@@ -20,57 +24,106 @@ import Settings from './Settings';
     address: state.wallet.address,
   }),
   dispatch => ({
-    fetchWallet: () => dispatch(walletActions.fetchWallet()),
+    startWalletPoller: () => dispatch(walletActions.startWalletPoller()),
     getChainInfo: () => dispatch(chainActions.getChainInfo()),
   }),
 )
 export default class WindowApp extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isLoading: true
+    };
+  }
+
   static propTypes = {
-    fetchWallet: PropTypes.func.isRequired,
+    startWalletPoller: PropTypes.func.isRequired,
     getChainInfo: PropTypes.func.isRequired,
     initialized: PropTypes.bool.isRequired,
     isLocked: PropTypes.bool.isRequired,
     address: PropTypes.string.isRequired,
   };
 
-  componentWillMount() {
-    this.props.fetchWallet();
-    this.props.getChainInfo();
+  async componentDidMount() {
+    try {
+      await this.props.startWalletPoller();
+      await this.props.getChainInfo();
+    } catch (e) {
+    }
+
+    this.setState({
+      isLoading: false
+    });
   }
 
   render() {
-    const { initialized, isLocked, address } = this.props;
-
-    if (!initialized) {
-      return <noscript />;
-    }
-
-    // TODO: Add Desktop Onboarding
-    if (!address) {
-      return <div>Create Account First</div>
-    }
-
-    if (isLocked) {
-      return <AccountLogin className="window-app__login"/>;
-    }
-
     return (
       <HashRouter hashType="slash">
         <div className="window-app">
           <SubHeader />
           <div className="window-app__content">
-            <Switch>
-              <Route path="/account" component={Account} />
-              <Route path="/send" component={Account} />
-              <Route path="/receive" component={Account} />
-              <Route path="/get_coins" component={GetCoins} />
-              <Route path="/settings" component={Settings} />
-              <Route path="/domain/:name?" component={Auction} />
-              <Redirect to="/account" />
-            </Switch>
+            {this.renderRoutes()}
           </div>
         </div>
       </HashRouter>
+    );
+  }
+
+  renderRoutes() {
+    if (this.state.isLoading) {
+      return null;
+    }
+
+    if (this.props.isLocked || !this.props.initialized) {
+      return (
+        <Switch>
+          <Route path="/login" render={() => <AccountLogin className="window-app__login" />} />
+          <Route path="/funding-options" render={this.renderWrapper(FundAccessOptions)} />
+          <Route
+            path="/new-wallet"
+            render={this.renderWrapper(CreateNewAccount)}
+          />
+          <Route
+            path="/import-seed"
+            render={this.renderWrapper(ImportSeedWarning)}
+          />
+          {this.renderDefault()}
+        </Switch>
+      );
+    }
+
+    return (
+      <Switch>
+        <Route path="/account" component={Account} />
+        <Route path="/send" component={Account} />
+        <Route path="/receive" component={Account} />
+        <Route path="/get_coins" component={GetCoins} />
+        <Route path="/settings" component={Settings} />
+        <Route path="/domain/:name?" component={Auction} />
+        {this.renderDefault()}
+      </Switch>
+    );
+  }
+
+  renderDefault = () => {
+    if (!this.props.initialized) {
+      return <Redirect to="/funding-options" />
+    }
+
+    if (this.props.isLocked) {
+      return <Redirect to="/login" />
+    }
+
+    return <Redirect to="/account" />
+  };
+
+  renderWrapper = (c) => {
+    const Component = c;
+    return () => (
+      <ExtensionWrapper inWindow>
+        <Component />
+      </ExtensionWrapper>
     );
   }
 }

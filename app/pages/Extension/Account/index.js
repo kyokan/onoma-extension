@@ -19,7 +19,6 @@ import './loggedin.scss';
   }),
 )
 export default class App extends Component {
-
   static propTypes = {
     isSynchronized: PropTypes.bool.isRequired,
     lockWallet: PropTypes.func.isRequired,

@@ -39,6 +39,8 @@
     @extend %box-input;
     width: 100%;
     box-sizing: border-box;
+    margin-bottom: 12px;
+
     input {
       width: 100%;
     }
@@ -51,8 +53,11 @@
   &__error {
     color: $orange-red;
     font-size: .75rem;
-    height: 1rem;
-    margin: .125rem .375rem;
+    margin: -6px .375rem 12px .375rem;
+
+    &:empty {
+      margin: 0;
+    }
   }
 
   &__footer {

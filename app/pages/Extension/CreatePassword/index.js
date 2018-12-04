@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import c from 'classnames';
 import StatusBar from '../../../components/StatusBar/index';
 import './create.scss';
+import Submittable from '../../../components/Submittable';
 
 const HIGHLIGHT_ONLY = '$$HIGHLIGHT_ONLY$$';
 
@@ -26,7 +27,7 @@ export default class CreatePassword extends Component {
     };
   }
 
-  onClickNext = () => {
+  onSubmit = () => {
     if (this.state.password.length < 8) {
       this.setState({
         passwordError: 'Password must be at least 8 characters long.',
@@ -86,41 +87,44 @@ export default class CreatePassword extends Component {
         <div className="create-password__status-bar">
           <StatusBar currentStep={currentStep} totalSteps={totalSteps} />
         </div>
+
         <div className="create-password__content">
-          <div className="create-password__header_text">
-            Set up a password
-          </div>
-          <div
-            className={c('create-password__input', {
-              'create-password__input--error': this.state.passwordError,
-            })}
-          >
-            <input
-              type="password"
-              placeholder="Enter Password"
-              value={this.state.password}
-              onChange={this.onChange('password')}
-            />
-          </div>
-          {this.renderError('passwordError')}
-          <div
-            className={c('create-password__input', {
-              'create-password__input--error': this.state.passwordConfirmationError,
-            })}
-          >
-            <input
-              type="password"
-              placeholder="Confirm Password"
-              value={this.state.passwordConfirmation}
-              onChange={this.onChange('passwordConfirmation')}
-            />
-          </div>
-          {this.renderError('passwordConfirmationError')}
+          <Submittable onSubmit={this.onSubmit}>
+            <div className="create-password__header_text">
+              Set up a password
+            </div>
+            <div
+              className={c('create-password__input', {
+                'create-password__input--error': this.state.passwordError,
+              })}
+            >
+              <input
+                type="password"
+                placeholder="Enter Password"
+                value={this.state.password}
+                onChange={this.onChange('password')}
+              />
+            </div>
+            {this.renderError('passwordError')}
+            <div
+              className={c('create-password__input', {
+                'create-password__input--error': this.state.passwordConfirmationError,
+              })}
+            >
+              <input
+                type="password"
+                placeholder="Confirm Password"
+                value={this.state.passwordConfirmation}
+                onChange={this.onChange('passwordConfirmation')}
+              />
+            </div>
+            {this.renderError('passwordConfirmationError')}
+          </Submittable>
         </div>
         <div className="create-password__footer">
           <button
             className="extension_cta_button create_cta"
-            onClick={this.onClickNext}
+            onClick={this.onSubmit}
           >
             Next
           </button>

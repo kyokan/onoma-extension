@@ -41,20 +41,17 @@ export default class ConfirmSeed extends Component {
     } = this.props;
 
     return (
-      <div className="extension_primary_section create-password">
-        <div
-          className="subheader_text clickable"
-          onClick={onBack}
-        >
-          <span className="directional_symbol create_back">
-            <i className="arrow left" />
+      <div className="create-password">
+        <div className="create-password__header">
+          <i className="arrow left clickable" onClick={onBack} />
+          <span className="create-password__cancel">
+            Cancel
           </span>
-          <span>Back</span>
+        </div>
+        <div className="create-password__status-bar">
+          <StatusBar currentStep={currentStep} totalSteps={totalSteps} />
         </div>
         <div className="create-password__content">
-          <div className="create_status_bar">
-            <StatusBar currentStep={currentStep} totalSteps={totalSteps} />
-          </div>
           <div className="header_text">Verify Your Seed Phrase</div>
           <div className="subheader_text copy-seed__subheader">
             This is your secret 24-word phrase to recover your funds. This is the only way to access your funds. Do not lose this phrase.
@@ -77,19 +74,21 @@ export default class ConfirmSeed extends Component {
             />
           </div>
         </div>
-        <button
-          className="extension_cta_button create_cta"
-          onClick={() => {
-            if (this.state.words === this.props.seedphrase) {
-              onNext();
-            } else {
-              this.setState({ pasteAttempted: true });
-              setTimeout(() => this.setState({ pasteAttempted: false }), 1000);
-            }
-          }}
-        >
-          Next
-        </button>
+        <div className="create-password__footer">
+          <button
+            className="extension_cta_button create_cta"
+            onClick={() => {
+              if (this.state.words === this.props.seedphrase) {
+                onNext();
+              } else {
+                this.setState({ pasteAttempted: true });
+                setTimeout(() => this.setState({ pasteAttempted: false }), 1000);
+              }
+            }}
+          >
+            Next
+          </button>
+        </div>
       </div>
     );
   }

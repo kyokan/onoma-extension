@@ -8,7 +8,12 @@ import Checkbox from '../../../components/Checkbox';
 @withRouter
 export default class InterstitialWarningModal extends Component {
   static propTypes = {
-    nextRoute: PropTypes.string.isRequired
+    nextRoute: PropTypes.string.isRequired,
+    nextAction: PropTypes.func
+  };
+
+  static defaultProps = {
+    nextAction: () => Promise.resolve()
   };
 
   constructor(props) {
@@ -38,7 +43,8 @@ export default class InterstitialWarningModal extends Component {
     this.props.history.push('/settings');
   };
 
-  onClickSubmit =() => {
+  onClickSubmit = async () => {
+    await this.props.nextAction();
     this.props.history.push(this.props.nextRoute);
   };
 
