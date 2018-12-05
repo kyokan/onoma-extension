@@ -29,6 +29,8 @@ export default class App extends Component {
   };
 
   render() {
+    const { height, currentHash } = this.props;
+
     return (
       <div className="default">
         <div className="default__header">
@@ -46,8 +48,12 @@ export default class App extends Component {
         <div className="default__content">
           <div className="default__content__title">Allison Animates the Web</div>
           <button
-            className="extension_cta_button cta__btn default_cta"
-            onClick={() => this.props.history.push('/funding-options')}
+            className="default__content__cta"
+            onClick={() => {
+              const url = extension.runtime.getURL('window.html');
+              extension.tabs.create({ url });
+              // this.props.history.push('/funding-options')
+            }}
           >
             Set up my Handshake wallet
           </button>
@@ -65,24 +71,22 @@ export default class App extends Component {
           </div>
         </div>
         <div className="default__footer">
-          <div className="login_resolver_switch">
-            <span>
-              <label className="switch">
-                <input
-                  type="checkbox"
-                  defaultChecked={!!localStorage.getItem('shouldResolveOnHandshake')}
-                  onChange={() => {
-                    this.props.toggleResolve();
-                  }}
-                />
-                <span className="slider round" />
-              </label>
-            </span>
-            <span className="switch-text login_switch_text">
-              Resolve on Handshake
-            </span>
-            <span className="default__info-icon" />
+          <span>
+            <label className="switch">
+              <input
+                type="checkbox"
+                defaultChecked={!!localStorage.getItem('shouldResolveOnHandshake')}
+                onChange={() => {
+                  this.props.toggleResolve();
+                }}
+              />
+              <span className="slider round" />
+            </label>
           </span>
+          <span className="default__toggle-text">
+            Resolve on Handshake
+          </span>
+          <span className="default__info-icon" />
         </div>
       </div>
     );
