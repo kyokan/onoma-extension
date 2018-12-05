@@ -25,7 +25,7 @@ export default async function startNode() {
     hash: true,
     query: true,
     prune: true,
-    network: 'testnet',
+    network: 'simnet',
     memory: false,
     coinCache: 30,
     logConsole: true,
@@ -33,7 +33,8 @@ export default async function startNode() {
     workerFile: '/worker.js',
     createSocket: (port, host) => ProxySocket.connect('ws://hnsd-1.dev.kyokan.io:8081', port, host),
     logger,
-    plugins: [plugin]
+    plugins: [plugin],
+    seeds: ['aorsxa4ylaacshipyjkfbvzfkh3jhh4yowtoqdt64nzemqtiw2whk@18.217.172.158']
   });
 
   // const { wdb } = node.require('walletdb');

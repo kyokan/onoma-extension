@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { VIEW_TYPES } from '../../ducks/extension';
 import * as walletActions from '../../ducks/wallet';
 import * as chainActions from '../../ducks/chain';
 
@@ -23,14 +22,14 @@ import './App.scss';
   }),
   dispatch => ({
     startWalletPoller: () => dispatch(walletActions.startWalletPoller()),
-    getChainInfo: () => dispatch(chainActions.getChainInfo()),
+    startChainInfoPoller: () => dispatch(chainActions.startChainInfoPoller()),
   }),
 )
 export default class App extends Component {
   static propTypes = {
     address: PropTypes.string.isRequired,
     startWalletPoller: PropTypes.func.isRequired,
-    getChainInfo: PropTypes.func.isRequired,
+    startChainInfoPoller: PropTypes.func.isRequired,
     currentView: PropTypes.string,
     initialized: PropTypes.bool.isRequired,
     isLocked: PropTypes.bool.isRequired,
@@ -38,7 +37,7 @@ export default class App extends Component {
 
   async componentWillMount() {
     await this.props.startWalletPoller();
-    this.props.getChainInfo();
+    await this.props.startChainInfoPoller();
   }
 
   render() {

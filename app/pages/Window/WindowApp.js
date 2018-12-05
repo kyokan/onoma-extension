@@ -25,7 +25,7 @@ import FundAccessOptions from '../Extension/FundAccessOptions';
   }),
   dispatch => ({
     startWalletPoller: () => dispatch(walletActions.startWalletPoller()),
-    getChainInfo: () => dispatch(chainActions.getChainInfo()),
+    startChainInfoPoller: () => dispatch(chainActions.startChainInfoPoller()),
   }),
 )
 export default class WindowApp extends Component {
@@ -39,7 +39,7 @@ export default class WindowApp extends Component {
 
   static propTypes = {
     startWalletPoller: PropTypes.func.isRequired,
-    getChainInfo: PropTypes.func.isRequired,
+    startChainInfoPoller: PropTypes.func.isRequired,
     initialized: PropTypes.bool.isRequired,
     isLocked: PropTypes.bool.isRequired,
     address: PropTypes.string.isRequired,
@@ -48,7 +48,7 @@ export default class WindowApp extends Component {
   async componentDidMount() {
     try {
       await this.props.startWalletPoller();
-      await this.props.getChainInfo();
+      await this.props.startChainInfoPoller();
     } catch (e) {
     }
 

@@ -51,6 +51,7 @@ export default class CreatePassword extends Component {
               placeholder="Your password"
               onChange={e => this.setState({ passphrase: e.target.value })}
               value={passphrase}
+              autoFocus
             />
           </div>
         </Submittable>
