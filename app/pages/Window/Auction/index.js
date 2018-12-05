@@ -137,7 +137,6 @@ function getSellAmount(status, bids) {
 function getStatus(domain = {}, bids = []) {
   const closeDate = getCloseDate(domain, bids);
 
-  return SOLD
   if (domain.start && domain.start.reserved) {
     return RESERVE;
   }
@@ -174,11 +173,11 @@ function getCloseDate(domain = {}, bids = []) {
   (state, ownProps) => {
     const domain = state.domains[ownProps.match.params.name] || {};
     const bids = [
-      {
-        timePlaced: new Date('October 6, 2018'), // Date,
-        bidder: 'you', // you or hexString,
-        bidAmount: 2500.5 // number HNS
-      },
+      // {
+      //   timePlaced: new Date('October 6, 2018'), // Date,
+      //   bidder: 'you', // you or hexString,
+      //   bidAmount: 2500.5 // number HNS
+      // },
     ];
 
     return {
@@ -189,8 +188,8 @@ function getCloseDate(domain = {}, bids = []) {
       biddingOpenBlock: domain.start && domain.start.start,
       biddingCloseDate: getCloseDate(domain, bids),
       biddingCloseBlock: null,
-      paidValue: 1000000000 || domain.info && domain.info.value,
-      owner: 'ts1qg9v8g9ccht2nvslkxd0h2aujcvglfxnjme8x6s' || domain.info && domain.info.owner,
+      paidValue: domain.info && domain.info.value,
+      owner: domain.info && domain.info.owner,
     };
   },
   dispatch => ({
