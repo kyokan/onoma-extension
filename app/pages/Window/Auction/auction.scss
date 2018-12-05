@@ -265,6 +265,9 @@
     box-sizing: border-box;
     font-size: .8rem;
     padding: .5rem .75rem;
+    input {
+      background-color: $white;
+    }
   }
 
   &__button {
