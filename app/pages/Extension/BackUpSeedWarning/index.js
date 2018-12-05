@@ -23,6 +23,7 @@ export default class BackUpSeedWarning extends Component {
       currentStep,
       totalSteps,
       onBack,
+      onNext
     } = this.props;
 
     return (
@@ -57,6 +58,7 @@ export default class BackUpSeedWarning extends Component {
         <div className="backup-warning__footer">
           <button
             className="extension_cta_button create_cta"
+            onClick={onNext}
           >
             Next
           </button>

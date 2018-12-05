@@ -10,6 +10,7 @@ import Account from './Account';
 import FundAccessOptions from './FundAccessOptions';
 import CreateNewAccount from './CreateNewAccount';
 import AccountLogin from './AccountLogin';
+import { MemoryRouter, Redirect, Route, Switch } from 'react-router-dom';
 
 import './App.scss';
 
@@ -21,47 +22,61 @@ import './App.scss';
     isLocked: state.wallet.isLocked,
   }),
   dispatch => ({
-    fetchWallet: () => dispatch(walletActions.fetchWallet()),
+    startWalletPoller: () => dispatch(walletActions.startWalletPoller()),
     getChainInfo: () => dispatch(chainActions.getChainInfo()),
   }),
 )
 export default class App extends Component {
   static propTypes = {
     address: PropTypes.string.isRequired,
-    fetchWallet: PropTypes.func.isRequired,
+    startWalletPoller: PropTypes.func.isRequired,
     getChainInfo: PropTypes.func.isRequired,
     currentView: PropTypes.string,
     initialized: PropTypes.bool.isRequired,
     isLocked: PropTypes.bool.isRequired,
   };
 
-  componentWillMount() {
-    this.props.fetchWallet();
+  async componentWillMount() {
+    await this.props.startWalletPoller();
     this.props.getChainInfo();
   }
 
   render() {
-    const { currentView, address, initialized, isLocked } = this.props;
+    return (
+      <MemoryRouter>
+        {this.renderRoutes()}
+      </MemoryRouter>
+    );
+  }
 
-    if (!initialized) {
-      return <noscript />;
+  renderRoutes() {
+    if (!this.props.initialized) {
+      return (
+        <Switch>
+          <Route path="/new-wallet" component={CreateNewAccount} />
+          <Route path="/funding-options" component={FundAccessOptions} />
+          <Route path="/" component={ExtensionDefault} />
+          <Redirect to="/" />
+        </Switch>
+      );
     }
 
-    if (isLocked) {
-      return <AccountLogin />;
+    if (this.props.isLocked) {
+      return (
+        <Switch>
+          <Route path="/new-wallet" component={CreateNewAccount} />
+          <Route path="/funding-options" component={FundAccessOptions} />
+          <Route path="/" component={AccountLogin} />
+          <Redirect to="/" />
+        </Switch>
+      );
     }
 
-    switch (currentView) {
-      case VIEW_TYPES.DEFAULT:
-        return address
-          ? <Account />
-          : <ExtensionDefault />;
-      case VIEW_TYPES.CREATE_ACCOUNT_OPTIONS:
-        return <FundAccessOptions />;
-      case VIEW_TYPES.CREATE_NEW_ACCOUNT:
-        return <CreateNewAccount />;
-      default:
-        return <div>View Not Yet Defined</div>;
-    }
+    return (
+      <Switch>
+        <Route path="/account" component={Account} />
+        <Redirect to="/account" />
+      </Switch>
+    );
   }
 }

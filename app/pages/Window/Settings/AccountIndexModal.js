@@ -14,7 +14,7 @@ export default class AccountIndexModal extends Component {
           Enter an account index you would like to <br /> interact with.
         </div>
         <div className="account-index-modal__path">
-          m / 44' / 5353' / <input type="text" placeholder="0" className="account-index-modal__path-entry" />
+          m / 44' / 5353' / <input type="text" placeholder="0" className="account-index-modal__path-entry" autoFocus />
         </div>
         <button className="account-index-modal__submit">
           Change index

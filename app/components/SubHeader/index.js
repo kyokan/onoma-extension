@@ -10,7 +10,10 @@ import * as domainActions from '../../ducks/domains';
 
 @withRouter
 @connect(
-  null,
+  state => ({
+    initialized: state.wallet.initialized,
+    isLocked: state.wallet.isLocked,
+  }),
   dispatch => ({
     getNameInfo: tld => dispatch(domainActions.getNameInfo(tld)),
   })
@@ -24,6 +27,7 @@ export default class SubHeader extends Component {
       pathname: PropTypes.string.isRequired,
     }),
     getNameInfo: PropTypes.func.isRequired,
+    isLocked: PropTypes.bool.isRequired,
   };
 
   constructor(props) {
@@ -78,73 +82,89 @@ export default class SubHeader extends Component {
   };
 
   render() {
+    const name = c('subheader', {
+      'subheader--empty': !this.props.initialized || this.props.isLocked
+    });
+
+    return (
+      <div className={name}>
+        <div className="subheader__content">
+          <div className="subheader__logo" />
+          {this.renderNav()}
+        </div>
+        { this.renderModal() }
+      </div>
+    )
+  }
+
+  renderNav() {
+    if (!this.props.initialized || this.props.isLocked) {
+      return null;
+    }
+
     const { history: { push }, location: { pathname } } = this.props;
     const { isShowingSendModal, isShowingReceiveModal } = this.state;
     const isShowingModal = isShowingSendModal || isShowingReceiveModal;
 
     return (
-      <div className="subheader">
-        <div className="subheader__content">
-          <div className="subheader__logo" />
-          <div className="subheader__search">
-            <input
-              className="subheader__search__input"
-              type="text"
-              value={this.state.inputValue}
-              onChange={this.handleInputValueChange}
-              onKeyDown={e => e.key === 'Enter' && this.handleSearchClick()}
-              placeholder="Lookup top-level domain"
-            />
-            <div
-              className="subheader__search__icon"
-              onClick={this.handleSearchClick}
-            />
-          </div>
-          <div className="subheader__actions">
-            <a
-              className={c('subheader__action', {
-                'subheader__action--selected': !isShowingModal && /account|send|receive/.test(pathname),
-              })}
-              onClick={() => push('/account')}
-            >
-              Home
-            </a>
-            <a
-              className={c('subheader__action', {
-                'subheader__action--selected': isShowingSendModal,
-              })}
-              onClick={this.openSendModal}
-            >
-              Send
-            </a>
-            <a
-              className={c('subheader__action', {
-                'subheader__action--selected': isShowingReceiveModal,
-              })}
-              onClick={this.openReceiveModal}
-            >
-              Receive
-            </a>
-            <a
-              className={c('subheader__action', {
-                'subheader__action--selected': !isShowingModal && /get_coins/.test(pathname),
-              })}
-              onClick={() => push('/get_coins')}
-            >
-              Get Coins
-            </a>
-            <a
-              className={c('subheader__action', {
-                'subheader__action--selected': !isShowingModal && /settings/.test(pathname),
-              })}
-              onClick={() => push('/settings')}
-            >
-              Settings
-            </a>
-          </div>
+      <React.Fragment>
+        <div className="subheader__search">
+          <input
+            className="subheader__search__input"
+            type="text"
+            value={this.state.inputValue}
+            onChange={this.handleInputValueChange}
+            onKeyDown={e => e.key === 'Enter' && this.handleSearchClick()}
+            placeholder="Lookup top-level domain"
+          />
+          <div
+            className="subheader__search__icon"
+            onClick={this.handleSearchClick}
+          />
         </div>
-        { this.renderModal() }
-      </div>
-    )
+        <div className="subheader__actions">
+          <a
+            className={c('subheader__action', {
+              'subheader__action--selected': !isShowingModal && /account|send|receive/.test(pathname),
+            })}
+            onClick={() => push('/account')}
+          >
+            Home
+          </a>
+          <a
+            className={c('subheader__action', {
+              'subheader__action--selected': isShowingSendModal,
+            })}
+            onClick={this.openSendModal}
+          >
+            Send
+          </a>
+          <a
+            className={c('subheader__action', {
+              'subheader__action--selected': isShowingReceiveModal,
+            })}
+            onClick={this.openReceiveModal}
+          >
+            Receive
+          </a>
+          <a
+            className={c('subheader__action', {
+              'subheader__action--selected': !isShowingModal && /get_coins/.test(pathname),
+            })}
+            onClick={() => push('/get_coins')}
+          >
+            Get Coins
+          </a>
+          <a
+            className={c('subheader__action', {
+              'subheader__action--selected': !isShowingModal && /settings/.test(pathname),
+            })}
+            onClick={() => push('/settings')}
+          >
+            Settings
+          </a>
+        </div>
+      </React.Fragment>
+    );
   }
 };

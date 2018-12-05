@@ -3,6 +3,7 @@ import MiniModal from '../../../components/Modal/MiniModal';
 import './reveal-seed-modal.scss';
 import { connect } from 'react-redux';
 import * as walletActions from '../../../ducks/wallet';
+import Submittable from '../../../components/Submittable';
 
 @connect(
   () => ({}),
@@ -67,14 +68,17 @@ class RevealSeedModal extends Component {
         <div className="reveal-seed-modal__instructions">
           Enter your password to reveal your seed phrase.
         </div>
-        <input
-          type="password"
-          className="reveal-seed-modal__password"
-          placeholder="Your password"
-          value={this.state.passphrase}
-          onChange={this.onChangePassphrase}
-        />
-        {this.renderErrorMessage()}
+        <Submittable onSubmit={this.onClickReveal}>
+          <input
+            type="password"
+            className="reveal-seed-modal__password"
+            placeholder="Your password"
+            value={this.state.passphrase}
+            onChange={this.onChangePassphrase}
+            autoFocus
+          />
+          {this.renderErrorMessage()}
+        </Submittable>
         <button className="reveal-seed-modal__submit" onClick={this.onClickReveal}>
           Reveal recovery phrase
         </button>

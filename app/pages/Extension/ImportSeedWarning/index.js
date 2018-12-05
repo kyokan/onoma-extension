@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
-import actions from '../../../actions/extension.js';
-import StatusBar from '../../../components/StatusBar/index.js';
+import actions from '../../../ducks/extension';
+import StatusBar from '../../../components/StatusBar';
 import './importwarning.scss';
+import { withRouter } from 'react-router-dom';
 
 @connect(
   state => ({
@@ -15,13 +16,13 @@ import './importwarning.scss';
     }, dispatch)
   })
 )
+@withRouter
 export default class ImportSeedWarning extends Component {
-
   static propTypes = {};
 
   state = {
     agreementConfirmed: false,
-  }
+  };
 
   handleAgreementClick() {
     const agreement = this.state.agreementConfirmed;
@@ -71,7 +72,7 @@ export default class ImportSeedWarning extends Component {
         </div>
         <button
           className={classNames(['import_cta', agreementConfirmed ? 'import_cta_button__active' : 'import_cta_button'])}
-          onClick={() => {this.props.actions.setView('default')}}
+          onClick={() => this.props.history.push('/')}
         >
           I Agree, Continue
         </button>

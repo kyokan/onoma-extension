@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import * as extensionActions from '../../../ducks/extension';
 import * as walletActions from '../../../ducks/wallet';
 import './login.scss';
+import ExtensionWrapper from '../ExtensionWrapper';
+import Submittable from '../../../components/Submittable';
 
 const { VIEW_TYPES } = extensionActions;
 
@@ -39,17 +41,19 @@ export default class CreatePassword extends Component {
     const { passphrase } = this.state;
 
     return (
-      <div className={`extension_primary_section ${className}`}>
+      <ExtensionWrapper className={className}>
         <div className="header_text"> Log in to your wallet </div>
-        <div>
-          <input
-            className="login_password_input"
-            type="password"
-            placeholder="Your password"
-            onChange={e => this.setState({ passphrase: e.target.value })}
-            value={passphrase}
-          />
-        </div>
+        <Submittable onSubmit={() => this.props.unlockWallet(passphrase)}>
+          <div>
+            <input
+              className="login_password_input"
+              type="password"
+              placeholder="Your password"
+              onChange={e => this.setState({ passphrase: e.target.value })}
+              value={passphrase}
+            />
+          </div>
+        </Submittable>
         <button
           className="extension_cta_button login_cta"
           onClick={() => this.props.unlockWallet(passphrase)}
@@ -93,7 +97,7 @@ export default class CreatePassword extends Component {
             Resolve on Handshake
           </span>
         </div>
-      </div>
+      </ExtensionWrapper>
     );
   }
 }

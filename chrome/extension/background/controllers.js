@@ -10,19 +10,20 @@ export async function getWallet(node) {
   const wallet = await wdb.get('extension');
 
   if (!wallet) {
-    return { address: '', type: NONE };
+    return { address: '', type: NONE, initialized: false };
   }
 
   const account = await wallet.getAccount('default');
 
   if (!account) {
-    return { address: '', type: NONE };
+    return { address: '', type: NONE, initialized: false };
   }
 
   const receive = account.receiveAddress();
   const address = receive.toString(node.network);
 
   const balance = await wallet.getBalance('default');
+  console.log(localStorage.getItem('initialized'));
 
   return {
     address,
@@ -31,11 +32,37 @@ export async function getWallet(node) {
     balance: {
       confirmed: Amount.coin(balance.confirmed),
       unconfirmed: Amount.coin(balance.unconfirmed),
-    }
+    },
+    initialized: !!localStorage.getItem('initialized'),
   };
 }
 
+export async function removeWallet(req, res) {
+  try {
+    localStorage.removeItem('initialized');
+    await _removeWallet(node);
+    res.send({ id: req.id });
+  } catch (err) {
+    res.send({
+      id: req.id,
+      error: true,
+      payload: err.message
+    });
+  }
+}
+
+export async function completeInitialization(req, res) {
+  localStorage.setItem('initialized', '1');
+  console.log(localStorage.getItem('initialized'));
+  res.send({ id: req.id })
+}
+
 export async function createWallet(node, passphrase) {
+  const existingWallet = await _getWallet(node);
+  if (existingWallet) {
+    await _removeWallet(node);
+  }
+
   const { wdb } = node.require('walletdb');
   const wallet = await wdb.create({
     id: 'extension',
@@ -216,4 +243,12 @@ async function _getWallet(node) {
   } catch (e) {
     return null;
   }
+}
+
+async function _removeWallet(node) {
+  const { wdb } = node.require('walletdb');
+
+  await wdb.db.close();
+  await wdb.db.destroy();
+  await wdb.db.open();
 }

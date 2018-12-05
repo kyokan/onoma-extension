@@ -12,7 +12,8 @@ import * as walletActions from '../../../ducks/wallet';
 @connect(
   () => ({}),
   dispatch => ({
-    lockWallet: () => dispatch(walletActions.lockWallet())
+    lockWallet: () => dispatch(walletActions.lockWallet()),
+    removeWallet: () => dispatch(walletActions.removeWallet())
   })
 )
 export default class Settings extends Component {
@@ -61,8 +62,8 @@ export default class Settings extends Component {
         </ul>
         <Switch>
           <Route path="/settings/account-index" component={AccountIndexModal} />
-          <Route path="/settings/import-seed" render={() => <InterstitialWarningModal nextRoute="/account" />} />
-          <Route path="/settings/new-wallet" render={() => <InterstitialWarningModal nextRoute="/account" />} />
+          <Route path="/settings/import-seed" render={() => <InterstitialWarningModal nextAction={this.props.removeWallet} nextRoute="/import-seed" />} />
+          <Route path="/settings/new-wallet" render={() => <InterstitialWarningModal nextAction={this.props.removeWallet} nextRoute="/" />} />
           <Route path="/settings/reveal-seed" component={RevealSeedModal} />
         </Switch>
       </ContentArea>

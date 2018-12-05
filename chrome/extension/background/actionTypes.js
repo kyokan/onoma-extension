@@ -7,3 +7,5 @@ export const SEND = 'SEND';
 export const TOGGLE_RESOLVE = 'TOGGLE_RESOLVE';
 export const RPC_REQUEST = 'RPC_REQUEST';
 export const REVEAL_SEED = 'REVEAL_SEED';
+export const REMOVE_WALLET = 'REMOVE_WALLET';
+export const COMPLETE_INITIALIZATION = 'COMPLETE_INITIALIZATION';

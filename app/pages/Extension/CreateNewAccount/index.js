@@ -10,9 +10,10 @@ import client from '../../../utils/client';
 import { CREATE_WALLET } from '../../../../chrome/extension/background/actionTypes';
 import * as walletActions from '../../../ducks/wallet';
 import * as extensionDuck from '../../../ducks/extension';
+import { withRouter } from 'react-router-dom';
 
 const { VIEW_TYPES } = extensionDuck;
-const TERM_OF_USE = 0;
+const TERMS_OF_USE = 0;
 const CREATE_PASSWORD = 1;
 const BACK_UP_SEED_WARNING = 2;
 const COPY_SEEDPHRASE = 3;
@@ -21,26 +22,25 @@ const CONFIRM_SEEDPHRASE = 4;
 @connect(
   null,
   dispatch => ({
-    fetchWallet: () => dispatch(walletActions.fetchWallet()),
-    setView: viewType => dispatch(extensionDuck.setView(viewType)),
+    completeInitialization: () => dispatch(walletActions.completeInitialization()),
   }),
 )
+@withRouter
 export default class CreateNewAccount extends Component {
 
   static propTypes = {
-    fetchWallet: PropTypes.func.isRequired,
-    setView: PropTypes.func.isRequired,
+    completeInitialization: PropTypes.func.isRequired,
   };
 
   state = {
-    currentStep: TERM_OF_USE,
+    currentStep: TERMS_OF_USE,
     seedphrase: '',
     address: '',
   };
 
   render() {
     switch (this.state.currentStep) {
-      case TERM_OF_USE:
+      case TERMS_OF_USE:
         return (
           <Terms
             onAccept={() => this.setState({ currentStep: CREATE_PASSWORD })}
@@ -51,18 +51,16 @@ export default class CreateNewAccount extends Component {
           <CreatePassword
             currentStep={1}
             totalSteps={3}
-            onBack={() => this.setState({currentStep: TERM_OF_USE})}
+            onBack={() => this.setState({currentStep: TERMS_OF_USE})}
             onNext={(password) => {
-              // client.dispatch({type: CREATE_WALLET, payload: password})
-              //   .then(({address, seed}) => {
+              client.dispatch({type: CREATE_WALLET, payload: password})
+                .then(({address, seed}) => {
                   this.setState({
-                    // address,
-                    // seedphrase: seed,
-                    address: '0xhello',
-                    seedphrase: ['a', 'b', 'c', 'd'],
+                    address: address,
+                    seedphrase: seed,
                     currentStep: BACK_UP_SEED_WARNING,
                   });
-            //     }).catch(console.error.bind(console));
+                }).catch(console.error.bind(console));
             }}
           />
         );
@@ -71,8 +69,8 @@ export default class CreateNewAccount extends Component {
           <BackUpSeedWarning
             currentStep={2}
             totalSteps={3}
-            onBack={() => ({})}
-            onNext={() => ({})}
+            onBack={() => this.setState({ currentStep: CREATE_PASSWORD })}
+            onNext={() => this.setState({ currentStep: COPY_SEEDPHRASE })}
           />
         );
       case COPY_SEEDPHRASE:
@@ -92,9 +90,9 @@ export default class CreateNewAccount extends Component {
             totalSteps={4}
             seedphrase={this.state.seedphrase}
             onBack={() => this.setState({ currentStep: COPY_SEEDPHRASE })}
-            onNext={() => {
-              this.props.fetchWallet();
-              this.props.setView(VIEW_TYPES.DEFAULT);
+            onNext={async () => {
+              await this.props.completeInitialization();
+              this.props.history.push('/');
             }}
           />
         );
