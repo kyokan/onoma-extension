@@ -11,7 +11,7 @@ class Account extends Component {
     accountIndex: PropTypes.number.isRequired,
     balance: PropTypes.object.isRequired,
     transactions: PropTypes.array.isRequired,
-    domains: PropTypes.array.isRequired,
+    domains: PropTypes.array.isRequired
   };
 
   static defaultProps = {
@@ -19,11 +19,11 @@ class Account extends Component {
     accountIndex: 0,
     balance: bn(0),
     transactions: [],
-    domains: [],
+    domains: []
   };
 
   state = {
-    isShowingAccountModal: false,
+    isShowingAccountModal: false
   };
 
   openModal = () => this.setState({ isShowingAccountModal: true });
@@ -33,10 +33,86 @@ class Account extends Component {
 
   renderTransactions() {
     const { transactions } = this.props;
+    const transactionsDummyArray = [
+      {
+        id: 1,
+        type: 'sent',
+        date: 1544033054,
+        pending: true,
+        receiver: '1G83fdm3HUXrCNLbtMDqcw6o5GNn4xqX',
+        amount: 5
+      },
+      {
+        id: 2,
+        type: 'received',
+        date: 1544032412,
+        pending: false,
+        sender: '1G83fdm3HUXrCNLbtMDqcw6o5GNn4xqX',
+        amount: 7500
+      },
+      {
+        id: 3,
+        type: 'received',
+        date: 1544013054,
+        pending: false,
+        sender: '1G83fdm3HUXrCNLbtMDqcw6o5GNn4xqX',
+        amount: 1
+      },
+      {
+        id: 4,
+        type: 'sent',
+        date: 1544012054,
+        pending: false,
+        receiver: '1G83fdm3HUXrCNLbtMDqcw6o5GNn4xqX',
+        amount: 0.00025
+      },
+      {
+        id: 5,
+        type: 'received',
+        date: 1544011054,
+        pending: false,
+        sender: '1G83fdm3HUXrCNLbtMDqcw6o5GNn4xqX',
+        amount: 1
+      }
+    ];
 
-    return !transactions.length
+    const renderIcon = tx => {
+      if (tx.pending) {
+        return <div className="account__list-item__pending-icon" />;
+      } else if (tx.type === 'sent') {
+        return <div className="account__list-item__sent-icon" />;
+      } else if (tx.type === 'received') {
+        return <div className="account__list-item__received-icon" />;
+      }
+      throw new Error('tx type not defined');
+    };
+
+    return !transactionsDummyArray.length
       ? this.renderEmpty('You do not have any transactions')
-      : transactions.map(tx => <div>I am a transaction</div>);
+      : transactionsDummyArray.map((tx, index) => (
+        <div>
+          <div className="account__list-item" id={tx.id}>
+            {renderIcon(tx)}
+            <div>
+              <div className="account__list-item__title">10/13/18</div>
+              <div className="account__list-item__subtitle">6:52 PM</div>
+            </div>
+            <div>
+              <div className="account__list-item__title">Reiceived funds</div>
+              <div className="account__list-item__subtitle">
+                  from 1G83fdm3HUXrCNLbtMDqcw6o5GNn4xqX
+                </div>
+            </div>
+            <div style={{ textAlign: 'right' }}>
+              <div className="account__list-item__number-positive">+23 HNS</div>
+              <div className="account__list-item__subtitle">7499.00075 HNS</div>
+            </div>
+          </div>
+          {index < transactionsDummyArray.length - 1 && (
+          <div className="account__list-item__divider" />
+            )}
+        </div>
+        ));
   }
 
   renderDomains() {
@@ -50,47 +126,33 @@ class Account extends Component {
   renderAccountModal() {
     const { accountBase, accountIndex } = this.props;
 
-    return !this.state.isShowingAccountModal
-      ? null
-      : (
-        <Modal
-          className="account__switch-account-modal"
-          onClose={this.closeModal}
-        >
-          <div className="account__switch-account-modal__wrapper">
-            <div
-              className="account__switch-account-modal__close-btn"
-              onClick={this.closeModal}
-            >
-              ✕
-            </div>
-            <div className="account__switch-account-modal__header">
-              <div className="account__switch-account-modal__title">
-                Switch Account
-              </div>
-              <div className="account__switch-account-modal__subtitle">
-                Enter an account index you would like to interact with
-              </div>
-            </div>
-            <div className="account__switch-account-modal__content">
-              <div className="account__switch-account-modal__account-base">
-                {`${accountBase}`}
-              </div>
-              <input
-                type="number"
-                className="account__switch-account-modal__account-index"
-                placeholder={accountIndex}
-                min="0"
-              />
-            </div>
-            <div className="account__switch-account-modal__footer">
-              <button className="account__switch-account-modal__btn">
-                Switch
-              </button>
+    return !this.state.isShowingAccountModal ? null : (
+      <Modal className="account__switch-account-modal" onClose={this.closeModal}>
+        <div className="account__switch-account-modal__wrapper">
+          <div className="account__switch-account-modal__close-btn" onClick={this.closeModal}>
+            ✕
+          </div>
+          <div className="account__switch-account-modal__header">
+            <div className="account__switch-account-modal__title">Switch Account</div>
+            <div className="account__switch-account-modal__subtitle">
+              Enter an account index you would like to interact with
             </div>
           </div>
-        </Modal>
-      );
+          <div className="account__switch-account-modal__content">
+            <div className="account__switch-account-modal__account-base">{`${accountBase}`}</div>
+            <input
+              type="number"
+              className="account__switch-account-modal__account-index"
+              placeholder={accountIndex}
+              min="0"
+            />
+          </div>
+          <div className="account__switch-account-modal__footer">
+            <button className="account__switch-account-modal__btn">Switch</button>
+          </div>
+        </div>
+      </Modal>
+    );
   }
 
   render() {
@@ -98,9 +160,7 @@ class Account extends Component {
 
     return (
       <div className="account">
-        <div
-          className="account__address"
-        >
+        <div className="account__address">
           <div>Default Account</div>
           <div className="account__info-icon" />
         </div>
@@ -114,21 +174,19 @@ class Account extends Component {
         <div className="account__content">
           <div className="account__transactions">
             <div className="account__panel-title">Your Recent Transactions</div>
-            { this.renderTransactions() }
+            {this.renderTransactions()}
           </div>
           <div className="account__domains">
             <div className="account__panel-title">Your Domains</div>
-            { this.renderDomains() }
+            {this.renderDomains()}
           </div>
         </div>
         {this.renderAccountModal()}
       </div>
-    )
+    );
   }
 }
 
-export default connect(
-  state => ({
-    balance: bn(state.wallet.balance.confirmed),
-  }),
-)(Account);
+export default connect(state => ({
+  balance: bn(state.wallet.balance.confirmed)
+}))(Account);
