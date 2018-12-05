@@ -3,65 +3,46 @@ import { connect } from 'react-redux';
 // import classNames from 'classnames';
 import * as actions from '../../../ducks/extension';
 import './access.scss';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 const { VIEW_TYPES } = actions;
 
-@connect(
-  state => ({
-  }),
-  dispatch => ({
-  }),
-)
+// @connect(
+//   state => ({
+//   }),
+//   dispatch => ({
+//   }),
+// )
+@withRouter
 export default class FundAccessOptions extends Component {
-  renderCheck = () => (
-    <div className="circle-check-container">
-      <div className="circle-check-symbol" />
-    </div>
-  );
 
   render() {
-    const { setView } = this.props;
-
     return (
-      <div className="extension_primary_section">
-        <div
-          className="subheader_text clickable"
-          onClick={() => this.props.setView(VIEW_TYPES.DEFAULT)}
-        >
-          <span className="directional_symbol access_back">
-            <i className="arrow left" />
-          </span>
-          <span>
-            Back
-          </span>
+      <div className="extension_primary_section funding-options">
+        <div className="funding-options__header">
+          <div className="funding-options__header__alice" />
+          <div className="funding-options__header__the-cat" />
         </div>
-        <div className="extension_primary_line_break access_line_break" />
-        <div className="header_text"> How would you like to access your wallet? </div>
-        <div className="access_cta_wrapper">
-          <button className="access_cta_button">
-            { this.renderCheck() }
-            <div className="access_cta_primary_text">
-              <span>Connect Ledger Device</span>
-            </div>
-            <div className="access_cta_secondary_text"> Recommended </div>
+        <div className="funding-options__content">
+          <div className="funding-options__content__title">
+            Allison Animates the Web
+          </div>
+          <div className="funding-options__content__body-text">
+            Take control of your Handshake coins. browse Handshake websites, and auction domains.
+          </div>
+        </div>
+        <div className="funding-options__footer">
+          <button
+            className="funding-options__footer__primary-btn"
+            onClick={() => {
+              this.props.history.push('/new-wallet');
+            }}
+          >
+            Create a new wallet
           </button>
-
-          <Link className="access_cta_button" to="/import-seed">
-            { this.renderCheck() }
-            <div className="access_cta_primary_text">
-              <span>Import Seed Phrase</span>
-            </div>
-            <div className="access_cta_secondary_text"> Not Secure </div>
-          </Link>
-
-          <Link className="access_cta_button" to="/new-wallet">
-            { this.renderCheck() }
-            <div className="access_cta_primary_text">
-              <span> Create A New Wallet </span>
-            </div>
-            <div className="access_cta_secondary_text"> Not Secure </div>
-          </Link>
+          <button className="funding-options__footer__secondary-btn">
+            I already have a wallet
+          </button>
         </div>
       </div>
     );

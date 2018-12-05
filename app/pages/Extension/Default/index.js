@@ -22,7 +22,6 @@ const { VIEW_TYPES } = extensionDuck;
 @withRouter
 export default class App extends Component {
   static propTypes = {
-    setView: PropTypes.func.isRequired,
     toggleResolve: PropTypes.func.isRequired,
     currentHash: PropTypes.string.isRequired,
     height: PropTypes.number.isRequired,
@@ -51,8 +50,7 @@ export default class App extends Component {
             className="default__content__cta"
             onClick={() => {
               const url = extension.runtime.getURL('window.html');
-              extension.tabs.create({ url });
-              // this.props.history.push('/funding-options')
+              extension.tabs.create({ url: `${url}#/funding-options` });
             }}
           >
             Set up my Handshake wallet
