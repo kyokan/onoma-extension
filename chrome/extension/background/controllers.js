@@ -23,7 +23,6 @@ export async function getWallet(node) {
   const address = receive.toString(node.network);
 
   const balance = await wallet.getBalance('default');
-  console.log(localStorage.getItem('initialized'));
 
   return {
     address,
@@ -53,7 +52,6 @@ export async function removeWallet(req, res) {
 
 export async function completeInitialization(req, res) {
   localStorage.setItem('initialized', '1');
-  console.log(localStorage.getItem('initialized'));
   res.send({ id: req.id })
 }
 
@@ -74,7 +72,7 @@ export async function createWallet(node, passphrase) {
 
   return {
     address: account.receiveAddress().toString(node.network),
-    seed: wallet.master.mnemonic.mnemonic
+    seed: wallet.master.mnemonic.toString()
   };
 }
 
