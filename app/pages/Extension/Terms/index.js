@@ -5,17 +5,10 @@ import { connect } from 'react-redux';
 import * as actions from '../../../ducks/extension';
 import './terms.scss';
 
-@connect(
-  null,
-  dispatch => ({
-    setView: viewType => dispatch(actions.setView(viewType)),
-  })
-)
-export default class CreatePassword extends Component {
-
+export default class Terms extends Component {
   static propTypes = {
-    setView: PropTypes.func.isRequired,
     onAccept: PropTypes.func.isRequired,
+    onBack: PropTypes.func.isRequired
   };
 
   state = {
@@ -25,18 +18,14 @@ export default class CreatePassword extends Component {
   toggleTerms = () => this.setState({ hasAccepted: !this.state.hasAccepted });
 
   render() {
-    const {
-      setView,
-      onAccept,
-    } = this.props;
-
+    const { onAccept } = this.props;
     const { hasAccepted } = this.state;
 
     return (
       <div className="terms">
         <div
           className="terms__header clickable"
-          onClick={() => setView('default')}
+          onClick={this.props.onBack}
         >
           <i className="arrow left" />
         </div>
@@ -45,7 +34,7 @@ export default class CreatePassword extends Component {
             Terms of Use
           </div>
           <div className="subheader_text terms_subheader">
-            {'Please review and agree to the Handshake wallet\'s terms of use.'}
+            Please review and agree to the Handshake wallet's terms of use.
           </div>
           <button
             className={c('terms__button', { 'terms__button--accepted': hasAccepted })}

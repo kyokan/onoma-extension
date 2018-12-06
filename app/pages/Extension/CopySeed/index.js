@@ -2,9 +2,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// import classNames from 'classnames';
-import StatusBar from '../../../components/StatusBar/index';
 import './copy.scss';
+import WizardHeader from '../../../components/WizardHeader';
 
 @connect()
 export default class CopySeed extends Component {
@@ -15,6 +14,7 @@ export default class CopySeed extends Component {
     seedphrase: PropTypes.string.isRequired,
     onBack: PropTypes.func.isRequired,
     onNext: PropTypes.func.isRequired,
+    onCancel: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -27,26 +27,20 @@ export default class CopySeed extends Component {
       totalSteps,
       onBack,
       onNext,
+      onCancel,
       seedphrase,
     } = this.props;
 
     return (
       <div className="create-password">
-        <div className="create-password__header">
-          <i className="arrow left clickable" onClick={onBack} />
-          <span className="create-password__cancel">
-            Cancel
-          </span>
-        </div>
-        <div className="create-password__status-bar">
-          <StatusBar currentStep={currentStep} totalSteps={totalSteps} />
-        </div>
+        <WizardHeader currentStep={currentStep} totalSteps={totalSteps} onBack={onBack} onCancel={onCancel} />
         <div className="create-password__content">
           <div className="header_text">Your Recovery Seed Phrase</div>
           <div className="subheader_text copy-seed__subheader">
-            This is your secret 24-word phrase to recover your funds. This is the only way to access your funds. Do not lose this phrase.
+            This is your secret 24-word phrase to recover your funds. This is the only way to access your funds. Do not
+            lose this phrase.
           </div>
-          <div className="copy-seed__textarea" >
+          <div className="copy-seed__textarea">
             <textarea
               value={seedphrase}
               onClick={e => e.target.select()}

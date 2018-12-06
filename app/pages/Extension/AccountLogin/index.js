@@ -7,8 +7,6 @@ import './login.scss';
 import ExtensionWrapper from '../ExtensionWrapper';
 import Submittable from '../../../components/Submittable';
 
-const { VIEW_TYPES } = extensionActions;
-
 @connect(
   state => ({
     height: state.chain.height,
@@ -19,7 +17,7 @@ const { VIEW_TYPES } = extensionActions;
     toggleResolve: () => dispatch(extensionActions.toggleResolve()),
   }),
 )
-export default class CreatePassword extends Component {
+export default class AccountLogin extends Component {
 
   static propTypes = {
     unlockWallet: PropTypes.func.isRequired,
@@ -37,19 +35,19 @@ export default class CreatePassword extends Component {
   };
 
   render() {
-    const { currentHash, height, className } = this.props;
-    const { passphrase } = this.state;
+    const {currentHash, height, className} = this.props;
+    const {passphrase} = this.state;
 
     return (
       <ExtensionWrapper className={className}>
-        <div className="header_text"> Log in to your wallet </div>
+        <div className="header_text"> Log in to your wallet</div>
         <Submittable onSubmit={() => this.props.unlockWallet(passphrase)}>
           <div>
             <input
               className="login_password_input"
               type="password"
               placeholder="Your password"
-              onChange={e => this.setState({ passphrase: e.target.value })}
+              onChange={e => this.setState({passphrase: e.target.value})}
               value={passphrase}
               autoFocus
             />

@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import c from 'classnames';
 import StatusBar from '../../../components/StatusBar/index';
 import './confirm-seed.scss';
+import WizardHeader from '../../../components/WizardHeader';
 
 @connect()
 export default class ConfirmSeed extends Component {
@@ -15,6 +16,7 @@ export default class ConfirmSeed extends Component {
     seedphrase: PropTypes.string.isRequired,
     onBack: PropTypes.func.isRequired,
     onNext: PropTypes.func.isRequired,
+    onCancel: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -38,23 +40,17 @@ export default class ConfirmSeed extends Component {
       totalSteps,
       onBack,
       onNext,
+      onCancel
     } = this.props;
 
     return (
       <div className="create-password">
-        <div className="create-password__header">
-          <i className="arrow left clickable" onClick={onBack} />
-          <span className="create-password__cancel">
-            Cancel
-          </span>
-        </div>
-        <div className="create-password__status-bar">
-          <StatusBar currentStep={currentStep} totalSteps={totalSteps} />
-        </div>
+        <WizardHeader currentStep={currentStep} totalSteps={totalSteps} onBack={onBack} onCancel={onCancel} />
         <div className="create-password__content">
           <div className="header_text">Verify Your Seed Phrase</div>
           <div className="subheader_text copy-seed__subheader">
-            This is your secret 24-word phrase to recover your funds. This is the only way to access your funds. Do not lose this phrase.
+            This is your secret 24-word phrase to recover your funds. This is the only way to access your funds. Do not
+            lose this phrase.
           </div>
           <div
             className={c('copy-seed__textarea', {
@@ -64,7 +60,7 @@ export default class ConfirmSeed extends Component {
             <textarea
               placeholder="Type your seedphrase here"
               onKeyDown={this.handleKeyDown}
-              onChange={e => this.setState({ words: e.target.value })}
+              onChange={e => this.setState({words: e.target.value})}
               // onPaste={e => {
               //   e.preventDefault();
               //   this.setState({ pasteAttempted: true });
@@ -81,8 +77,8 @@ export default class ConfirmSeed extends Component {
               if (this.state.words === this.props.seedphrase) {
                 onNext();
               } else {
-                this.setState({ pasteAttempted: true });
-                setTimeout(() => this.setState({ pasteAttempted: false }), 1000);
+                this.setState({pasteAttempted: true});
+                setTimeout(() => this.setState({pasteAttempted: false}), 1000);
               }
             }}
           >

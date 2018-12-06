@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import c from 'classnames';
-import StatusBar from '../../../components/StatusBar/index';
 import './create.scss';
 import Submittable from '../../../components/Submittable';
+import WizardHeader from '../../../components/WizardHeader';
 
 const HIGHLIGHT_ONLY = '$$HIGHLIGHT_ONLY$$';
 
@@ -15,6 +15,7 @@ export default class CreatePassword extends Component {
     totalSteps: PropTypes.number.isRequired,
     onBack: PropTypes.func.isRequired,
     onNext: PropTypes.func.isRequired,
+    onCancel: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -78,16 +79,12 @@ export default class CreatePassword extends Component {
 
     return (
       <div className="create-password">
-        <div className="create-password__header">
-          <i className="arrow left clickable" onClick={onBack} />
-          <span className="create-password__cancel">
-            Cancel
-          </span>
-        </div>
-        <div className="create-password__status-bar">
-          <StatusBar currentStep={currentStep} totalSteps={totalSteps} />
-        </div>
-
+        <WizardHeader
+          currentStep={currentStep}
+          totalSteps={totalSteps}
+          onBack={onBack}
+          onCancel={this.props.onCancel}
+        />
         <div className="create-password__content">
           <Submittable onSubmit={this.onSubmit}>
             <div className="create-password__header_text">

@@ -1,48 +1,29 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import classNames from 'classnames';
-import actions from '../../../ducks/extension';
-import StatusBar from '../../../components/StatusBar/index.js';
 import './importenter.scss';
+import PropTypes from 'prop-types';
+import WizardHeader from '../../../components/WizardHeader';
 
 @connect(
-  state => ({
-  }),
-  dispatch => ({
-    actions: bindActionCreators({
-      setView: actions.setView,
-    }, dispatch)
-  })
+  state => ({}),
+  dispatch => ({})
 )
-
 export default class ImportSeedEnterPassphrase extends Component {
-
-  static propTypes = {};
-
-  state = {
-    agreementConfirmed: false,
-  }
+  static propTypes = {
+    currentStep: PropTypes.number.isRequired,
+    totalSteps: PropTypes.number.isRequired,
+    onBack: PropTypes.func.isRequired,
+    onNext: PropTypes.func.isRequired,
+    onCancel: PropTypes.func.isRequired
+  };
 
   render() {
-    const { agreementConfirmed } = this.state;
-    const currentStep = 2;
-    const totalSteps = 3;
-    const steps = agreementConfirmed ? currentStep + 1 : currentStep;
+    const {currentStep, totalSteps, onBack} = this.props;
     const importPlaceholder = 'Enter or paste your mnemonic seed phrase here';
 
     return (
       <div className="create-password">
-        <div className="create-password__header">
-          <i className="arrow left clickable" onClick={() => {}} />
-          <span className="create-password__cancel">
-            Cancel
-          </span>
-        </div>
-        <div className="create-password__status-bar">
-          <StatusBar currentStep={currentStep} totalSteps={totalSteps} />
-        </div>
-
+        <WizardHeader currentStep={currentStep} totalSteps={totalSteps} onBack={onBack} onCancel={this.props.onCancel} />
         <div className="create-password__content">
           <div className='header_text'>
             Sign in with your seed phrase
@@ -58,15 +39,13 @@ export default class ImportSeedEnterPassphrase extends Component {
               Faucet participants: this phrase was given to you when you signed up.
             </div>
           </div>
-
-
           <div>
             <textarea className='import_enter_textarea' placeholder={importPlaceholder} />
           </div>
 
           <button
-            className={classNames(['import_enter_cta', agreementConfirmed ? 'import_enter_cta_button__active' : 'import_enter_cta_button'])}
-            onClick={() => {this.props.actions.setView('default')}}
+            className="import_enter_cta"
+            onClick={this.props.onNext}
           >
             Unlock funds
           </button>

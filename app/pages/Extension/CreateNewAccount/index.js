@@ -9,10 +9,8 @@ import ConfirmSeed from '../ConfirmSeed';
 import client from '../../../utils/client';
 import { CREATE_WALLET } from '../../../../chrome/extension/background/actionTypes';
 import * as walletActions from '../../../ducks/wallet';
-import * as extensionDuck from '../../../ducks/extension';
 import { withRouter } from 'react-router-dom';
 
-const { VIEW_TYPES } = extensionDuck;
 const TERMS_OF_USE = 0;
 const CREATE_PASSWORD = 1;
 const BACK_UP_SEED_WARNING = 2;
@@ -44,6 +42,7 @@ export default class CreateNewAccount extends Component {
         return (
           <Terms
             onAccept={() => this.setState({ currentStep: CREATE_PASSWORD })}
+            onBack={() => this.props.history.push('/funding-options')}
           />
         );
       case CREATE_PASSWORD:
@@ -62,6 +61,7 @@ export default class CreateNewAccount extends Component {
                   });
                 }).catch(console.error.bind(console));
             }}
+            onCancel={() => this.props.history.push('/funding-options')}
           />
         );
       case BACK_UP_SEED_WARNING:
@@ -71,6 +71,7 @@ export default class CreateNewAccount extends Component {
             totalSteps={3}
             onBack={() => this.setState({ currentStep: CREATE_PASSWORD })}
             onNext={() => this.setState({ currentStep: COPY_SEEDPHRASE })}
+            onCancel={() => this.props.history.push('/funding-options')}
           />
         );
       case COPY_SEEDPHRASE:
@@ -81,6 +82,7 @@ export default class CreateNewAccount extends Component {
             seedphrase={this.state.seedphrase}
             onBack={() => this.setState({ currentStep: CREATE_PASSWORD })}
             onNext={() => this.setState({ currentStep: CONFIRM_SEEDPHRASE })}
+            onCancel={() => this.props.history.push('/funding-options')}
           />
         );
       case CONFIRM_SEEDPHRASE:
@@ -94,6 +96,7 @@ export default class CreateNewAccount extends Component {
               await this.props.completeInitialization();
               this.props.history.push('/');
             }}
+            onCancel={() => this.props.history.push('/funding-options')}
           />
         );
       default:

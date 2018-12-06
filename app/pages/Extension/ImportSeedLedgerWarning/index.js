@@ -17,7 +17,7 @@ import './importledger.scss';
   })
 )
 
-export default class ImportSeedEnterPassphrase extends Component {
+export default class ImportSeedLedgerWarning extends Component {
 
   static propTypes = {};
 

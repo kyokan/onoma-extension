@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Checkbox from '../../../components/Checkbox';
 import StatusBar from '../../../components/StatusBar';
 import './index.scss';
+import WizardHeader from '../../../components/WizardHeader';
 
 @connect()
 export default class BackUpSeedWarning extends Component {
@@ -12,6 +13,7 @@ export default class BackUpSeedWarning extends Component {
     totalSteps: PropTypes.number.isRequired,
     onBack: PropTypes.func.isRequired,
     onNext: PropTypes.func.isRequired,
+    onCancel: PropTypes.func.isRequired,
   };
 
   state = {
@@ -23,20 +25,13 @@ export default class BackUpSeedWarning extends Component {
       currentStep,
       totalSteps,
       onBack,
-      onNext
+      onNext,
+      onCancel
     } = this.props;
 
     return (
       <div className="backup-warning">
-        <div className="backup-warning__header">
-          <i className="arrow left clickable" onClick={onBack} />
-          <span className="backup-warning__cancel">
-            Cancel
-          </span>
-        </div>
-        <div className="backup-warning__status-bar">
-          <StatusBar currentStep={currentStep} totalSteps={totalSteps} />
-        </div>
+        <WizardHeader currentStep={currentStep} totalSteps={totalSteps} onBack={onBack} onCancel={onCancel} />
         <div className="backup-warning__content">
           <div className="backup-warning__header_text">
             Back up your recovery seed phrase
