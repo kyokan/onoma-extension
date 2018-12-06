@@ -1,15 +1,11 @@
 /* eslint-disable max-len */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import c from 'classnames';
-import StatusBar from '../../../components/StatusBar/index';
 import './confirm-seed.scss';
 import WizardHeader from '../../../components/WizardHeader';
 
-@connect()
 export default class ConfirmSeed extends Component {
-
   static propTypes = {
     currentStep: PropTypes.number.isRequired,
     totalSteps: PropTypes.number.isRequired,
@@ -49,7 +45,7 @@ export default class ConfirmSeed extends Component {
         <div className="create-password__content">
           <div className="header_text">Verify Your Seed Phrase</div>
           <div className="subheader_text copy-seed__subheader">
-            This is your secret 24-word phrase to recover your funds. This is the only way to access your funds. Do not
+            This is your secret 12-word phrase to recover your funds. This is the only way to access your funds. Do not
             lose this phrase.
           </div>
           <div

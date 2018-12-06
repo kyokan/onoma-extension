@@ -3,6 +3,7 @@
 import client from '../utils/client';
 import * as rpc from '../../chrome/extension/background/actionTypes';
 import { REVEAL_SEED } from '../../chrome/extension/background/actionTypes';
+import isEqual from 'lodash.isequal';
 
 export const NONE = 'NONE';
 export const LEDGER = 'LEDGER';
@@ -28,18 +29,34 @@ const initialState = {
   isPolling: false,
 };
 
+export const importSeed = (passphrase, mnemonic) => dispatch => client.dispatch({
+  type: rpc.IMPORT_SEED,
+  payload: {
+    passphrase,
+    mnemonic,
+  }
+}).then(() => dispatch(fetchWallet()));
+
 export const completeInitialization = () => dispatch => client.dispatch({ type: rpc.COMPLETE_INITIALIZATION })
   .then(() => dispatch(fetchWallet()));
 
-export const fetchWallet = () => (dispatch) => client.dispatch({type: rpc.GET_WALLET})
-  .then(({initialized, address, type, isLocked, balance}) => {
-    dispatch(setWallet({
-      initialized,
-      address,
-      type,
-      isLocked,
-      balance,
-    }));
+export const fetchWallet = () => (dispatch, getState) => client.dispatch({type: rpc.GET_WALLET})
+  .then((payload) => {
+    const state = getState().wallet;
+    const existingState = {
+      initialized: state.initialized,
+      address: state.address,
+      type: state.type,
+      isLocked: state.isLocked,
+      balance: state.balance,
+    };
+
+    console.log('in here');
+    if (isEqual(existingState, payload)) {
+      return
+    }
+
+    dispatch(setWallet(payload));
   });
 
 export const startWalletPoller = () => {
@@ -52,6 +69,7 @@ export const startWalletPoller = () => {
       if (!getState().wallet.isPolling) {
         return
       }
+
 
       try {
         await dispatch(fetchWallet());

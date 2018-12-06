@@ -100,6 +100,7 @@ export default class CreatePassword extends Component {
                 placeholder="Enter Password"
                 value={this.state.password}
                 onChange={this.onChange('password')}
+                autoFocus
               />
             </div>
             {this.renderError('passwordError')}

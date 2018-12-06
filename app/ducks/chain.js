@@ -1,5 +1,6 @@
 import client from '../utils/client';
 import * as rpc from '../../chrome/extension/background/actionTypes';
+import isEqual from 'lodash.isequal';
 
 const SET_CHAIN_INFO = 'app/chain/setChainInfo';
 const START_POLLING = 'app/chain/startPolling';
@@ -12,12 +13,25 @@ const initialState = {
   isPolling: false
 };
 
-export const getChainInfo = () => dispatch => client
+export const getChainInfo = () => (dispatch, getState) => client
     .dispatch({ type: rpc.GET_CHAIN_INFO })
-    .then(({ height, currentHash, synced }) => dispatch({
-      type: SET_CHAIN_INFO,
-      payload: { height, currentHash, synced },
-    }));
+    .then((payload) => {
+      const state = getState().chain;
+      const oldState = {
+        height: state.height,
+        currentHash: state.currentHash,
+        synced: state.synced
+      };
+
+      if (isEqual(payload, oldState)) {
+        return
+      }
+
+      dispatch({
+        type: SET_CHAIN_INFO,
+        payload
+      })
+    });
 
 export const startChainInfoPoller = () => {
   return async (dispatch, getState) => {
@@ -47,7 +61,7 @@ export const stopChainInfoPoller = () => {
   return {
     type: STOP_POLLING
   };
-}
+};
 
 export default function chainReducer(state = initialState, { type, payload }) {
   switch (type) {

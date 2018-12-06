@@ -3,20 +3,33 @@
 import * as walletTypes from '../../../app/ducks/wallet';
 import Amount from '../../../node_modules/hsd/lib/ui/amount';
 import MasterKey from 'hsd/lib/wallet/masterkey';
+
 const { EXTENSION, NONE } = walletTypes;
+const ONE_DAY = 24 * 60 * 60 * 1000;
+
+const EMPTY_WALLET = {
+  address: '',
+  type: NONE,
+  initialized: false,
+  isLocked: true,
+  balance: {
+    confirmed: '',
+    unconfirmed: ''
+  }
+};
 
 export async function getWallet(node) {
   const { wdb } = node.require('walletdb');
   const wallet = await wdb.get('extension');
 
   if (!wallet) {
-    return { address: '', type: NONE, initialized: false };
+    return EMPTY_WALLET;
   }
 
   const account = await wallet.getAccount('default');
 
   if (!account) {
-    return { address: '', type: NONE, initialized: false };
+    return EMPTY_WALLET;
   }
 
   const receive = account.receiveAddress();
@@ -66,7 +79,7 @@ export async function createWallet(node, passphrase) {
     id: 'extension',
     passphrase,
   });
-  await wallet.master.unlock(passphrase, 24 * 60 * 60 * 1000);
+  await wallet.master.unlock(passphrase, ONE_DAY);
   wallet.master.mnemonic.toSeed(passphrase);
   const account = await wallet.getAccount('default');
 
@@ -127,6 +140,30 @@ export async function revealSeed(req, res) {
       id: req.id,
       error: true,
       payload: message
+    })
+  }
+}
+
+export async function importSeed(req, res) {
+  try {
+    const existing = await _getWallet(req.node);
+    if (existing) {
+      await _removeWallet(req.node);
+    }
+
+    const {wdb} = req.node.require('walletdb');
+    const wallet = await wdb.create({
+      id: 'extension',
+      passphrase: req.passphrase,
+      mnemonic: req.mnemonic
+    });
+    await wallet.master.unlock(req.passphrase, ONE_DAY);
+    res.send({ id: req.id });
+  } catch (e) {
+    res.send({
+      id: req.id,
+      error: true,
+      payload: e.message
     })
   }
 }

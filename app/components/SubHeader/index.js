@@ -8,7 +8,6 @@ import ReceiveModal from '../ReceiveModal';
 import './subheader.scss';
 import * as domainActions from '../../ducks/domains';
 
-@withRouter
 @connect(
   state => ({
     initialized: state.wallet.initialized,
@@ -18,6 +17,7 @@ import * as domainActions from '../../ducks/domains';
     getNameInfo: tld => dispatch(domainActions.getNameInfo(tld)),
   })
 )
+@withRouter
 export default class SubHeader extends Component {
   static propTypes = {
     history: PropTypes.shape({

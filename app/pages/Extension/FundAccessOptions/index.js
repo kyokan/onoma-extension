@@ -34,13 +34,14 @@ export default class FundAccessOptions extends Component {
         <div className="funding-options__footer">
           <button
             className="funding-options__footer__primary-btn"
-            onClick={() => {
-              this.props.history.push('/new-wallet');
-            }}
+            onClick={() => this.props.history.push('/new-wallet')}
           >
             Create a new wallet
           </button>
-          <button className="funding-options__footer__secondary-btn">
+          <button
+            className="funding-options__footer__secondary-btn"
+            onClick={() => this.props.history.push('/import-seed')}
+          >
             I already have a wallet
           </button>
         </div>

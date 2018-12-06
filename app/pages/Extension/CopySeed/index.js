@@ -37,7 +37,7 @@ export default class CopySeed extends Component {
         <div className="create-password__content">
           <div className="header_text">Your Recovery Seed Phrase</div>
           <div className="subheader_text copy-seed__subheader">
-            This is your secret 24-word phrase to recover your funds. This is the only way to access your funds. Do not
+            This is your secret 12-word phrase to recover your funds. This is the only way to access your funds. Do not
             lose this phrase.
           </div>
           <div className="copy-seed__textarea">

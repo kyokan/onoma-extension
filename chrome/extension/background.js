@@ -8,7 +8,7 @@ import {
   UNLOCK_WALLET,
   LOCK_WALLET,
   GET_CHAIN_INFO,
-  SEND, TOGGLE_RESOLVE, RPC_REQUEST, REVEAL_SEED, REMOVE_WALLET, COMPLETE_INITIALIZATION,
+  SEND, TOGGLE_RESOLVE, RPC_REQUEST, REVEAL_SEED, REMOVE_WALLET, COMPLETE_INITIALIZATION, IMPORT_SEED,
 } from './background/actionTypes';
 
 const chrome = global.chrome;
@@ -82,6 +82,8 @@ function initControllers(node, port) {
         return controllers.removeWallet(req, res);
       case COMPLETE_INITIALIZATION:
         return controllers.completeInitialization(req, res);
+      case IMPORT_SEED:
+        return controllers.importSeed(req, res);
       default:
         return null;
     }
