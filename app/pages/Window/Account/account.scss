@@ -83,98 +83,105 @@
 
   &__list-item {
     display: grid;
-    grid-template-columns: 1.5rem 4rem 16rem auto;
-    grid-template-areas: "icon timestamp description value";
+    grid-template-columns: 1.5rem 4rem auto auto;
     grid-column-gap: 1.25rem;
-    background-color: rgba($black, 0.03);
-    padding: 0.75rem 1.25rem;
-    border-radius: 0.5rem;
-    @media (max-width: 620px) {
-      grid-template-columns: 4rem auto;
-      grid-template-rows: auto;
-      grid-row-gap: 1rem;
-      grid-template-areas:
-        "icon description"
-        "timestamp value";
+
+    &--pending {
+      opacity: 0.5;
+    }
+
+    &__container {
+      background-color: rgba($black, 0.03);
+      padding: 0.75rem 1.25rem;
+      border-radius: 0.5rem;
+    }
+
+    &__container + &__container {
+      margin-top: 0.625rem; // 10px
     }
 
     &__tx-icon {
-      grid-area: icon;
+      @extend %col-nowrap;
       justify-self: center;
       align-self: center;
-    }
+      background-size: contain;
+      background-repeat: no-repeat;
 
-    &__tx-timestamp {
-      grid-area: timestamp;
-    }
+      &--pending {
+        background-image: url("/img/pending-black.svg");
+        height: 1.25rem;
+        width: 1.1rem;
+        opacity: 0.4;
+      }
 
-    &__tx-description {
-      grid-area: description;
-    }
+      &--received {
+        background-image: url("/img/arrow-down-circle-green.svg");
+        height: 1.3rem;
+        width: 1.3rem;
+      }
 
-    &__tx-value {
-      grid-area: value;
-      text-align: end;
-      @media (max-width: 620px) {
-        text-align: left;
+      &--sent {
+        background-image: url("/img/arrow-up-circle-red.svg");
+        height: 1.3rem;
+        width: 1.3rem;
       }
     }
 
-    &__divider {
-      height: 0.625rem;
+    &__tx-timestamp {
+      @extend %col-nowrap;
+    }
+
+    &__tx-description {
+      @extend %col-nowrap;
+      flex: 1 1 auto;
+      text-overflow: ellipsis;
+      white-space: no-wrap;
+      overflow: hidden;
+    }
+
+    &__tx-value {
+      @extend %col-nowrap;
+      flex: 0 0 auto;
+      text-overflow: ellipsis;
+      white-space: no-wrap;
+      overflow: hidden;
+      text-align: end;
     }
 
     &__title {
+      @extend %h4;
       color: $black;
       font-weight: 500;
-      font-size: 0.875rem; //14px
-      line-height: 1rem;
       margin-bottom: 0.15rem;
+
+      &--pending {
+        opacity: 0.4;
+      }
     }
 
     &__subtitle {
-      opacity: 0.3;
+      @extend %h5;
+      opacity: 0.4;
       color: $black;
-      font-size: 0.6875rem; // 11px
-      line-height: 0.8125rem; // 13px
     }
 
-    &__pending-icon {
-      background-image: url("/img/pending-black.svg");
-      height: 1.25rem;
-      width: 1.1rem;
-      background-size: contain;
-      background-repeat: no-repeat;
-    }
-
-    &__sent-icon {
-      background-image: url("/img/arrow-up-circle-red.svg");
-      height: 1.3rem;
-      width: 1.3rem;
-      background-size: contain;
-      background-repeat: no-repeat;
-    }
-
-    &__received-icon {
-      background-image: url("/img/arrow-down-circle-green.svg");
-      height: 1.3rem;
-      width: 1.3rem;
-      background-size: contain;
-      background-repeat: no-repeat;
-    }
-
-    &__number-positive {
+    &__number {
       font-size: 1rem;
       font-weight: 500;
       line-height: 1.1875rem; // 19px
-      color: #0bca6b;
-    }
 
-    &__number-negative {
-      font-size: 1rem;
-      font-weight: 500;
-      line-height: 1.1875rem; // 19px
-      color: #f53923;
+      &--positive {
+        color: #0bca6b;
+      }
+
+      &--negative {
+        color: #f53923;
+      }
+
+      &--pending {
+        color: $black;
+        opacity: 0.4;
+      }
     }
   }
   &__switch-account-modal {

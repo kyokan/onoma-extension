@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { BigNumber as bn } from 'bignumber.js';
+import classnames from 'classnames';
+
 import Modal from '../../../components/Modal/index';
 import './account.scss';
 
@@ -37,80 +39,142 @@ class Account extends Component {
       {
         id: 1,
         type: 'sent',
-        date: 1544033054,
+        date: 1542033412,
         pending: true,
         receiver: '1G83fdm3HUXrCNLbtMDqcw6o5GNn4xqX',
-        amount: 5
+        value: 5.0,
+        balance: 7499.00075
       },
       {
         id: 2,
         type: 'received',
-        date: 1544032412,
+        date: 1542032412,
         pending: false,
         sender: '1G83fdm3HUXrCNLbtMDqcw6o5GNn4xqX',
-        amount: 7500
+        value: 7500,
+        balance: 7501.00075
       },
       {
         id: 3,
         type: 'received',
-        date: 1544013054,
+        date: 1542013054,
         pending: false,
         sender: '1G83fdm3HUXrCNLbtMDqcw6o5GNn4xqX',
-        amount: 1
+        value: 1,
+        balance: 1.00075
       },
       {
         id: 4,
         type: 'sent',
-        date: 1544012054,
+        date: 1542012054,
         pending: false,
         receiver: '1G83fdm3HUXrCNLbtMDqcw6o5GNn4xqX',
-        amount: 0.00025
+        value: 0.00025,
+        balance: 0.00075
       },
       {
         id: 5,
         type: 'received',
-        date: 1544011054,
+        date: 1542011054,
         pending: false,
         sender: '1G83fdm3HUXrCNLbtMDqcw6o5GNn4xqX',
-        amount: 1
+        value: 1.0,
+        balance: 1.0
       }
     ];
 
-    const renderIcon = tx => {
-      if (tx.pending) {
-        return <div className="account__list-item__pending-icon" />;
-      } else if (tx.type === 'sent') {
-        return <div className="account__list-item__sent-icon" />;
-      } else if (tx.type === 'received') {
-        return <div className="account__list-item__received-icon" />;
-      }
-      throw new Error('tx type not defined');
+    // conditional styling
+    const iconStyling = tx =>
+      classnames('account__list-item__tx-icon ', {
+        'account__list-item__tx-icon--pending': tx.pending,
+        'account__list-item__tx-icon--received': tx.type === 'received' && !tx.pending,
+        'account__list-item__tx-icon--sent': tx.type === 'sent' && !tx.pending
+      });
+
+    const titleStyling = tx =>
+      classnames('account__list-item__title', {
+        'account__list-item__title--pending': tx.pending
+      });
+
+    const numberStyling = tx =>
+      classnames('account__list-item__number', {
+        'account__list-item__number--pending': tx.pending,
+        'account__list-item__number--positive': tx.type === 'received' && !tx.pending,
+        'account__list-item__number--negative': tx.type === 'sent' && !tx.pending
+      });
+
+    // conditional rendering
+
+    const renderIcon = tx => <div className={iconStyling(tx)} />;
+
+    const renderTimestamp = tx => {
+      const date = new Date(tx.date * 1000);
+      const year = date
+        .getFullYear()
+        .toString()
+        .slice(2);
+      const month = date.getMonth();
+      const day = date.getDate();
+      let hours = date.getHours();
+      let minutes = date.getMinutes();
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      hours %= 12;
+      hours = hours || 12; // the hour '0' should be '12'
+      minutes = minutes < 10 ? `0${minutes}` : minutes;
+      const strTime = `${hours}:${minutes} ${ampm}`;
+
+      return (
+        <div className="account__list-item__tx-timestamp">
+          <div className={titleStyling(tx)}>
+            {day}/{month}/{year}
+          </div>
+          <div className="account__list-item__subtitle">{strTime}</div>
+        </div>
+      );
     };
+
+    const renderDescription = tx => {
+      let description = '';
+      if (tx.pending) {
+        description = 'Pending transaction';
+      } else if (tx.type === 'sent') {
+        description = 'Sent funds';
+      } else if (tx.type === 'received') {
+        description = 'Reiceived funds';
+      } else {
+        description = 'undefined tx type';
+      }
+
+      return (
+        <div className="account__list-item__tx-description">
+          <div className={titleStyling(tx)}>{description}</div>
+          <div className="account__list-item__subtitle">
+            from {tx.type === 'received' ? tx.sender : tx.receiver}
+          </div>
+        </div>
+      );
+    };
+
+    const renderNumber = tx => (
+      <div className="account__list-item__tx-value">
+        <div className={numberStyling(tx)}>
+          {tx.type === 'received' ? '+' : '-'}
+          {tx.value} HNS
+        </div>
+        <div className="account__list-item__subtitle">{tx.balance} HNS</div>
+      </div>
+    );
 
     return !transactionsDummyArray.length
       ? this.renderEmpty('You do not have any transactions')
-      : transactionsDummyArray.map((tx, index) => (
-        <div>
-          <div className="account__list-item" id={tx.id}>
-            <div className="account__list-item__tx-icon">{renderIcon(tx)}</div>
-            <div className="account__list-item__tx-timestamp">
-              <div className="account__list-item__title">10/13/18</div>
-              <div className="account__list-item__subtitle">6:52 PM</div>
-            </div>
-            <div className="account__list-item__tx-description">
-              <div className="account__list-item__title">Reiceived funds</div>
-              <div className="account__list-item__subtitle">
-                  from 1G83fdm3HUXrCNLbtMDqcw6o5GNn4xqX
-                </div>
-            </div>
-            <div className="account__list-item__tx-value">
-              <div className="account__list-item__number-positive">+23 HNS</div>
-              <div className="account__list-item__subtitle">7499.00075 HNS</div>
-            </div>
+      : transactionsDummyArray.map(tx => (
+        <div className="account__list-item__container" id={tx.id}>
+          <div className="account__list-item">
+            {renderIcon(tx)}
+            {renderTimestamp(tx)}
+            {renderDescription(tx)}
+            {renderNumber(tx)}
           </div>
-          {index < transactionsDummyArray.length - 1 && (
-          <div className="account__list-item__divider" />
-            )}
         </div>
         ));
   }
