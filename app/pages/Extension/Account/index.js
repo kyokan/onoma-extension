@@ -6,6 +6,7 @@ import * as walletActions from '../../../ducks/wallet';
 import AccountDropdown from '../../../components/Dropdown';
 import '../extension.scss';
 import './loggedin.scss';
+import Hash from '../../../components/Hash';
 
 
 @connect(
@@ -109,7 +110,7 @@ export default class App extends Component {
               {`Current Height: #${height}`}
             </div>
             <div className="account__info-text">
-              {`Current Hash: ${currentHash.slice(0, 10)}...${currentHash.slice(-10)}`}
+              Current Hash: <Hash value={currentHash} />
             </div>
           </div>
         </div>

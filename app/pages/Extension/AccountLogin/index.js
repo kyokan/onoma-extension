@@ -6,6 +6,7 @@ import * as walletActions from '../../../ducks/wallet';
 import './login.scss';
 import ExtensionWrapper from '../ExtensionWrapper';
 import Submittable from '../../../components/Submittable';
+import Hash from '../../../components/Hash';
 
 @connect(
   state => ({
@@ -73,7 +74,7 @@ export default class AccountLogin extends Component {
             {`Current Height: #${height}`}
           </div>
           <div className="account__info-text login_background">
-            {`Current Hash: ${currentHash.slice(0, 10)}...${currentHash.slice(-10)}`}
+            Current Hash: <Hash value={currentHash} />
           </div>
         </div>
 

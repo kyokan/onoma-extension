@@ -15,6 +15,7 @@ import CreateNewAccount from '../Extension/CreateNewAccount';
 import ExtensionWrapper from '../Extension/ExtensionWrapper';
 import FundAccessOptions from '../Extension/FundAccessOptions';
 import ImportSeedFlow from '../Extension/ImportSeedFlow';
+import Footer from './Footer';
 
 
 @connect(
@@ -64,6 +65,9 @@ export default class WindowApp extends Component {
           <SubHeader />
           <div className="window-app__content">
             {this.renderRoutes()}
+          </div>
+          <div className="window-app__footer">
+            <Footer />
           </div>
         </div>
       </HashRouter>
