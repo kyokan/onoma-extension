@@ -92,18 +92,18 @@ class Account extends Component {
       : transactionsDummyArray.map((tx, index) => (
         <div>
           <div className="account__list-item" id={tx.id}>
-            {renderIcon(tx)}
-            <div>
+            <div className="account__list-item__tx-icon">{renderIcon(tx)}</div>
+            <div className="account__list-item__tx-timestamp">
               <div className="account__list-item__title">10/13/18</div>
               <div className="account__list-item__subtitle">6:52 PM</div>
             </div>
-            <div>
+            <div className="account__list-item__tx-description">
               <div className="account__list-item__title">Reiceived funds</div>
               <div className="account__list-item__subtitle">
                   from 1G83fdm3HUXrCNLbtMDqcw6o5GNn4xqX
                 </div>
             </div>
-            <div style={{ textAlign: 'right' }}>
+            <div className="account__list-item__tx-value">
               <div className="account__list-item__number-positive">+23 HNS</div>
               <div className="account__list-item__subtitle">7499.00075 HNS</div>
             </div>
