@@ -51,7 +51,6 @@ export const fetchWallet = () => (dispatch, getState) => client.dispatch({type: 
       balance: state.balance,
     };
 
-    console.log('in here');
     if (isEqual(existingState, payload)) {
       return
     }
