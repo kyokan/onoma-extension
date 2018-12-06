@@ -3,12 +3,12 @@ $white: #fff;
 $black: #000;
 $grey: #e2e2e2;
 $dark-grey: #c2c2c2;
-$athens-gray: #F1F1F3;
+$athens-gray: #f1f1f3;
 $manatee-gray: #909095;
-$mischka-gray: #CDCDDE;
+$mischka-gray: #cdcdde;
 
 // Blue
-$azure-blue: #2480FD;
+$azure-blue: #2480fd;
 $turquioise-blue: #63e8b1;
 $caribbean-green: #00e591;
 
@@ -28,7 +28,7 @@ i.arrow {
   }
 
   &.left {
-    background-image: url('/img/arrow-back-blue.svg');
+    background-image: url("/img/arrow-back-blue.svg");
   }
 }
 
@@ -58,12 +58,12 @@ i.arrow {
 
 %btn-primary {
   border: 1px solid $azure-blue;
-  padding: .6875rem 1rem;
-  font-size: .875rem;
+  padding: 0.6875rem 1rem;
+  font-size: 0.875rem;
   outline: none;
   background-color: $azure-blue;
   color: $white;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   cursor: pointer;
   font-weight: 500;
   transition: 200ms ease-in-out;
@@ -87,38 +87,38 @@ i.arrow {
   &:disabled {
     border-color: $grey;
     background-color: $grey;
-    color: rgba($black, .4);
+    color: rgba($black, 0.4);
     cursor: default;
   }
 }
 
 %btn-secondary {
   border: 1px solid $azure-blue;
-  padding: .75rem 1rem;
-  font-size: .9rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
   outline: none;
   background-color: transparent;
   color: $azure-blue;
-  border-radius: .75rem;
+  border-radius: 0.75rem;
   cursor: pointer;
   font-weight: 500;
   transition: 200ms ease-in-out;
 
   &:focus {
     border-color: lighten($azure-blue, 10);
-    background-color: rgba($white, .5);
+    background-color: rgba($white, 0.5);
     color: lighten($azure-blue, 10);
   }
 
   &:hover {
     border-color: lighten($azure-blue, 10);
-    background-color: rgba($white, .5);
+    background-color: rgba($white, 0.5);
     color: lighten($azure-blue, 10);
   }
 
   &:active {
     border-color: darken($azure-blue, 10);
-    background-color: rgba($white, .5);
+    background-color: rgba($white, 0.5);
     color: darken($azure-blue, 10);
     box-shadow: none;
   }
@@ -134,41 +134,41 @@ i.arrow {
 
 %panel {
   background-color: $white;
-  border: 1px solid rgba($black, .15);
-  box-shadow: 0 2px 2px 1px rgba($black, .1);
-  border-radius: .5rem;
+  border: 1px solid rgba($black, 0.15);
+  box-shadow: 0 2px 2px 1px rgba($black, 0.1);
+  border-radius: 0.5rem;
 }
 
 %box-input {
   box-shadow: 0 0 0 1.25px $athens-gray;
   background-color: $athens-gray;
-  padding: .6rem .75rem;
-  border-radius: .25rem;
-  font-size: .85rem;
+  padding: 0.6rem 0.75rem;
+  border-radius: 0.25rem;
+  font-size: 0.85rem;
   outline: none;
   width: 6rem;
   transition: 200ms ease-in-out;
 
   &::-webkit-input-placeholder {
     font-weight: 300;
-    color: rgba($black, .1);
+    color: rgba($black, 0.1);
   }
 
   &:focus-within {
-    box-shadow: 0 0 0 1.25px rgba($azure-blue, .6);
+    box-shadow: 0 0 0 1.25px rgba($azure-blue, 0.6);
   }
 
   input {
     outline: none;
     flex: 1 1 auto;
     width: 0;
-    font-size: .85rem;
+    font-size: 0.85rem;
     border: none;
     background-color: $athens-gray;
 
     &::-webkit-input-placeholder {
       font-weight: 400;
-      color: rgba($black, .4);
+      color: rgba($black, 0.4);
     }
   }
 }
@@ -207,8 +207,8 @@ i.arrow {
   right: 0;
   bottom: 0;
   background-color: $grey;
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 
 .slider:before {
@@ -219,8 +219,8 @@ i.arrow {
   left: 7.2px;
   bottom: 4.55px;
   background-color: $dark-grey;
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 
 input:checked + .slider {
@@ -248,27 +248,26 @@ input:checked + .slider:before {
 }
 
 /* Text */
-$monospace: 'Roboto Mono', monospace;
+$monospace: "Roboto Mono", monospace;
 
 %h7 {
-  font-size: .5625rem;
-  line-height: .5625rem * 1.4;
+  font-size: 0.5625rem;
+  line-height: 0.5625rem * 1.4;
 }
 
-
 %h6 {
-  font-size: .625rem;
-  line-height: .625rem * 1.4;
+  font-size: 0.625rem;
+  line-height: 0.625rem * 1.4;
 }
 
 %h5 {
-  font-size: .75rem;
-  line-height: .75rem * 1.4;
+  font-size: 0.75rem;
+  line-height: 0.75rem * 1.4;
 }
 
 %h4 {
-  font-size: .875rem;
-  line-height: .875rem * 1.4;
+  font-size: 0.875rem;
+  line-height: 0.875rem * 1.4;
 }
 
 %h3 {
