@@ -8,6 +8,10 @@ import './index.scss';
 import { transactionsDummyOrder } from '../../utils/mockingTransactionsState';
 
 export default class Transactions extends Component {
+  static propTypes = {
+    transactionsDummyOrder: PropTypes.array.isRequired
+  };
+
   render() {
     return transactionsDummyOrder.map(txId => (
       <div className="transaction__container" key={txId}>
