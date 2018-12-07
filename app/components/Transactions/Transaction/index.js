@@ -18,6 +18,7 @@ export default class Transaction extends Component {
   };
 
   // conditional styling
+
   iconStyling = tx =>
     classnames('transaction__tx-icon ', {
       'transaction__tx-icon--pending': tx.pending,
@@ -38,6 +39,7 @@ export default class Transaction extends Component {
     });
 
   // conditional rendering
+
   renderIcon = tx => <div className={this.iconStyling(tx)} />;
 
   renderTimestamp = tx => {
