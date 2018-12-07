@@ -6,15 +6,15 @@ import './index.scss';
 
 export default class Transactions extends Component {
   static propTypes = {
-    transactions: PropTypes.array.isRequired
+    transactionsOrder: PropTypes.array.isRequired
   };
 
   render() {
-    const { transactions } = this.props;
+    const { transactionsOrder } = this.props;
 
-    return transactions.map(tx => (
-      <div className="transaction__container" id={tx.id}>
-        <Transaction transaction={tx} />
+    return transactionsOrder.map(txId => (
+      <div className="transaction__container" key={txId}>
+        <Transaction transactionId={txId} />
       </div>
     ));
   }

@@ -85,10 +85,12 @@ class Account extends Component {
       }
     ];
 
-    return !transactionsDummyArray.length ? (
+    const transactionsOrder = transactionsDummyArray.map(tx => tx.id);
+
+    return !transactionsOrder.length ? (
       this.renderEmpty('You do not have any transactions')
     ) : (
-      <Transactions transactions={transactionsDummyArray} />
+      <Transactions transactionsOrder={transactionsOrder} />
     );
   }
 

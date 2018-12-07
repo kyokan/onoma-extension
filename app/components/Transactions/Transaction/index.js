@@ -12,7 +12,55 @@ const SENT = 'sent';
 
 export default class Transaction extends Component {
   static propTypes = {
-    transaction: PropTypes.object.isRequired
+    transactionId: PropTypes.number.isRequired
+  };
+
+  transactionsDummyMap = {
+    1: {
+      id: 1,
+      type: 'sent',
+      date: 1542033412,
+      pending: true,
+      receiver: '1G83fdm3HUXrCNLbtMDqcw6o5GNn4xqX',
+      value: 5.0,
+      balance: 7499.00075
+    },
+    2: {
+      id: 2,
+      type: 'received',
+      date: 1542032412,
+      pending: false,
+      sender: '1G83fdm3HUXrCNLbtMDqcw6o5GNn4xqX',
+      value: 7500,
+      balance: 7501.00075
+    },
+    3: {
+      id: 3,
+      type: 'received',
+      date: 1542013054,
+      pending: false,
+      sender: '1G83fdm3HUXrCNLbtMDqcw6o5GNn4xqX',
+      value: 1,
+      balance: 1.00075
+    },
+    4: {
+      id: 4,
+      type: 'sent',
+      date: 1542012054,
+      pending: false,
+      receiver: '1G83fdm3HUXrCNLbtMDqcw6o5GNn4xqX',
+      value: 0.00025,
+      balance: 0.00075
+    },
+    5: {
+      id: 5,
+      type: 'received',
+      date: 1542011054,
+      pending: false,
+      sender: '1G83fdm3HUXrCNLbtMDqcw6o5GNn4xqX',
+      value: 1.0,
+      balance: 1.0
+    }
   };
 
   // conditional styling
@@ -86,7 +134,8 @@ export default class Transaction extends Component {
   );
 
   render() {
-    const { transaction } = this.props;
+    const { transactionId } = this.props;
+    const transaction = this.transactionsDummyMap[transactionId];
 
     return (
       <div className="transaction">
@@ -98,3 +147,5 @@ export default class Transaction extends Component {
     );
   }
 }
+
+//TODO: Connect component to Redux and grab transactionsMap directly
