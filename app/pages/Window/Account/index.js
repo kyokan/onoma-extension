@@ -7,6 +7,7 @@ import classnames from 'classnames';
 import Modal from '../../../components/Modal/index';
 import './account.scss';
 import createAMPMTimeStamp from '../../../utils/timeConverter';
+import Transactions from '../../../components/Transactions';
 
 class Account extends Component {
   static propTypes = {
@@ -84,87 +85,11 @@ class Account extends Component {
       }
     ];
 
-    // conditional styling
-    const iconStyling = tx =>
-      classnames('account__list-item__tx-icon ', {
-        'account__list-item__tx-icon--pending': tx.pending,
-        'account__list-item__tx-icon--received': tx.type === 'received' && !tx.pending,
-        'account__list-item__tx-icon--sent': tx.type === 'sent' && !tx.pending
-      });
-
-    const titleStyling = tx =>
-      classnames('account__list-item__title', {
-        'account__list-item__title--pending': tx.pending
-      });
-
-    const numberStyling = tx =>
-      classnames('account__list-item__number', {
-        'account__list-item__number--pending': tx.pending,
-        'account__list-item__number--positive': tx.type === 'received' && !tx.pending,
-        'account__list-item__number--negative': tx.type === 'sent' && !tx.pending
-      });
-
-    // conditional rendering
-
-    const renderIcon = tx => <div className={iconStyling(tx)} />;
-
-    const renderTimestamp = tx => {
-      const { year, month, day, strTime } = createAMPMTimeStamp(tx.date);
-
-      return (
-        <div className="account__list-item__tx-timestamp">
-          <div className={titleStyling(tx)}>
-            {day}/{month}/{year}
-          </div>
-          <div className="account__list-item__subtitle">{strTime}</div>
-        </div>
-      );
-    };
-
-    const renderDescription = tx => {
-      let description = '';
-      if (tx.pending) {
-        description = 'Pending transaction';
-      } else if (tx.type === 'sent') {
-        description = 'Sent funds';
-      } else if (tx.type === 'received') {
-        description = 'Reiceived funds';
-      } else {
-        description = 'undefined tx type';
-      }
-
-      return (
-        <div className="account__list-item__tx-description">
-          <div className={titleStyling(tx)}>{description}</div>
-          <div className="account__list-item__subtitle">
-            from {tx.type === 'received' ? tx.sender : tx.receiver}
-          </div>
-        </div>
-      );
-    };
-
-    const renderNumber = tx => (
-      <div className="account__list-item__tx-value">
-        <div className={numberStyling(tx)}>
-          {tx.type === 'received' ? '+' : '-'}
-          {tx.value} HNS
-        </div>
-        <div className="account__list-item__subtitle">{tx.balance} HNS</div>
-      </div>
+    return !transactionsDummyArray.length ? (
+      this.renderEmpty('You do not have any transactions')
+    ) : (
+      <Transactions transactions={transactionsDummyArray} />
     );
-
-    return !transactionsDummyArray.length
-      ? this.renderEmpty('You do not have any transactions')
-      : transactionsDummyArray.map(tx => (
-        <div className="account__list-item__container" id={tx.id}>
-          <div className="account__list-item">
-            {renderIcon(tx)}
-            {renderTimestamp(tx)}
-            {renderDescription(tx)}
-            {renderNumber(tx)}
-          </div>
-        </div>
-        ));
   }
 
   renderDomains() {
