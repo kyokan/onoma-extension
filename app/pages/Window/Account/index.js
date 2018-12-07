@@ -108,7 +108,7 @@ class Account extends Component {
           <div className="account__balance-wrapper">
             <div className="account__balance-wrapper__amount">
               {`HNS ${+balance.toFixed(5)}`}
-              </div>
+            </div>
           </div>
         </div>
         <div className="account__content">
