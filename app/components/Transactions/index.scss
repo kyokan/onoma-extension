@@ -72,7 +72,7 @@
     @extend %h3;
     color: $black;
     font-weight: 500;
-    margin-bottom: 0.15rem;
+    margin-bottom: 0.1rem;
 
     &--pending {
       color: rgba($black, 0.3);
@@ -88,7 +88,7 @@
     @extend %h3;
     color: $black;
     font-weight: 500;
-    margin-bottom: 0.15rem;
+    margin-bottom: 0.1rem;
 
     &--positive {
       color: #0bca6b;

@@ -6,13 +6,13 @@ const createAMPMTimeStamp = timestamp => {
     .slice(2);
   const month = date.getMonth();
   const day = date.getDate();
-  let hours = date.getHours();
-  let minutes = date.getMinutes();
-  const ampm = hours >= 12 ? 'PM' : 'AM';
-  hours %= 12;
-  hours = hours || 12; // the hour '0' should be '12'
-  minutes = minutes < 10 ? `0${minutes}` : minutes;
-  const strTime = `${hours}:${minutes} ${ampm}`;
+  const twentyfourHours = date.getHours();
+  const m = date.getMinutes();
+  const ampm = twentyfourHours >= 12 ? 'PM' : 'AM';
+  let twelveHours = twentyfourHours % 12;
+  twelveHours = twelveHours || 12; // the hour '0' should be '12'
+  const mm = m < 10 ? `0${m}` : m;
+  const strTime = `${twelveHours}:${mm} ${ampm}`;
   return {
     year,
     month,
