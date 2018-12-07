@@ -6,6 +6,7 @@ import classnames from 'classnames';
 
 import Modal from '../../../components/Modal/index';
 import './account.scss';
+import createAMPMTimeStamp from '../../../utils/timeConverter';
 
 class Account extends Component {
   static propTypes = {
@@ -108,20 +109,7 @@ class Account extends Component {
     const renderIcon = tx => <div className={iconStyling(tx)} />;
 
     const renderTimestamp = tx => {
-      const date = new Date(tx.date * 1000);
-      const year = date
-        .getFullYear()
-        .toString()
-        .slice(2);
-      const month = date.getMonth();
-      const day = date.getDate();
-      let hours = date.getHours();
-      let minutes = date.getMinutes();
-      const ampm = hours >= 12 ? 'PM' : 'AM';
-      hours %= 12;
-      hours = hours || 12; // the hour '0' should be '12'
-      minutes = minutes < 10 ? `0${minutes}` : minutes;
-      const strTime = `${hours}:${minutes} ${ampm}`;
+      const { year, month, day, strTime } = createAMPMTimeStamp(tx.date);
 
       return (
         <div className="account__list-item__tx-timestamp">
