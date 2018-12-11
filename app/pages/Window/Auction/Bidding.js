@@ -1,21 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function bidding({
-  date,
-  block,
-  type,
-}) {
+function bidding({ date = '', block, type }) {
+  let dateText = '';
+
+  if (date instanceof Date) {
+    dateText = date.toDateString();
+  } else if (typeof date === 'string') {
+    dateText = date;
+  }
+
+  let blockText = '';
+
+  if (isNaN(block)) {
+    blockText = block;
+  } else {
+    blockText = `#${block}`;
+  }
+
   return (
     <div className="auction__group">
       <div className="auction__title">
         {`Bidding ${type}`}
       </div>
       <div className="auction__large">
-        { date ? date.toDateString() : '' }
+        { dateText }
       </div>
       <div className="auction__block">
-        { block ? `Block #${block}` : '' }
+        { `Block ${blockText}` }
       </div>
     </div>
   );
