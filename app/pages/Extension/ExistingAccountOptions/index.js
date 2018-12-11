@@ -4,6 +4,10 @@ import PropTypes from 'prop-types';
 // import classNames from 'classnames';
 import './existing.scss';
 
+const NONE = 0;
+const CONNECT_LEDGER = 1;
+const IMPORT_SEED = 2;
+
 @withRouter
 export default class ExistingAccountOptions extends Component {
   static propTypes = {
@@ -11,6 +15,22 @@ export default class ExistingAccountOptions extends Component {
       push: PropTypes.func.isRequired,
     }),
   };
+
+  state = {
+    hovered: NONE,
+  };
+
+  getTip() {
+    switch (this.state.hovered) {
+      case IMPORT_SEED:
+        return 'A 24 word secret phrase that was given to you when you generated a previous Handshake wallet (e.g. developer faucet).';
+      case CONNECT_LEDGER:
+        return 'A small device that generates and holds onto your private key. Transactions are signed directly on the device.';
+      case NONE:
+      default:
+        return '';
+    }
+  }
 
   render() {
     return (
@@ -27,20 +47,36 @@ export default class ExistingAccountOptions extends Component {
           </div>
           <div
             className="existing-options__content__option"
+            onMouseEnter={() => this.setState({ hovered: CONNECT_LEDGER })}
+            onMouseLeave={() => this.setState({ hovered: NONE })}
             // TODO: Michael to add new route and create onboarding component.
             // Refer to CreateNewAccount; you have to create a <ConnectLedger />
             // onClick={() => this.props.history.push('/connect-ledger')}
           >
-            <div>Connect Ledger Device</div>
-            <div>COMING SOON</div>
+            <div className="existing-options__content__option__title">
+              Connect Ledger Device
+            </div>
+            <div className="existing-options__content__option__description">
+              Coming Soon
+            </div>
           </div>
-          <div className="existing-options__content__option">
-            <div>Import Your Seed Phrase</div>
-            <div>NOT SECURE</div>
+          <div
+            className="existing-options__content__option"
+            onMouseEnter={() => this.setState({ hovered: IMPORT_SEED })}
+            onMouseLeave={() => this.setState({ hovered: NONE })}
+          >
+            <div className="existing-options__content__option__title">
+              Import Your Seed Phrase
+            </div>
+            <div className="existing-options__content__option__description">
+              Not Secure
+            </div>
           </div>
         </div>
         <div className="existing-options__footer">
-          <div></div>
+          <div className="existing-options__footer__tip">
+            { this.getTip() }
+          </div>
         </div>
       </div>
     );
