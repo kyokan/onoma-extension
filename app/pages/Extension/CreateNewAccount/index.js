@@ -53,7 +53,7 @@ export default class CreateNewAccount extends Component {
             onBack={() => this.setState({currentStep: TERMS_OF_USE})}
             onNext={(password) => {
               client.dispatch({type: CREATE_WALLET, payload: password})
-                .then(({address, seed}) => {
+                .then(({ address, seed }) => {
                   this.setState({
                     address: address,
                     seedphrase: seed,

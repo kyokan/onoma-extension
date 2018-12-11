@@ -5,8 +5,10 @@
   height: 100%;
 
   &__header {
+    @extend %row-nowrap;
     padding: 1.125rem 1.625rem;
     border-bottom: 1px solid $grey;
+    align-items: center;
   }
 
   &__content {
@@ -53,16 +55,8 @@
   flex: 1 0 auto;
 }
 
-.terms_forward_arrow {
-
-}
-
 .clickable {
   cursor: pointer;
-}
-
-.terms_header {
-  margin-bottom: 10px;
 }
 
 .terms_cta {

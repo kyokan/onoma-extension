@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+// import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 // import classNames from 'classnames';
-import * as actions from '../../../ducks/extension';
+// import * as actions from '../../../ducks/extension';
 import './access.scss';
-import { Link, withRouter } from 'react-router-dom';
-
-const { VIEW_TYPES } = actions;
 
 // @connect(
 //   state => ({
@@ -15,6 +14,11 @@ const { VIEW_TYPES } = actions;
 // )
 @withRouter
 export default class FundAccessOptions extends Component {
+  static propTypes = {
+    history: PropTypes.shape({
+      push: PropTypes.func.isRequired,
+    }),
+  };
 
   render() {
     return (
@@ -40,7 +44,7 @@ export default class FundAccessOptions extends Component {
           </button>
           <button
             className="funding-options__footer__secondary-btn"
-            onClick={() => this.props.history.push('/import-seed')}
+            onClick={() => this.props.history.push('/existing-options')}
           >
             I already have a wallet
           </button>
