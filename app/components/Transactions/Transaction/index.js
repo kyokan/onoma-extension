@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { BigNumber as bn } from 'bignumber.js';
@@ -12,9 +13,12 @@ import { transactionsDummyMap } from '../../../utils/mockingTransactionsState';
 const RECEIVED = 'received';
 const SENT = 'sent';
 
+@connect((state, ownProps) => ({
+  transaction: transactionsDummyMap[ownProps.transactionId] || {}
+}))
 export default class Transaction extends Component {
   static propTypes = {
-    transactionId: PropTypes.number.isRequired
+    transaction: PropTypes.object.isRequired
   };
 
   // conditional styling
@@ -44,7 +48,7 @@ export default class Transaction extends Component {
 
   renderTimestamp = tx => {
     const { year, month, day, strTime } = createAMPMTimeStamp(tx.date);
-    
+
     return (
       <div className="transaction__tx-timestamp">
         <div className={this.titleStyling(tx)}>
@@ -81,17 +85,16 @@ export default class Transaction extends Component {
     <div className="transaction__tx-value">
       <div className={this.numberStyling(tx)}>
         {tx.type === RECEIVED ? '+' : '-'}
-        {tx.value % 1 === 0 ? bn(tx.value).toFixed(1) : tx.value} HNS
+        {tx.value % 1 === 0 ? bn(tx.value).toFixed(1) : bn(tx.value).toFixed()} HNS
       </div>
       <div className="transaction__subtitle">
-        {tx.balance % 1 === 0 ? bn(tx.balance).toFixed(1) : tx.balance} HNS
+        {tx.balance % 1 === 0 ? bn(tx.balance).toFixed(1) : bn(tx.balance).toFixed()} HNS
       </div>
     </div>
   );
 
   render() {
-    const { transactionId } = this.props;
-    const transaction = transactionsDummyMap[transactionId];
+    const { transaction } = this.props;
 
     return (
       <div className="transaction">
