@@ -1,0 +1,39 @@
+@import '../extension';
+
+.existing-options {
+  @extend %col-nowrap;
+  height: 100%;
+
+  &__header {
+    @extend %row-nowrap;
+    padding: 1.125rem 1.625rem;
+    border-bottom: 1px solid $grey;
+    align-items: center;
+
+    .arrow {
+      cursor: pointer;
+    }
+  }
+
+  &__content {
+    @extend %col-nowrap;
+    flex: 1 1 auto;
+    padding: 1.25rem 1.875rem;
+
+    &__title {
+      @extend %h2;
+      line-height: 1.167rem;
+      font-weight: 500;
+    }
+
+    &__option {
+      border-radius: .75rem;
+      border: 1px solid $azure-blue;
+      box-shadow: 0 5px 10px 0 $grey;
+    }
+  }
+
+  &__footer {
+
+  }
+}

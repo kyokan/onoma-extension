@@ -15,6 +15,7 @@ import CreateNewAccount from '../Extension/CreateNewAccount';
 import ExtensionWrapper from '../Extension/ExtensionWrapper';
 import FundAccessOptions from '../Extension/FundAccessOptions';
 import ImportSeedFlow from '../Extension/ImportSeedFlow';
+import ExistingAccountOptions from '../Extension/ExistingAccountOptions';
 import Footer from './Footer';
 
 
@@ -84,6 +85,7 @@ export default class WindowApp extends Component {
         <Switch>
           <Route path="/login" render={() => <AccountLogin className="window-app__login" />} />
           <Route path="/funding-options" render={this.renderWrapper(FundAccessOptions)} />
+          <Route path="/existing-options" render={this.renderWrapper(ExistingAccountOptions)} />
           <Route path="/new-wallet" render={this.renderWrapper(CreateNewAccount)} />
           <Route path="/import-seed" render={this.renderWrapper(ImportSeedFlow)} />
           {this.renderDefault()}
