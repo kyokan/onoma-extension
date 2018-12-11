@@ -27,12 +27,17 @@ export default class ImportSeedEnterMnemonic extends Component {
   };
 
   render() {
-    const {currentStep, totalSteps, onBack, onNext} = this.props;
+    const { currentStep, totalSteps, onBack, onNext } = this.props;
     const importPlaceholder = 'Enter or paste your mnemonic seed phrase here';
 
     return (
       <div className="create-password">
-        <WizardHeader currentStep={currentStep} totalSteps={totalSteps} onBack={onBack} onCancel={this.props.onCancel} />
+        <WizardHeader
+          currentStep={currentStep}
+          totalSteps={totalSteps}
+          onBack={onBack}
+          onCancel={this.props.onCancel}
+        />
         <div className="create-password__content">
           <div className="header_text">
             Sign in with your seed phrase

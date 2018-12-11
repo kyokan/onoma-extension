@@ -64,6 +64,7 @@ export default class ExistingAccountOptions extends Component {
             className="existing-options__content__option"
             onMouseEnter={() => this.setState({ hovered: IMPORT_SEED })}
             onMouseLeave={() => this.setState({ hovered: NONE })}
+            onClick={() => this.props.history.push('/import-seed')}
           >
             <div className="existing-options__content__option__title">
               Import Your Seed Phrase
