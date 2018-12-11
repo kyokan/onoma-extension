@@ -59,7 +59,6 @@ export default class ImportSeedWarning extends Component {
               Entering your seed on any website is dangerous. You could lose all your funds if you accidently visit a phishing website or if this extension is compromised.
             </span>
           </div>
-
           <div className="import_user_input">
             <Checkbox
               checked={agreementConfirmed}
@@ -72,8 +71,10 @@ export default class ImportSeedWarning extends Component {
         </div>
         <div className="create-password__footer">
           <button
-            className={classNames(['import_cta', agreementConfirmed ? 'import_cta_button__active' : 'import_cta_button'])}
+            className="import_cta_button"
+            // className={classNames(['import_cta', agreementConfirmed ? 'import_cta_button__active' : 'import_cta_button'])}
             onClick={this.props.onNext}
+            disabled={!agreementConfirmed}
           >
             I Agree, Continue
           </button>

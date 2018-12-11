@@ -53,6 +53,8 @@
 
 .terms_subheader {
   flex: 1 0 auto;
+  @extend %h4;
+  color: $manatee-gray;
 }
 
 .clickable {
