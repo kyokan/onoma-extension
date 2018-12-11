@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as domainActions from '../../../ducks/domains';
 import { BiddingOpen, BiddingClose } from './Bidding';
-import { CloseInfo, OpenInfo, SoldInfo } from './info';
+import { CloseInfo, OpenInfo, SoldInfo, ReserveInfo } from './info';
 import './auction.scss';
-import { AUCTION_STATE } from '../../../ducks/domains';
+// import { AUCTION_STATE } from '../../../ducks/domains';
 
 const AVAILABLE = 0;
 const SOLD = 1;
@@ -21,38 +21,6 @@ function addDays(start = new Date(), days = 0) {
 function isEarlierThan(startDate, endDate) {
   return startDate.toISOString().split('T')[0] < endDate.toISOString().split('T')[0];
 }
-
-// export const dummyStateExchange = {
-//   domain: 'exchange/', // would imagine this comes from react router
-//   status: 'SOLD', // would imagine this can be calculated based on biddingOpenBlocks
-//   biddingOpenDate: new Date('October 1, 2018'), // is this estimated based on the openBlock?
-//   biddingOpenBlock: 2305,
-//   biddingCloseDate: new Date('October 23, 2018'),
-//   biddingCloseBlock: 3209,
-//   bids: [
-//     {
-//       timePlaced: new Date('October 6, 2018'), // Date,
-//       bidder: 'you', // you or hexString,
-//       bidAmount: 2500.5 // number HNS
-//     },
-//     {
-//       timePlaced: new Date('October 3, 2018'), // Date,
-//       bidder: '0x9349arbitraryhex', // you or hexString,
-//       bidAmount: 1200 // number HNS
-//     },
-//     {
-//       timePlaced: new Date('October 4, 2018'), // Date,
-//       bidder: '0x342arbitraryhex', // you or hexString,
-//       bidAmount: 940, // number HNS
-//     },
-//     {
-//       timePlaced: new Date('October 2, 2018'), // Date,
-//       bidder: '0x342arbitraryhex', // you or hexString,
-//       bidAmount: 880, // number HNS
-//     },
-//   ],
-//   userBid: 0,
-// };
 
 export const ACTION_PROCESS = {
   title: 'The Auction Process',
@@ -123,16 +91,6 @@ const statusToMessage = status => ({
   [SOLD]: <div className="auction__red">Sold</div>,
   [RESERVE]: <div className="auction__black">Reserved</div>,
 })[status];
-
-function getSellAmount(status, bids) {
-  if (status !== SOLD) {
-    return null;
-  }
-  if (bids.length === 1) {
-    return '0.00000 HNS';
-  }
-  return `${bids[1].bidAmount} HNS`;
-}
 
 function getStatus(domain = {}, bids = []) {
   const closeDate = getCloseDate(domain, bids);
@@ -233,18 +191,6 @@ export default class Auction extends Component {
 
   getDomain = () => this.props.match.params.name;
 
-  renderBiddingClose = () => {
-    const { bids, biddingCloseDate, biddingCloseBlock } = this.props;
-    return !bids.length
-      ? defaultBiddingClose
-      : (
-        <BiddingClose
-          date={biddingCloseDate}
-          block={biddingCloseBlock}
-        />
-      );
-  };
-
   renderAuctionRight = () => {
     const {
       biddingOpenDate,
@@ -254,6 +200,10 @@ export default class Auction extends Component {
       paidValue,
       owner,
     }= this.props;
+
+    if (status === RESERVE) {
+      return <ReserveInfo />;
+    }
 
     if (status === SOLD) {
       return <SoldInfo owner={owner} paidValue={paidValue} />;
@@ -268,94 +218,10 @@ export default class Auction extends Component {
     return <CloseInfo biddingCloseDate={biddingCloseDate} bids={bids} />
   };
 
-  renderAuctionBottom = () => {
-    const {
-      biddingOpenDate,
-      biddingCloseDate,
-      bids,
-      status,
-    } = this.props;
-
-    // TODO move this out
-    const renderBidAmount = (bidAmount/*: number*/) => {
-      if (bidAmount === 'HIDDEN') {
-        return `Hidden until ${biddingCloseDate.toDateString()}`;
-      }
-      const n = bidAmount.toFixed(5);
-      return `${n} HNS`;
-    };
-
-    const bidHistorySuffix = bids.length
-      ? ` (${bids.length})`
-      : '';
-
-    const body = bids.length
-      ? (
-        <div className="auction__history-grid">
-          <div className="auction__title auction__title__history">Time placed</div>
-          <div className="auction__title auction__title__history">Bidder</div>
-          <div className="auction__title auction__title__history">Bid amount</div>
-          {
-            bids.map((bid, i) => {
-              let winnerClass = '';
-              if (status === 'SOLD') {
-                // TODO handle for only 1 bid
-                if (i === 0) {
-                  winnerClass = ' auction__winner';
-                }
-                if (i === 1) {
-                  winnerClass = ' auction__winner-price';
-                }
-              }
-
-              return (
-                <React.Fragment>
-                  <div className={`auction__time-placed auction__history-item${winnerClass}`}>
-                    { `${bid.timePlaced.toDateString()}` }
-                  </div>
-                  <a className={`auction__bidder auction__history-item${winnerClass}`}>
-                    { bid.bidder }
-                  </a>
-                  <div className={`auction__history-item${winnerClass}`}>
-                    {/* this can be hidden*/}
-                    { renderBidAmount(bid.bidAmount) }
-                  </div>
-                </React.Fragment>
-              );
-            })
-          }
-        </div>
-      )
-      : (
-        <div className="auction__bidding-open-message auction__history-item auction__hidden-message">
-          {
-            !!biddingOpenDate && (biddingOpenDate.getTime() > new Date().getTime())
-              ? `Bidding opens on ${biddingOpenDate.toDateString()}.`
-              : 'No bids!'
-          }
-        </div>
-      );
-
-
-    return (
-      <div className="auction__bottom">
-        <div className="auction__bid-history__title">
-          { `Bid History${bidHistorySuffix}`}
-        </div>
-        { body }
-      </div>
-    );
-  };
-
   renderAuctionLeft = () => {
     const {
       status,
-      bids,
       biddingCloseDate,
-      biddingOpenDate,
-      biddingOpenWeek,
-      biddingOpenBlock,
-      paidValue,
     } = this.props;
 
     const isSold = status === SOLD;
@@ -369,7 +235,10 @@ export default class Auction extends Component {
         </div>
         {
           isSold && (
-            <div className="auction__visit" onClick={() => window.open(`http://.${domain}`, '_blank')}>
+            <div
+              className="auction__visit"
+              onClick={() => window.open(`http://.${domain}`, '_blank')}
+            >
               <span>Visit</span>
               <span className="auction__visit-icon" />
             </div>
@@ -378,9 +247,7 @@ export default class Auction extends Component {
         <div className="auction__underline" />
         <div className="auction__left">
           <div className="auction__group">
-            <div className="auction__title">
-              Status
-            </div>
+            <div className="auction__title">Status</div>
             <div className="auction__status">
               <div className="auction__status-message">
                 { statusMessage }
@@ -400,16 +267,9 @@ export default class Auction extends Component {
                   : null
               }
             </div>
-            {
-              paidValue && isSold
-                ? <div className="auction__paid-bid">{`${paidValue} HNS`}</div>
-                : <a className="auction__bid-open-week">{`Week ${biddingOpenWeek}`}</a>
-            }
+            { this.renderStatusMessage() }
           </div>
-          <BiddingOpen
-            date={biddingOpenDate}
-            block={biddingOpenBlock}
-          />
+          { this.renderBiddingOpen() }
           { this.renderBiddingClose() }
         </div>
       </React.Fragment>
@@ -423,8 +283,87 @@ export default class Auction extends Component {
           {this.renderAuctionLeft()}
           {this.renderAuctionRight()}
         </div>
-        {this.renderAuctionBottom()}
       </div>
     );
   }
+
+  renderStatusMessage() {
+    const {
+      status,
+      biddingOpenWeek,
+      paidValue,
+    } = this.props;
+
+    if (paidValue && status === SOLD) {
+      return (
+        <div className="auction__paid-bid">
+          {`${paidValue} HNS`}
+        </div>
+      );
+    }
+
+    if (status === RESERVE) {
+      return (
+        <div className="auction__reserve-status-message">
+          <span className="auction__reserve-status-message__text">
+            for the trademark name holder.
+          </span>
+          <span className="auction__reserve-status-message__link">
+            Submit proof
+          </span>
+        </div>
+      );
+    }
+
+    if (status === AVAILABLE) {
+      return (
+        <a className="auction__bid-open-week">
+          {`Week ${biddingOpenWeek}`}
+        </a>
+      );
+    }
+  }
+
+  renderBiddingOpen() {
+    const {
+      status,
+      biddingOpenDate,
+      biddingOpenBlock,
+    } = this.props;
+
+    return (
+      <BiddingOpen
+        date={status === RESERVE ? 'N/A' : biddingOpenDate}
+        block={status === RESERVE ? 'N/A' : biddingOpenBlock}
+      />
+    );
+  }
+
+
+  renderBiddingClose = () => {
+    const {
+      status,
+      bids,
+      biddingCloseDate,
+      biddingCloseBlock,
+    } = this.props;
+
+    if (status === RESERVE) {
+      return (
+        <BiddingClose
+          date={'N/A'}
+          block={'N/A'}
+        />
+      );
+    }
+
+    return !bids.length
+      ? defaultBiddingClose
+      : (
+        <BiddingClose
+          date={biddingCloseDate}
+          block={biddingCloseBlock}
+        />
+      );
+  };
 }
