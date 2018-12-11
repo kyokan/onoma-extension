@@ -1,114 +1,105 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
-import actions from '../../../actions/extension.js';
+import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import * as extensionActions from '../../../ducks/extension';
+import ConnectLedgerStep from './ConnectLedgerStep';
 import './connect.scss';
 
+const COMPLETE = 'complete';
+const INCOMPLETE = 'incomplete';
+
 @connect(
-  state => ({
-  }),
+  state => ({}),
   dispatch => ({
-    actions: bindActionCreators({
-      setView: actions.setView,
-    }, dispatch)
-  })
+    setView: viewType => dispatch(extensionActions.setView(viewType)),
+  }),
 )
-
+@withRouter
 export default class ConnectLedger extends Component {
-
-  static propTypes = {};
+  static propTypes = {
+    history: PropTypes.shape({
+      push: PropTypes.func,
+    }).isRequired,
+  };
 
   state = {
-    step_one: 'not_started',
-    step_two: 'not_started',
-    step_three: 'complete',
+    stepOne: INCOMPLETE,
+    stepTwo: INCOMPLETE,
+    stepThree: COMPLETE,
   };
 
   allStepsComplete() {
-    const { step_one, step_two, step_three } = this.state;
-    if (step_one === 'complete' && step_two === 'complete' && step_three === 'complete') {
+    const { stepOne, stepTwo, stepThree } = this.state;
+    if (
+      stepOne === COMPLETE &&
+      stepTwo === COMPLETE &&
+      stepThree === COMPLETE
+    ) {
       return true;
     }
-
     return false;
   }
 
+  finishFlow() {
+    if (this.allStepsComplete()) {
+      return console.log('DONEEEEZO');
+    }
+    return console.log('Not donezo :(');
+  }
+
   render() {
+    const { stepOne, stepTwo, stepThree } = this.state;
+
     const ctaClasses = classNames([
       'connect_cta',
       this.allStepsComplete() ? 'connect_cta__active' : false,
     ]);
 
     return (
-      <div className='extension_primary_section'>
-        <div className='subheader_text clickable' onClick={() => {this.props.actions.setView('default')}}>
-          <span className='directional_symbol connect_back'>
-            <i className="arrow left"></i>
+      <div className="extension_primary_section">
+        <div
+          className="subheader_text clickable"
+          onClick={() => {
+            this.props.history.push('/existing-options');
+          }}
+        >
+          <span className="directional_symbol connect_back">
+            <i className="arrow left" />
           </span>
-          <span>
-            Back
-          </span>
+          <span>Back</span>
         </div>
-        <div className='extension_primary_line_break connect_line_break'> </div>
-        <div className='header_text connect_header'> Conect your Ledger </div>
+        <div className="extension_primary_line_break connect_line_break" />
+        <div className="header_text connect_header"> Connect your Ledger </div>
 
-        <div className='connect_status_pill_wrapper'>
-          <div className='connect_status_pill'>
-            <span className='connect_status_number'> 1 </span>
-            <span className='connect_status_text'> Connect your Ledger wallet directly to your computer</span>
-            <span className='connect_status_symbol'>
-              <div className={
-                classNames(
-                  [
-                    'ledger-circle-check-container',
-                    this.state.step_one === 'complete' ? 'ledger-circle-check-container__active' : false
-                  ]
-                )
-              }>
-                <div className='ledger-circle-check-symbol'></div>
-              </div>
-            </span>
-          </div> 
+        <ConnectLedgerStep
+          number={1}
+          description={'Connect your Ledger wallet directly to your computer'}
+          // unsure if this is the best way to render `completeness`
+          complete={stepOne === COMPLETE}
+        />
+        <ConnectLedgerStep
+          number={2}
+          description={'Enter your secret pin on your Ledger device'}
+          complete={stepTwo === COMPLETE}
+        />
+        <ConnectLedgerStep
+          number={3}
+          description={'Select the Handshake app on your Ledger device'}
+          complete={stepThree === COMPLETE}
+        />
 
-          <div className='connect_status_pill'>
-            <span className='connect_status_number'> 2 </span>
-            <span className='connect_status_text'> Enter your secret pin on your Ledger device</span>
-            <span className='connect_status_symbol'>
-              <div className={
-                classNames(
-                  [
-                    'ledger-circle-check-container',
-                    this.state.step_two === 'complete' ? 'ledger-circle-check-container__active' : false
-                  ]
-                )
-              }>
-                <div className='ledger-circle-check-symbol'></div>
-              </div>
-            </span>
-          </div> 
+        <button
+          className={ctaClasses}
+          onClick={() => {
+            this.finishFlow();
+          }}
+        >
+          Unlock Ledger
+        </button>
 
-          <div className='connect_status_pill'>
-            <span className='connect_status_number'> 3 </span>
-            <span className='connect_status_text'> Select the Handshake app on your Ledger device</span>
-            <span className='connect_status_symbol'>
-              <div className={
-                classNames(
-                  [
-                    'ledger-circle-check-container',
-                    this.state.step_three === 'complete' ? 'ledger-circle-check-container__active' : false
-                  ]
-                )
-              }>
-                <div className='ledger-circle-check-symbol'></div>
-              </div>
-            </span>
-          </div> 
-        </div>
-
-        <button className={ctaClasses} onClick={() => {this.props.actions.setView('default')}}> Unlock Ledger </button>
-
-        <div className='connect_support_cta'> Need help? Visit support page </div>
+        <div className="connect_support_cta">Need help? Visit support page</div>
       </div>
     );
   }
