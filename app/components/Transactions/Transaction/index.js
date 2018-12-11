@@ -44,7 +44,7 @@ export default class Transaction extends Component {
 
   renderTimestamp = tx => {
     const { year, month, day, strTime } = createAMPMTimeStamp(tx.date);
-
+    
     return (
       <div className="transaction__tx-timestamp">
         <div className={this.titleStyling(tx)}>
