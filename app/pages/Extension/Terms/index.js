@@ -33,7 +33,7 @@ export default class Terms extends Component {
           <div className="header_text">
             Terms of Use
           </div>
-          <div className="subheader_text terms_subheader">
+          <div className="terms_subheader">
             Please review and agree to the Handshake wallet's terms of use.
           </div>
           <button

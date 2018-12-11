@@ -29,6 +29,12 @@
   color: $manatee-gray;
 }
 
+.import-learn-more-text {
+  @extend %h4;
+  @extend %link;
+  margin-bottom: .5rem;
+}
+
 .clickable {
   cursor: pointer;
 }
@@ -64,39 +70,8 @@
 }
 
 .import_cta_button {
-  height: 45px;
   width: 100%;
-  border-radius: 8px;
-  font-family: 'Roboto', sans-serif;
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 16px;
   @extend %btn-primary;
-  text-align: center;
-  outline: none;
-  border: none;
-  background-color: #E4E4E2;
-  color: #909095;
-
-  &__active {
-    height: 45px;
-    width: 100%;
-    border-radius: 8px;
-    font-family: 'Roboto', sans-serif;
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 16px;
-    @extend %btn-primary;
-    text-align: center;
-    outline: none;
-    border: none;
-    background-color: $azure-blue;
-    color: white;
-  }
-}
-
-.import_cta {
-  margin-top: 15%;
 }
 
 .import_text_description {

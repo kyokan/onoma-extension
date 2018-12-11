@@ -34,25 +34,23 @@
   height: 7.5px;
 }
 
-.import_enter_textarea {
-  margin-top: 5px;
-  width: 250px;
-  height: 110px;
-  outline: none;
-  resize: none;
-  overflow: wrap;
-  border: 2px solid #cdcddd;
-  border-radius: 7.5px;
-  font-weight: 500;
-  font-size: 14px;
-  padding: 10px 10px;
+.import-enter__textarea-container {
+  @extend %row-nowrap;
+  flex: 1 1 auto;
+  width: 100%;
+}
 
+.import_enter_textarea {
+  @extend %box-input;
+  margin-top: .5rem;
+  resize: none;
+  white-space: normal;
+  border: none;
+  flex: 1 1 auto;
 }
 
 .import_enter_textarea::placeholder {
   color: #a2a2a2;
-  font-weight: 500;
-  font-size: 14px;
 }
 
 .import_enter_cta_button {
