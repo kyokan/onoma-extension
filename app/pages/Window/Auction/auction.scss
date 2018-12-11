@@ -388,4 +388,22 @@
       padding: 0 1rem 1rem;
     }
   }
+
+  &__reserve-status-message {
+    @extend %h5;
+    &__text {
+      margin-right: .25rem;
+    }
+
+    &__link {
+      @extend %link;
+    }
+  }
+
+  &__alexa-timestamp {
+    @extend %h5;
+    color: $manatee-gray;
+    grid-column-start: 1;
+    grid-column-end: 3;
+  }
 }

@@ -72,3 +72,16 @@ export const CloseInfo = ({ biddingCloseDate, bids }) => (
     </div>
   </div>
 );
+
+export const ReserveInfo = () => (
+  <div className="auction__right">
+    <div className="auction__bid-box-gray">
+      <div className="auction__bidding-not-open">
+        Reserved for the top 100,000 Alexa websites
+      </div>
+      <div className="auction__alexa-timestamp">
+        Alex websites as of 6/1/18
+      </div>
+    </div>
+  </div>
+);

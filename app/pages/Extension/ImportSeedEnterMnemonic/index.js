@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import WizardHeader from '../../../components/WizardHeader';
 import './importenter.scss';
+import classNames from 'classnames';
 
 export default class ImportSeedEnterMnemonic extends Component {
   constructor(props) {
@@ -27,26 +28,29 @@ export default class ImportSeedEnterMnemonic extends Component {
   };
 
   render() {
-    const {currentStep, totalSteps, onBack, onNext} = this.props;
+    const { currentStep, totalSteps, onBack, onNext } = this.props;
     const importPlaceholder = 'Enter or paste your mnemonic seed phrase here';
 
     return (
       <div className="create-password">
-        <WizardHeader currentStep={currentStep} totalSteps={totalSteps} onBack={onBack} onCancel={this.props.onCancel} />
+        <WizardHeader
+          currentStep={currentStep}
+          totalSteps={totalSteps}
+          onBack={onBack}
+          onCancel={this.props.onCancel}
+        />
         <div className="create-password__content">
-          <div className="header_text">
-            Sign in with your seed phrase
+          <div className="import-header-text">
+            Import your recovery phrase
           </div>
 
-          <div className="subheader_text import_enter_warning_text">
-            <div>
-              This is the 12-word phrase that was given to you when your wallet was created.
-            </div>
-            <div>
-              Faucet participants: this phrase was given to you when you signed up.
-            </div>
+          <div className="import_warning_text">
+            Enter your 24 word seed phrase that was assigned to you when you created your previous wallet.
           </div>
-          <div>
+          <div className="import-learn-more-text">
+            Learn more
+          </div>
+          <div className="import-enter__textarea-container">
             <textarea
               className="import_enter_textarea"
               placeholder={importPlaceholder}
@@ -55,8 +59,11 @@ export default class ImportSeedEnterMnemonic extends Component {
               autoFocus
             />
           </div>
+
+        </div>
+        <div className="create-password__footer">
           <button
-            className="import_enter_cta"
+            className="import_cta_button"
             onClick={() => onNext(this.state.mnemonic)}
             disabled={this.disableButton()}
           >
