@@ -51,13 +51,13 @@ export default class ExistingAccountOptions extends Component {
             onMouseLeave={() => this.setState({ hovered: NONE })}
             // TODO: Michael to add new route and create onboarding component.
             // Refer to CreateNewAccount; you have to create a <ConnectLedger />
-            // onClick={() => this.props.history.push('/connect-ledger')}
+            onClick={() => this.props.history.push('/connect-ledger')}
           >
             <div className="existing-options__content__option__title">
               Connect Ledger Device
             </div>
             <div className="existing-options__content__option__description">
-              Coming Soon
+              Recommended
             </div>
           </div>
           <div
@@ -75,9 +75,7 @@ export default class ExistingAccountOptions extends Component {
           </div>
         </div>
         <div className="existing-options__footer">
-          <div className="existing-options__footer__tip">
-            { this.getTip() }
-          </div>
+          <div className="existing-options__footer__tip">{this.getTip()}</div>
         </div>
       </div>
     );
