@@ -22,15 +22,22 @@
   }
 }
 
+.import_checkbox_text,
 .import_warning_text {
-  margin-bottom: 20px;
+  @extend %h4;
+  margin: .5rem 0;
+  color: $manatee-gray;
 }
 
 .clickable {
   cursor: pointer;
 }
 
-.import_header {}
+.import-header-text {
+  @extend %h2;
+  font-weight: 600;
+  letter-spacing: -.75px;
+}
 
 .import_password_input {
   @extend %box-input;
@@ -41,44 +48,19 @@
 }
 
 .import_user_input {
-  display: flex;
-  flex: row nowrap;
-  width: 100%;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 2px 2px;
-}
+  @extend %row-nowrap;
+  margin-top: 1rem;
 
-.import_checkbox_wrapper {
-}
-
-.import_checkbox_text {
-  margin-left: 10px;
-  font-weight: 500;
-}
-
-.import-checkbox-container {
-  width: 20px;
-  height: 20px;
-  border-radius: 2px;
-  background-color: #E2E2E2;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  &__active {
-    background-color: $azure-blue;
+  .checkbox {
+    flex: 0 0 auto;
+    margin-right: .5rem;
   }
-}
 
-.import-checkbox-symbol {
-  position: relative;
-  top: -2px;
-  height: 5px;
-  width: 10px;
-  border-top: 2px solid $white;
-  border-right: 2px solid $white;
-  transform: rotate(135deg);
+  .import_checkbox_text {
+    flex: 1 1 auto;
+    width: 0;
+    margin: 0;
+  }
 }
 
 .import_cta_button {
