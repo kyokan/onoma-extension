@@ -62,6 +62,10 @@
 
   &__footer {
     padding: 1.25rem 1.875rem 1.875rem 1.875rem;
+
+    &__removed-padding-top {
+      padding-top: 0;
+    }
   }
 }
 
