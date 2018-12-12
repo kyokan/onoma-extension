@@ -1,18 +1,19 @@
-import React, { Component } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
+
+import WizardHeader from '../../../components/WizardHeader';
 import ConnectLedgerStep from './ConnectLedgerStep';
 import './connect.scss';
 
 // wizard header
 
 @withRouter
-export default class ConnectLedger extends Component {
+export default class ConnectLedger extends React.Component {
   static propTypes = {
-    history: PropTypes.shape({
-      push: PropTypes.func,
-    }).isRequired,
+    onBack: PropTypes.func.isRequired,
+    onCancel: PropTypes.func.isRequired,
   };
 
   state = {
@@ -36,55 +37,60 @@ export default class ConnectLedger extends Component {
   render() {
     const { isLedgerConnected, secretEntered, handshakeSelected } = this.state;
 
-    const ctaClasses = classNames([
-      'connect_cta',
-      this.allStepsComplete() ? 'connect_cta__active' : false,
-    ]);
+    const { onBack, onCancel } = this.props;
     // Btn primary
     return (
-      <div className="extension_primary_section">
-        <div
-          className="subheader_text clickable"
-          onClick={() => {
-            this.props.history.push('/existing-options');
-          }}
-        >
-          <span className="directional_symbol connect_back">
-            <i className="arrow left" />
+      <div className="create-password">
+        <div className="terms__header">
+          <i
+            className="arrow left clickable wizard-header__back"
+            onClick={onBack}
+          />
+          <span className="wizard-header__cancel" onClick={onCancel}>
+            Cancel
           </span>
-          <span>Back</span>
         </div>
-        <div className="extension_primary_line_break connect_line_break" />
-        <div className="header_text connect_header"> Connect your Ledger </div>
+        <div className="create-password__content">
+          <div className="import-header-text">Import your recovery phrase</div>
+          <ConnectLedgerStep
+            stepNumber={1}
+            stepDescription={
+              'Connect your Ledger wallet directly to your computer'
+            }
+            stepCompleted={isLedgerConnected}
+          />
+          <ConnectLedgerStep
+            stepNumber={2}
+            stepDescription={'Enter your secret pin on your Ledger device'}
+            stepCompleted={secretEntered}
+          />
+          <ConnectLedgerStep
+            stepNumber={3}
+            stepDescription={'Select the Handshake app on your Ledger device'}
+            stepCompleted={handshakeSelected}
+          />
+        </div>
+        <div className="create-password__footer">
+          <button
+            className="import_cta_button"
+            onClick={() => console.log('hi')}
+            disabled
+          >
+            Unlock funds
+          </button>
+          <div className="connect_support_cta">
+            Need help? Visit support page
+          </div>
+        </div>
 
-        <ConnectLedgerStep
-          stepNumber={1}
-          stepDescription={
-            'Connect your Ledger wallet directly to your computer'
-          }
-          stepCompleted={isLedgerConnected}
-        />
-        <ConnectLedgerStep
-          stepNumber={2}
-          stepDescription={'Enter your secret pin on your Ledger device'}
-          stepCompleted={secretEntered}
-        />
-        <ConnectLedgerStep
-          stepNumber={3}
-          stepDescription={'Select the Handshake app on your Ledger device'}
-          stepCompleted={handshakeSelected}
-        />
-
-        <button
+        {/* <button
           className={ctaClasses}
           onClick={() => {
             this.finishFlow();
           }}
         >
           Unlock Ledger
-        </button>
-
-        <div className="connect_support_cta">Need help? Visit support page</div>
+        </button> */}
       </div>
     );
   }

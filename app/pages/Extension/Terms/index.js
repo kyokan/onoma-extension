@@ -8,7 +8,7 @@ import './terms.scss';
 export default class Terms extends Component {
   static propTypes = {
     onAccept: PropTypes.func.isRequired,
-    onBack: PropTypes.func.isRequired
+    onBack: PropTypes.func.isRequired,
   };
 
   state = {
@@ -23,21 +23,18 @@ export default class Terms extends Component {
 
     return (
       <div className="terms">
-        <div
-          className="terms__header clickable"
-          onClick={this.props.onBack}
-        >
-          <i className="arrow left" />
+        <div className="terms__header">
+          <i className="arrow left clickable" onClick={this.props.onBack} />
         </div>
         <div className="terms__content">
-          <div className="header_text">
-            Terms of Use
-          </div>
+          <div className="header_text">Terms of Use</div>
           <div className="terms_subheader">
             Please review and agree to the Handshake wallet's terms of use.
           </div>
           <button
-            className={c('terms__button', { 'terms__button--accepted': hasAccepted })}
+            className={c('terms__button', {
+              'terms__button--accepted': hasAccepted,
+            })}
             onClick={this.toggleTerms}
           >
             <span>Terms of Use</span>
