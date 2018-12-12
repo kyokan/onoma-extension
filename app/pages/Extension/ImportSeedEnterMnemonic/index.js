@@ -57,13 +57,18 @@ export default class ImportSeedEnterMnemonic extends Component {
             />
           </div>
         </div>
-        <div className="create-password__footer">
+        <div
+          className={classNames([
+            'create-password__footer',
+            'create-password__footer__removed-padding-top',
+          ])}
+        >
           <button
             className="extension_cta_button terms_cta"
             onClick={() => onNext(this.state.mnemonic)}
             disabled={this.disableButton()}
           >
-            Unlock funds
+            Unlock wallet
           </button>
         </div>
       </div>

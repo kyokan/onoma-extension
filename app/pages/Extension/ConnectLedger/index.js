@@ -17,8 +17,8 @@ export default class ConnectLedger extends React.Component {
   };
 
   state = {
-    isLedgerConnected: false,
-    secretEntered: false,
+    isLedgerConnected: true,
+    secretEntered: true,
     handshakeSelected: true,
   };
 
@@ -54,9 +54,7 @@ export default class ConnectLedger extends React.Component {
           <div className="header_text">Connect your Ledger</div>
           <ConnectLedgerStep
             stepNumber={1}
-            stepDescription={
-              'Connect your Ledger wallet directly to your computer'
-            }
+            stepDescription={'Connect your Ledger directly to your computer'}
             stepCompleted={isLedgerConnected}
           />
           <ConnectLedgerStep
@@ -66,31 +64,27 @@ export default class ConnectLedger extends React.Component {
           />
           <ConnectLedgerStep
             stepNumber={3}
-            stepDescription={'Select the Handshake app on your Ledger device'}
+            stepDescription={'Select the Handshake app on your Ledger'}
             stepCompleted={handshakeSelected}
           />
         </div>
-        <div className="create-password__footer">
+        <div
+          className={classNames([
+            'create-password__footer',
+            'create-password__footer__removed-padding-top',
+          ])}
+        >
           <div className="connect_support_cta">
             Need help? Visit support page
           </div>
           <button
             className="extension_cta_button terms_cta"
             onClick={() => console.log('hi')}
-            disabled
+            disabled={!this.allStepsComplete()}
           >
-            Unlock funds
+            Unlock Ledger
           </button>
         </div>
-
-        {/* <button
-          className={ctaClasses}
-          onClick={() => {
-            this.finishFlow();
-          }}
-        >
-          Unlock Ledger
-        </button> */}
       </div>
     );
   }

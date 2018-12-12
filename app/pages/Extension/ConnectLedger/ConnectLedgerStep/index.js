@@ -20,9 +20,7 @@ export default class ConnectLedgerStep extends Component {
             className={classNames('ledger-circle-check-container', {
               'ledger-circle-check-container__active': stepCompleted,
             })}
-          >
-            <div className="ledger-circle-check-symbol" />
-          </div>
+          />
         </span>
       </div>
     );

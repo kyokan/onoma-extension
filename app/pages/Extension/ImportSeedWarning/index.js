@@ -62,10 +62,12 @@ export default class ImportSeedWarning extends Component {
             </span>
           </div>
           <div className="import_user_input">
-            <Checkbox
-              checked={agreementConfirmed}
-              onChange={this.handleAgreementClick}
-            />
+            <span className="import_checkbox_container">
+              <Checkbox
+                checked={agreementConfirmed}
+                onChange={this.handleAgreementClick}
+              />
+            </span>
             <span className="import_checkbox_text">
               I understand I am selecting the least secure option.
             </span>
