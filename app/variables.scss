@@ -31,7 +31,7 @@ i.arrow {
   }
 
   &.left {
-    background-image: url("/img/arrow-back-blue.svg");
+    background-image: url('/img/arrow-back-blue.svg');
   }
 }
 
@@ -88,13 +88,7 @@ i.arrow {
   }
 
   &:disabled {
-<<<<<<< HEAD
-    border-color: $grey;
-    background-color: $grey;
-    color: rgba($black, 0.4);
-=======
     opacity: 0.25;
->>>>>>> changed styling of import and connect ledger view to promote consistency
     cursor: default;
   }
 }
@@ -255,7 +249,7 @@ input:checked + .slider:before {
 }
 
 /* Text */
-$monospace: "Roboto Mono", monospace;
+$monospace: 'Roboto Mono', monospace;
 
 %h7 {
   font-size: 0.5625rem;
