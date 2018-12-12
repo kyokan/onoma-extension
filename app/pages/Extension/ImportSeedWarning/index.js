@@ -10,13 +10,15 @@ import Checkbox from '../../../components/Checkbox';
 import WizardHeader from '../../../components/WizardHeader';
 
 @connect(
-  state => ({
-  }),
+  state => ({}),
   dispatch => ({
-    actions: bindActionCreators({
-      setView: actions.setView,
-    }, dispatch)
-  })
+    actions: bindActionCreators(
+      {
+        setView: actions.setView,
+      },
+      dispatch,
+    ),
+  }),
 )
 @withRouter
 export default class ImportSeedWarning extends Component {
@@ -50,13 +52,13 @@ export default class ImportSeedWarning extends Component {
           onCancel={this.props.onCancel}
         />
         <div className="create-password__content">
-          <div className="import-header-text">
-            Import your recovery seed phrase
-          </div>
+          <div className="header_text">Import your recovery seed phrase</div>
 
           <div className="import_warning_text">
             <span>
-              Entering your seed on any website is dangerous. You could lose all your funds if you accidently visit a phishing website or if this extension is compromised.
+              Entering your seed on any website is dangerous. You could lose all
+              your funds if you accidently visit a phishing website or if this
+              extension is compromised.
             </span>
           </div>
           <div className="import_user_input">
@@ -65,13 +67,13 @@ export default class ImportSeedWarning extends Component {
               onChange={this.handleAgreementClick}
             />
             <span className="import_checkbox_text">
-            I understand I am selecting the least secure option.
-          </span>
+              I understand I am selecting the least secure option.
+            </span>
           </div>
         </div>
         <div className="create-password__footer">
           <button
-            className="import_cta_button"
+            className="extension_cta_button terms_cta"
             // className={classNames(['import_cta', agreementConfirmed ? 'import_cta_button__active' : 'import_cta_button'])}
             onClick={this.props.onNext}
             disabled={!agreementConfirmed}

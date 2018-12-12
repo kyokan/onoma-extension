@@ -51,7 +51,7 @@ export default class ConnectLedger extends React.Component {
           </span>
         </div>
         <div className="create-password__content">
-          <div className="import-header-text">Import your recovery phrase</div>
+          <div className="header_text">Connect your Ledger</div>
           <ConnectLedgerStep
             stepNumber={1}
             stepDescription={
@@ -71,16 +71,16 @@ export default class ConnectLedger extends React.Component {
           />
         </div>
         <div className="create-password__footer">
+          <div className="connect_support_cta">
+            Need help? Visit support page
+          </div>
           <button
-            className="import_cta_button"
+            className="extension_cta_button terms_cta"
             onClick={() => console.log('hi')}
             disabled
           >
             Unlock funds
           </button>
-          <div className="connect_support_cta">
-            Need help? Visit support page
-          </div>
         </div>
 
         {/* <button
