@@ -1,21 +1,12 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import classNames from 'classnames';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import * as extensionActions from '../../../ducks/extension';
 import ConnectLedgerStep from './ConnectLedgerStep';
 import './connect.scss';
 
-const COMPLETE = 'complete';
-const INCOMPLETE = 'incomplete';
+// wizard header
 
-@connect(
-  state => ({}),
-  dispatch => ({
-    setView: viewType => dispatch(extensionActions.setView(viewType)),
-  }),
-)
 @withRouter
 export default class ConnectLedger extends Component {
   static propTypes = {
@@ -25,21 +16,14 @@ export default class ConnectLedger extends Component {
   };
 
   state = {
-    stepOne: INCOMPLETE,
-    stepTwo: INCOMPLETE,
-    stepThree: COMPLETE,
+    isLedgerConnected: false,
+    secretEntered: false,
+    handshakeSelected: true,
   };
 
   allStepsComplete() {
-    const { stepOne, stepTwo, stepThree } = this.state;
-    if (
-      stepOne === COMPLETE &&
-      stepTwo === COMPLETE &&
-      stepThree === COMPLETE
-    ) {
-      return true;
-    }
-    return false;
+    const { isLedgerConnected, secretEntered, handshakeSelected } = this.state;
+    return isLedgerConnected && secretEntered && handshakeSelected;
   }
 
   finishFlow() {
@@ -50,13 +34,13 @@ export default class ConnectLedger extends Component {
   }
 
   render() {
-    const { stepOne, stepTwo, stepThree } = this.state;
+    const { isLedgerConnected, secretEntered, handshakeSelected } = this.state;
 
     const ctaClasses = classNames([
       'connect_cta',
       this.allStepsComplete() ? 'connect_cta__active' : false,
     ]);
-
+    // Btn primary
     return (
       <div className="extension_primary_section">
         <div
@@ -74,20 +58,21 @@ export default class ConnectLedger extends Component {
         <div className="header_text connect_header"> Connect your Ledger </div>
 
         <ConnectLedgerStep
-          number={1}
-          description={'Connect your Ledger wallet directly to your computer'}
-          // unsure if this is the best way to render `completeness`
-          complete={stepOne === COMPLETE}
+          stepNumber={1}
+          stepDescription={
+            'Connect your Ledger wallet directly to your computer'
+          }
+          stepCompleted={isLedgerConnected}
         />
         <ConnectLedgerStep
-          number={2}
-          description={'Enter your secret pin on your Ledger device'}
-          complete={stepTwo === COMPLETE}
+          stepNumber={2}
+          stepDescription={'Enter your secret pin on your Ledger device'}
+          stepCompleted={secretEntered}
         />
         <ConnectLedgerStep
-          number={3}
-          description={'Select the Handshake app on your Ledger device'}
-          complete={stepThree === COMPLETE}
+          stepNumber={3}
+          stepDescription={'Select the Handshake app on your Ledger device'}
+          stepCompleted={handshakeSelected}
         />
 
         <button

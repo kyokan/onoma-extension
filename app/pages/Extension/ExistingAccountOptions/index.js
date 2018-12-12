@@ -49,8 +49,6 @@ export default class ExistingAccountOptions extends Component {
             className="existing-options__content__option"
             onMouseEnter={() => this.setState({ hovered: CONNECT_LEDGER })}
             onMouseLeave={() => this.setState({ hovered: NONE })}
-            // TODO: Michael to add new route and create onboarding component.
-            // Refer to CreateNewAccount; you have to create a <ConnectLedger />
             onClick={() => this.props.history.push('/connect-ledger')}
           >
             <div className="existing-options__content__option__title">
