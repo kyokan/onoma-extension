@@ -3,7 +3,6 @@ import classNames from 'classnames';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import WizardHeader from '../../../components/WizardHeader';
 import ConnectLedgerStep from './ConnectLedgerStep';
 import './connect.scss';
 
@@ -38,7 +37,6 @@ export default class ConnectLedger extends React.Component {
     const { isLedgerConnected, secretEntered, handshakeSelected } = this.state;
 
     const { onBack, onCancel } = this.props;
-    // Btn primary
     return (
       <div className="create-password">
         <div className="terms__header">
@@ -74,12 +72,12 @@ export default class ConnectLedger extends React.Component {
             'create-password__footer__removed-padding-top',
           ])}
         >
-          <div className="connect_support_cta">
+          <div className="connect__support-cta">
             Need help? Visit support page
           </div>
           <button
             className="extension_cta_button terms_cta"
-            onClick={() => console.log('hi')}
+            onClick={this.finishFlow()}
             disabled={!this.allStepsComplete()}
           >
             Unlock Ledger
