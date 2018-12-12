@@ -31,7 +31,7 @@ i.arrow {
   }
 
   &.left {
-    background-image: url('/img/arrow-back-blue.svg');
+    background-image: url("/img/arrow-back-blue.svg");
   }
 }
 
@@ -249,7 +249,7 @@ input:checked + .slider:before {
 }
 
 /* Text */
-$monospace: 'Roboto Mono', monospace;
+$monospace: "Roboto Mono", monospace;
 
 %h7 {
   font-size: 0.5625rem;
