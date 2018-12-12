@@ -15,7 +15,7 @@ import CreateNewAccount from '../Extension/CreateNewAccount';
 import ExtensionWrapper from '../Extension/ExtensionWrapper';
 import FundAccessOptions from '../Extension/FundAccessOptions';
 import ImportSeedFlow from '../Extension/ImportSeedFlow';
-import ConnectLedger from '../Extension/ConnectLedger';
+import ConnectLedgerFlow from '../Extension/ConnectLedgerFlow';
 import ExistingAccountOptions from '../Extension/ExistingAccountOptions';
 import Footer from './Footer';
 
@@ -102,7 +102,7 @@ export default class WindowApp extends Component {
           />
           <Route
             path="/connect-ledger"
-            render={this.renderWrapper(ConnectLedger)}
+            render={this.renderWrapper(ConnectLedgerFlow)}
           />
           {this.renderDefault()}
         </Switch>
