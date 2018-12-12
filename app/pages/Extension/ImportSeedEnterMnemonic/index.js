@@ -9,7 +9,7 @@ export default class ImportSeedEnterMnemonic extends Component {
     super(props);
 
     this.state = {
-      mnemonic: ''
+      mnemonic: '',
     };
   }
 
@@ -18,10 +18,10 @@ export default class ImportSeedEnterMnemonic extends Component {
     totalSteps: PropTypes.number.isRequired,
     onBack: PropTypes.func.isRequired,
     onNext: PropTypes.func.isRequired,
-    onCancel: PropTypes.func.isRequired
+    onCancel: PropTypes.func.isRequired,
   };
 
-  onChangeMnemonic = (e) => {
+  onChangeMnemonic = e => {
     this.setState({
       mnemonic: e.target.value,
     });
@@ -40,16 +40,13 @@ export default class ImportSeedEnterMnemonic extends Component {
           onCancel={this.props.onCancel}
         />
         <div className="create-password__content">
-          <div className="import-header-text">
-            Import your recovery phrase
-          </div>
+          <div className="header_text">Import your recovery phrase</div>
 
           <div className="import_warning_text">
-            Enter your 24 word seed phrase that was assigned to you when you created your previous wallet.
+            Enter your 24 word seed phrase that was assigned to you when you
+            created your previous wallet.
           </div>
-          <div className="import-learn-more-text">
-            Learn more
-          </div>
+          <div className="import-learn-more-text">Learn more</div>
           <div className="import-enter__textarea-container">
             <textarea
               className="import_enter_textarea"
@@ -59,11 +56,10 @@ export default class ImportSeedEnterMnemonic extends Component {
               autoFocus
             />
           </div>
-
         </div>
         <div className="create-password__footer">
           <button
-            className="import_cta_button"
+            className="extension_cta_button terms_cta"
             onClick={() => onNext(this.state.mnemonic)}
             disabled={this.disableButton()}
           >
@@ -75,6 +71,6 @@ export default class ImportSeedEnterMnemonic extends Component {
   }
 
   disableButton() {
-    return this.state.mnemonic.trim().split(' ').length !== 12
+    return this.state.mnemonic.trim().split(' ').length !== 12;
   }
 }

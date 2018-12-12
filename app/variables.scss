@@ -85,9 +85,13 @@ i.arrow {
   }
 
   &:disabled {
+<<<<<<< HEAD
     border-color: $grey;
     background-color: $grey;
     color: rgba($black, 0.4);
+=======
+    opacity: 0.25;
+>>>>>>> changed styling of import and connect ledger view to promote consistency
     cursor: default;
   }
 }
@@ -213,7 +217,7 @@ i.arrow {
 
 .slider:before {
   position: absolute;
-  content: "";
+  content: '';
   height: 17.31px;
   width: 16.67px;
   left: 7.2px;
