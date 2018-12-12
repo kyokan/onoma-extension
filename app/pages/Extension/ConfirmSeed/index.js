@@ -16,7 +16,8 @@ export default class ConfirmSeed extends Component {
   };
 
   static defaultProps = {
-    seedphrase: 'witch collapse practice feed shame open despair creek road again ice least',
+    seedphrase:
+      'witch collapse practice feed shame open despair creek road again ice least',
   };
 
   state = {
@@ -25,28 +26,27 @@ export default class ConfirmSeed extends Component {
   };
 
   handleKeyDown = e => {
-    if (e.key === 'Enter' || !(/^[a-zA-Z ]+$/).test(e.key)) {
+    if (e.key === 'Enter' || !/^[a-zA-Z ]+$/.test(e.key)) {
       e.preventDefault();
     }
   };
 
   render() {
-    const {
-      currentStep,
-      totalSteps,
-      onBack,
-      onNext,
-      onCancel
-    } = this.props;
+    const { currentStep, totalSteps, onBack, onNext, onCancel } = this.props;
 
     return (
       <div className="create-password">
-        <WizardHeader currentStep={currentStep} totalSteps={totalSteps} onBack={onBack} onCancel={onCancel} />
+        <WizardHeader
+          currentStep={currentStep}
+          totalSteps={totalSteps}
+          onBack={onBack}
+          onCancel={onCancel}
+        />
         <div className="create-password__content">
-          <div className="header_text">Verify Your Seed Phrase</div>
-          <div className="subheader_text copy-seed__subheader">
-            This is your secret 12-word phrase to recover your funds. This is the only way to access your funds. Do not
-            lose this phrase.
+          <div className="header_text">Confirm your recovery phrase</div>
+          <div className="import_warning_text">
+            Pasting is disabled to ensure that you have securely backed up your
+            wallet on paper.
           </div>
           <div
             className={c('copy-seed__textarea', {
@@ -54,31 +54,40 @@ export default class ConfirmSeed extends Component {
             })}
           >
             <textarea
-              placeholder="Type your seedphrase here"
+              placeholder="Enter your seed phrase"
               onKeyDown={this.handleKeyDown}
-              onChange={e => this.setState({words: e.target.value})}
+              onChange={e => this.setState({ words: e.target.value })}
               // onPaste={e => {
               //   e.preventDefault();
               //   this.setState({ pasteAttempted: true });
               //   setTimeout(() => this.setState({ pasteAttempted: false }), 1000);
               // }}
               value={this.state.words}
+              autoFocus
             />
           </div>
         </div>
-        <div className="create-password__footer">
+        <div
+          className={c([
+            'create-password__footer',
+            'create-password__footer__removed-padding-top',
+          ])}
+        >
           <button
             className="extension_cta_button create_cta"
             onClick={() => {
               if (this.state.words === this.props.seedphrase) {
                 onNext();
               } else {
-                this.setState({pasteAttempted: true});
-                setTimeout(() => this.setState({pasteAttempted: false}), 1000);
+                this.setState({ pasteAttempted: true });
+                setTimeout(
+                  () => this.setState({ pasteAttempted: false }),
+                  1000,
+                );
               }
             }}
           >
-            Next
+            Create New Wallet
           </button>
         </div>
       </div>

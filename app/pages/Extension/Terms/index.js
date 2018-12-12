@@ -47,7 +47,7 @@ export default class Terms extends Component {
             onClick={onAccept}
             disabled={!hasAccepted}
           >
-            Accept
+            I agree
           </button>
         </div>
       </div>

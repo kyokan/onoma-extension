@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import WizardHeader from '../../../components/WizardHeader';
 import './importenter.scss';
-import classNames from 'classnames';
 
 export default class ImportSeedEnterMnemonic extends Component {
   constructor(props) {

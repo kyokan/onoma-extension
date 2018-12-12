@@ -20,12 +20,12 @@ const CONFIRM_SEEDPHRASE = 4;
 @connect(
   null,
   dispatch => ({
-    completeInitialization: () => dispatch(walletActions.completeInitialization()),
+    completeInitialization: () =>
+      dispatch(walletActions.completeInitialization()),
   }),
 )
 @withRouter
 export default class CreateNewAccount extends Component {
-
   static propTypes = {
     completeInitialization: PropTypes.func.isRequired,
   };
@@ -50,16 +50,18 @@ export default class CreateNewAccount extends Component {
           <CreatePassword
             currentStep={1}
             totalSteps={3}
-            onBack={() => this.setState({currentStep: TERMS_OF_USE})}
-            onNext={(password) => {
-              client.dispatch({type: CREATE_WALLET, payload: password})
+            onBack={() => this.setState({ currentStep: TERMS_OF_USE })}
+            onNext={password => {
+              client
+                .dispatch({ type: CREATE_WALLET, payload: password })
                 .then(({ address, seed }) => {
                   this.setState({
                     address: address,
                     seedphrase: seed,
                     currentStep: BACK_UP_SEED_WARNING,
                   });
-                }).catch(console.error.bind(console));
+                })
+                .catch(console.error.bind(console));
             }}
             onCancel={() => this.props.history.push('/funding-options')}
           />
@@ -80,7 +82,7 @@ export default class CreateNewAccount extends Component {
             currentStep={3}
             totalSteps={4}
             seedphrase={this.state.seedphrase}
-            onBack={() => this.setState({ currentStep: CREATE_PASSWORD })}
+            onBack={() => this.setState({ currentStep: BACK_UP_SEED_WARNING })}
             onNext={() => this.setState({ currentStep: CONFIRM_SEEDPHRASE })}
             onCancel={() => this.props.history.push('/funding-options')}
           />
