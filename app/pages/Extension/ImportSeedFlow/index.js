@@ -48,7 +48,7 @@ export default class ImportSeedFlow extends Component {
         return (
           <Terms
             onAccept={() => this.setState({ currentStep: WARNING_STEP })}
-            onBack={() => this.props.history.push('/funding-options')}
+            onBack={() => this.props.history.push('/existing-options')}
           />
         );
       case WARNING_STEP:

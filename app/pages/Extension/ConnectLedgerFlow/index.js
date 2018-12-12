@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -10,7 +10,7 @@ const TERM_OF_USE = 'TERM_OF_USE';
 const CONNECT_LEDGER = 'CONNECT_LEDGER';
 
 @withRouter
-export default class ConnectLedgerFlow extends Component {
+export default class ConnectLedgerFlow extends React.Component {
   static propTypes = {
     history: PropTypes.shape({
       push: PropTypes.func,
@@ -25,10 +25,13 @@ export default class ConnectLedgerFlow extends Component {
     return this.state.currentStep === TERM_OF_USE ? (
       <Terms
         onAccept={() => this.setState({ currentStep: CONNECT_LEDGER })}
-        onBack={() => this.props.history.push('/funding-options')}
+        onBack={() => this.props.history.push('/existing-options')}
       />
     ) : (
-      <ConnectLedger />
+      <ConnectLedger
+        onBack={() => this.setState({ currentStep: TERM_OF_USE })}
+        onCancel={() => this.props.history.push('/funding-options')}
+      />
     );
   }
 }
