@@ -15,9 +15,9 @@ import CreateNewAccount from '../Extension/CreateNewAccount';
 import ExtensionWrapper from '../Extension/ExtensionWrapper';
 import FundAccessOptions from '../Extension/FundAccessOptions';
 import ImportSeedFlow from '../Extension/ImportSeedFlow';
+import ConnectLedgerFlow from '../Extension/ConnectLedgerFlow';
 import ExistingAccountOptions from '../Extension/ExistingAccountOptions';
 import Footer from './Footer';
-
 
 @connect(
   state => ({
@@ -35,7 +35,7 @@ export default class WindowApp extends Component {
     super(props);
 
     this.state = {
-      isLoading: true
+      isLoading: true,
     };
   }
 
@@ -51,11 +51,10 @@ export default class WindowApp extends Component {
     try {
       await this.props.startWalletPoller();
       await this.props.startChainInfoPoller();
-    } catch (e) {
-    }
+    } catch (e) {}
 
     this.setState({
-      isLoading: false
+      isLoading: false,
     });
   }
 
@@ -64,9 +63,7 @@ export default class WindowApp extends Component {
       <HashRouter hashType="slash">
         <div className="window-app">
           <SubHeader />
-          <div className="window-app__content">
-            {this.renderRoutes()}
-          </div>
+          <div className="window-app__content">{this.renderRoutes()}</div>
           <div className="window-app__footer">
             <Footer />
           </div>
@@ -83,11 +80,30 @@ export default class WindowApp extends Component {
     if (this.props.isLocked || !this.props.initialized) {
       return (
         <Switch>
-          <Route path="/login" render={() => <AccountLogin className="window-app__login" />} />
-          <Route path="/funding-options" render={this.renderWrapper(FundAccessOptions)} />
-          <Route path="/existing-options" render={this.renderWrapper(ExistingAccountOptions)} />
-          <Route path="/new-wallet" render={this.renderWrapper(CreateNewAccount)} />
-          <Route path="/import-seed" render={this.renderWrapper(ImportSeedFlow)} />
+          <Route
+            path="/login"
+            render={() => <AccountLogin className="window-app__login" />}
+          />
+          <Route
+            path="/funding-options"
+            render={this.renderWrapper(FundAccessOptions)}
+          />
+          <Route
+            path="/existing-options"
+            render={this.renderWrapper(ExistingAccountOptions)}
+          />
+          <Route
+            path="/new-wallet"
+            render={this.renderWrapper(CreateNewAccount)}
+          />
+          <Route
+            path="/import-seed"
+            render={this.renderWrapper(ImportSeedFlow)}
+          />
+          <Route
+            path="/connect-ledger"
+            render={this.renderWrapper(ConnectLedgerFlow)}
+          />
           {this.renderDefault()}
         </Switch>
       );
@@ -108,22 +124,22 @@ export default class WindowApp extends Component {
 
   renderDefault = () => {
     if (!this.props.initialized) {
-      return <Redirect to="/funding-options" />
+      return <Redirect to="/funding-options" />;
     }
 
     if (this.props.isLocked) {
-      return <Redirect to="/login" />
+      return <Redirect to="/login" />;
     }
 
-    return <Redirect to="/account" />
+    return <Redirect to="/account" />;
   };
 
-  renderWrapper = (c) => {
+  renderWrapper = c => {
     const Component = c;
     return () => (
       <ExtensionWrapper inWindow>
         <Component />
       </ExtensionWrapper>
     );
-  }
+  };
 }

@@ -1,144 +1,61 @@
 @import '../extension';
 
-.connect_line_break {
-  margin-top: 10px;
-  margin-left: -25px;
-  margin-bottom: 25px;
-}
+.connect {
+  &__support-cta {
+    @extend %description_text;
+    align-self: center;
+    text-align: center;
+    margin: 0 0 0.3rem 0;
 
-.connect_back {
-  margin-right: 7px;
-  position: relative;
-  bottom: 1px;
-}
-
-.connect_forward_arrow {
-  i {
-    border: solid #A2A2A6;
-    border-width: 0 1.5px 1.5px 0;
-    display: inline-block;
-    padding: 3px;
-    display: relative;
-    margin-bottom: 2px;
+    &__link {
+      @extend %link;
+    }
   }
 
-  .right {
-    transform: rotate(-45deg);
-    -webkit-transform: rotate(-45deg);
+  &__status-pill {
+    height: 60px;
+    border-radius: 27.5px;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    margin: 5px 0px;
+    background-color: #f7f7f7;
   }
 
-  .left {
-    transform: rotate(135deg);
-    -webkit-transform: rotate(135deg);
+  &__status-number {
+    height: 19px;
+    color: #111111;
+    font-weight: 600;
+    line-height: 19px;
+  }
+
+  &__status-text {
+    @extend %subheader_text;
+    width: 180px;
+    padding: 1rem 1.45rem;
+    height: 28px;
+    color: #111111;
+    font-size: 0.75rem;
+    font-weight: 400;
+    line-height: 14px;
+  }
+}
+
+.ledger-circle-check-container {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 1rem;
+  background-color: #e2e2e2;
+  &__active {
+    background-color: $success-green;
+    background-image: url('/img/check-icon-white.svg');
+    background-size: cover;
+    background-position: center;
   }
 }
 
 .clickable {
   cursor: pointer;
-}
-
-.connect_header {
-  margin-bottom: 20px;
-}
-
-.connect-status-pill-wrapper {}
-
-.connect_button {
-  @extend %box-input;
-  width: 100%;
-  height: 50px;
-  margin: 10px 0rem;
-  border: 0.5px solid #E6E6EE;
-  color: #A2A2A6;
-  border-radius: 8px;
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
-}
-
-.connect_cta {
-  width: 100%;
-  height: 50px;
-  font-size: 18px;
-  font-weight: 500;
-  margin-top: 10px;
-  border-radius: 12px;
-  font-family: 'Roboto', sans-serif;
-  font-size: 16px;
-  font-weight: 500;
-  text-align: center;
-  outline: none;
-  @extend %btn-primary;
-  border: none;
-  background-color: #E4E4E2;
-  color: #909095;
-
-  &__active {
-    background-color: $azure-blue;
-    color: white;
-  }
-}
-
-.connect_support_cta {
-  @extend %description_text;
-  align-self: center;
-  text-align: center;
-  margin-top: 19px;
-  cursor: pointer;
-}
-
-.connect_status_pill {
-  height: 28px;
-  width: 85%;
-  // border: 1px solid #E2E2E2;
-  background-color: #F7F7F7;
-  border-radius: 25px;
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 20px;
-  margin: 10px 0px;
-}
-
-.connect_status_number {
-  color: black;
-  font-size: 18px;
-  font-weight: 600;
-}
-
-.connect_status_text {
-  @extend %subheader_text;
-  width: 180px;
-  margin-left: 7.5px;
-  color: #000000;
-  font-size: 12px;
-  font-weight: 500;
-  // line-height: 14px;
-}
-
-.connect_status_symbol {
-
-}
-
-.ledger-circle-check-container {
-  width: 15px;
-  height: 15px;
-  border: 1px solid #E2E2E2;
-  border-radius: 15px;
-  background-color: #E2E2E2;
-
-  &__active {
-    background-color: $azure-blue;
-  }
-}
-
-.ledger-circle-check-symbol {
-  margin-left: 2.2px;
-  margin-top: 3px;
-  height: .25rem;
-  width: .5rem;
-  border-top: 2px solid $white;
-  border-right: 2px solid $white;
-  transform: rotate(135deg);
 }

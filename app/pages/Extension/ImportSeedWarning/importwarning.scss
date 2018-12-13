@@ -22,17 +22,22 @@
   }
 }
 
+.import_checkbox_container {
+  padding-top: 0.05rem;
+}
+
 .import_checkbox_text,
 .import_warning_text {
   @extend %h4;
-  margin: .5rem 0;
+  margin: 0.2rem 0;
   color: $manatee-gray;
 }
 
 .import-learn-more-text {
   @extend %h4;
   @extend %link;
-  margin-bottom: .5rem;
+  margin-top: 0.2rem;
+  margin-bottom: 0.5rem;
 }
 
 .clickable {
@@ -42,14 +47,14 @@
 .import-header-text {
   @extend %h2;
   font-weight: 600;
-  letter-spacing: -.75px;
+  letter-spacing: -0.75px;
 }
 
 .import_password_input {
   @extend %box-input;
   width: 90%;
   margin: 10px 0rem;
-  border: 1px solid #E2E2E2;
+  border: 1px solid #e2e2e2;
   border-radius: 8px;
 }
 
@@ -59,7 +64,7 @@
 
   .checkbox {
     flex: 0 0 auto;
-    margin-right: .5rem;
+    margin-right: 0.5rem;
   }
 
   .import_checkbox_text {

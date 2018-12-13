@@ -8,7 +8,10 @@ import { connect } from 'react-redux';
 import * as walletActions from '../../../ducks/wallet';
 import Terms from '../Terms';
 import client from '../../../utils/client';
-import { CREATE_WALLET, IMPORT_SEED } from '../../../../chrome/extension/background/actionTypes';
+import {
+  CREATE_WALLET,
+  IMPORT_SEED,
+} from '../../../../chrome/extension/background/actionTypes';
 
 const TERM_OF_USE = 'TERM_OF_USE';
 const WARNING_STEP = 'WARNING';
@@ -18,9 +21,11 @@ const ENTRY_STEP = 'ENTRY';
 @connect(
   state => ({}),
   dispatch => ({
-    importSeed: (passphrase, mnemonic) => dispatch(walletActions.importSeed(passphrase, mnemonic)),
-    completeInitialization: () => dispatch(walletActions.completeInitialization()),
-  })
+    importSeed: (passphrase, mnemonic) =>
+      dispatch(walletActions.importSeed(passphrase, mnemonic)),
+    completeInitialization: () =>
+      dispatch(walletActions.completeInitialization()),
+  }),
 )
 @withRouter
 export default class ImportSeedFlow extends Component {
@@ -43,7 +48,7 @@ export default class ImportSeedFlow extends Component {
         return (
           <Terms
             onAccept={() => this.setState({ currentStep: WARNING_STEP })}
-            onBack={() => this.props.history.push('/funding-options')}
+            onBack={() => this.props.history.push('/existing-options')}
           />
         );
       case WARNING_STEP:
@@ -61,7 +66,7 @@ export default class ImportSeedFlow extends Component {
           <CreatePassword
             currentStep={2}
             totalSteps={3}
-            onBack={() => this.setState({currentStep: WARNING_STEP})}
+            onBack={() => this.setState({ currentStep: WARNING_STEP })}
             onNext={passphrase => {
               this.setState({
                 passphrase,
@@ -90,7 +95,7 @@ export default class ImportSeedFlow extends Component {
     });
   }
 
-  finishFlow = async (mnemonic) => {
+  finishFlow = async mnemonic => {
     try {
       await this.props.importSeed(this.state.passphrase, mnemonic);
       await this.props.completeInitialization();

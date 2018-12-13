@@ -3,8 +3,10 @@
 .status {
   &__step-number {
     flex: 0 0 auto;
+    width: 1.2rem;
+    text-align: right;
     margin-left: 1rem;
-    font-size: .75rem;
+    font-size: 0.65rem;
     font-weight: 600;
     color: $manatee-gray;
   }
@@ -21,12 +23,12 @@
 .status_bar {
   display: flex;
   flex-flow: row nowrap;
-  height: .1875rem;
+  height: 0.1875rem;
   flex: 1 0 auto;
 }
 
 .status_bar_element {
-  background-color: #E2E2E2;
+  background-color: #e2e2e2;
   flex: 1 0 auto;
 
   &__active {
@@ -35,5 +37,5 @@
 }
 
 .status_bar_text {
-  color: #9E9EA2;
+  color: #9e9ea2;
 }
