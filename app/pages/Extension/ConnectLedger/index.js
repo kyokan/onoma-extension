@@ -73,7 +73,7 @@ export default class ConnectLedger extends React.Component {
           ])}
         >
           <div className="connect__support-cta">
-            Need help? Visit support page
+            Need help? <span className="connect__support-cta__link">Visit support page</span>
           </div>
           <button
             className="extension_cta_button terms_cta"

@@ -6,13 +6,9 @@
     align-self: center;
     text-align: center;
     margin: 0 0 0.3rem 0;
-    cursor: pointer;
-    transition: 0.3s;
-    &:hover {
-      opacity: 0.8;
-    }
-    &:active {
-      opacity: 1;
+
+    &__link {
+      @extend %link;
     }
   }
 
