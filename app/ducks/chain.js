@@ -41,11 +41,11 @@ export const startChainInfoPoller = () => {
 
     const poll = async () => {
       if (!getState().chain.isPolling) {
-        return
+        return;
       }
 
       try {
-        await dispatch(getChainInfo())
+        await dispatch(getChainInfo());
       } catch (e) {
         console.error('Error fetching chain info, trying again in 1 second.');
       }
@@ -54,7 +54,7 @@ export const startChainInfoPoller = () => {
     };
 
     await poll();
-  }
+  };
 };
 
 export const stopChainInfoPoller = () => {

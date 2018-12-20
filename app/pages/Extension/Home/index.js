@@ -6,7 +6,7 @@ import Hash from '../../../components/Hash';
 import './home.scss';
 
 @connect(
-  state => ({
+  state => console.log(state) || ({
     height: state.chain.height,
     currentHash: state.chain.currentHash,
   }),

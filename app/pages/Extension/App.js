@@ -20,23 +20,16 @@ export default class App extends Component {
   };
 
   async componentWillMount() {
-    await this.props.startWalletPoller();
     await this.props.startChainInfoPoller();
   }
 
   render() {
     return (
       <MemoryRouter>
-        {this.renderRoutes()}
+        <Switch>
+          <Route path="/" component={Home} />
+        </Switch>
       </MemoryRouter>
-    );
-  }
-
-  renderRoutes() {
-    return (
-      <Switch>
-        <Route path="/" component={Home} />
-      </Switch>
     );
   }
 }
