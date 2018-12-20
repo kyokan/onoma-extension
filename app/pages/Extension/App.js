@@ -5,7 +5,6 @@ import { MemoryRouter, Route, Switch } from 'react-router-dom';
 import * as chainActions from '../../ducks/chain';
 import Home from './Home';
 
-
 import './App.scss';
 
 @connect(

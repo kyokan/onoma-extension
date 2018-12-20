@@ -38,7 +38,7 @@
       align-items:  center;
       border-radius: 50%;
       cursor: pointer;
-      box-shadow: 0 0 2px 48px rgba($black, .02);
+      box-shadow: 0 0 16px 48px rgba($black, .02);
       transition: 250ms ease-in-out;
 
       &__icon {
@@ -65,7 +65,7 @@
       }
 
       &:hover {
-        box-shadow: 0 0 2px 48px rgba($black, .04);
+        box-shadow: 0 0 16px 48px rgba($black, .04);
 
         .home__content__power {
 
@@ -80,7 +80,7 @@
       }
 
       &--on {
-        box-shadow: 0 0 2px 48px rgba($caribbean-green, .08) !important;
+        box-shadow: 0 0 16px 48px rgba($caribbean-green, .08) !important;
 
         .home__content__power {
 

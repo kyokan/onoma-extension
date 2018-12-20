@@ -3,25 +3,34 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import c from 'classnames';
 import Hash from '../../../components/Hash';
+import * as extensionActions from '../../../ducks/extension';
 import './home.scss';
 
 @connect(
-  state => console.log(state) || ({
+  state => ({
     height: state.chain.height,
     currentHash: state.chain.currentHash,
+  }),
+  dispatch => ({
+    toggleResolve: () => dispatch(extensionActions.toggleResolve()),
   }),
 )
 class Home extends Component {
   static propTypes = {
     currentHash: PropTypes.string.isRequired,
     height: PropTypes.number.isRequired,
+    toggleResolve: PropTypes.func.isRequired,
   };
 
   state = {
-    isToggledOn: false,
+    isToggledOn: !!localStorage.getItem('shouldResolveOnHandshake'),
   };
 
-  toggle = () => this.setState({ isToggledOn: !this.state.isToggledOn });
+  toggle = () => {
+    this.setState({
+      isToggledOn: !this.state.isToggledOn,
+    }, this.props.toggleResolve);
+  };
 
   render() {
     const { currentHash, height } = this.props;
