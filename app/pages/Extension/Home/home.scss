@@ -1,0 +1,109 @@
+@import "../../../variables";
+
+.home {
+  @extend %col-nowrap;
+  height: 100%;
+  width: 100%;
+
+  &__header {
+    @extend %row-nowrap;
+    justify-content:  center;
+    align-items:  center;
+    flex: 0 0 auto;
+    height: 63px;
+    box-shadow: 0 1px 0 0 $grey;
+
+    &:before {
+      content: '';
+      display: block;
+      height: 1.5rem;
+      width: 1.5rem;
+      background-image: url('/img/icon-128.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+  }
+
+  &__content {
+    @extend %row-nowrap;
+    align-items: center;
+    justify-content: center;
+    flex: 1 1 auto;
+    height: 0;
+    background-color: rgba($black, .01);
+
+    &__power {
+      @extend %row-nowrap;
+      justify-content:  center;
+      align-items:  center;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 0 2px 48px rgba($black, .02);
+      transition: 250ms ease-in-out;
+
+      &__icon {
+        @extend %row-nowrap;
+        justify-content:  center;
+        align-items:  center;
+        padding: 2rem;
+        border: 3px solid rgba($black, .15);
+        box-shadow: 0 0 0 2px rgba($black, .4);
+        border-radius: 50%;
+        transition: 250ms ease-in-out;
+
+        &:before {
+          transition: 250ms ease-in-out;
+          content: '';
+          display: block;
+          height: 4rem;
+          width: 4rem;
+          background-image: url('/img/power.svg');
+          background-size: contain;
+          background-repeat: no-repeat;
+          opacity: .25;
+        }
+      }
+
+      &:hover {
+        box-shadow: 0 0 2px 48px rgba($black, .04);
+
+        .home__content__power {
+
+          &__icon {
+            box-shadow: 0 0 0 2px rgba($black, .6);
+
+            &:before {
+              opacity: .75;
+            }
+          }
+        }
+      }
+
+      &--on {
+        box-shadow: 0 0 2px 48px rgba($caribbean-green, .08) !important;
+
+        .home__content__power {
+
+          &__icon {
+            border: 3px solid rgba($caribbean-green, .15);
+            box-shadow: 0 0 0 2px darken($caribbean-green, 15) !important;;
+
+            &:before {
+              opacity: 1;
+              background-image: url('/img/power-on.svg');
+            }
+          }
+        }
+      }
+
+    }
+  }
+
+  &__footer {
+    @extend %h6;
+    color: $manatee-gray;
+    flex: 0 0 auto;
+    padding: 1.5rem;
+    box-shadow: 0 -1px 0 0 $grey;
+  }
+}
