@@ -9,7 +9,6 @@ module.exports = {
   entry: {
     popup: [customPath, path.join(__dirname, '../chrome/extension/popup')],
     background: [customPath, path.join(__dirname, '../chrome/extension/background')],
-    window: [customPath, path.join(__dirname, '../chrome/extension/window')],
   },
   output: {
     path: path.join(__dirname, '../build/js'),

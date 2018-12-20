@@ -41,11 +41,11 @@ export default async function startNode() {
   // const { wdb } = node.require('walletdb');
   // wdb.options.witness = true;
   // node.chain.on('block', console.log.bind(console));
-
   await node.ensure();
   await node.open();
   await node.connect();
   node.startSync();
 
+  cachedNode = node;``
   return cachedNode;
 };

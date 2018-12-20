@@ -12,7 +12,6 @@ const baseDevConfig = () => ({
   devtool: 'eval-cheap-module-source-map',
   entry: {
     popup: [customPath, hotScript, path.join(__dirname, '../chrome/extension/popup')],
-    window: [customPath, hotScript, path.join(__dirname, '../chrome/extension/window')],
     background: [customPath, hotScript, path.join(__dirname, '../chrome/extension/background')],
   },
   devMiddleware: {
