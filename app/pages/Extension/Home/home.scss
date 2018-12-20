@@ -1,4 +1,4 @@
-@import "../../../variables";
+@import '../../../variables';
 
 .home {
   @extend %col-nowrap;
@@ -7,8 +7,8 @@
 
   &__header {
     @extend %row-nowrap;
-    justify-content:  center;
-    align-items:  center;
+    justify-content: center;
+    align-items: center;
     flex: 0 0 auto;
     height: 63px;
     box-shadow: 0 1px 0 0 $grey;
@@ -25,29 +25,30 @@
   }
 
   &__content {
-    @extend %row-nowrap;
+    @extend %col-nowrap;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     flex: 1 1 auto;
     height: 0;
-    background-color: rgba($black, .01);
+    background-color: rgba($black, 0.01);
 
     &__power {
       @extend %row-nowrap;
-      justify-content:  center;
-      align-items:  center;
+      justify-content: center;
+      align-items: center;
       border-radius: 50%;
       cursor: pointer;
-      box-shadow: 0 0 16px 48px rgba($black, .02);
+      box-shadow: 0 0 0px 0px rgba($black, 0.02);
       transition: 250ms ease-in-out;
+      margin-bottom: 3rem;
 
       &__icon {
         @extend %row-nowrap;
-        justify-content:  center;
-        align-items:  center;
-        padding: 2rem;
-        border: 3px solid rgba($black, .15);
-        box-shadow: 0 0 0 2px rgba($black, .4);
+        justify-content: center;
+        align-items: center;
+        padding: 1.5rem;
+        border: 3px solid rgba($black, 0.15);
+        box-shadow: 0 0 0 2px rgba($black, 0.4);
         border-radius: 50%;
         transition: 250ms ease-in-out;
 
@@ -55,38 +56,36 @@
           transition: 250ms ease-in-out;
           content: '';
           display: block;
-          height: 4rem;
-          width: 4rem;
+          height: 3rem;
+          width: 3rem;
           background-image: url('/img/power.svg');
           background-size: contain;
           background-repeat: no-repeat;
-          opacity: .25;
+          opacity: 0.75;
         }
       }
 
       &:hover {
-        box-shadow: 0 0 16px 48px rgba($black, .04);
+        box-shadow: 0 0 6px 18px rgba($black, 0.04);
 
         .home__content__power {
-
           &__icon {
-            box-shadow: 0 0 0 2px rgba($black, .6);
+            box-shadow: 0 0 0 2px rgba($black, 0.6);
 
             &:before {
-              opacity: .75;
+              opacity: 0.75;
             }
           }
         }
       }
 
       &--on {
-        box-shadow: 0 0 16px 48px rgba($caribbean-green, .08) !important;
+        box-shadow: 0 0 10px 30px rgba($caribbean-green, 0.08) !important;
 
         .home__content__power {
-
           &__icon {
-            border: 3px solid rgba($caribbean-green, .15);
-            box-shadow: 0 0 0 2px darken($caribbean-green, 15) !important;;
+            border: 3px solid rgba($caribbean-green, 0.15);
+            box-shadow: 0 0 0 2px darken($caribbean-green, 15) !important;
 
             &:before {
               opacity: 1;
@@ -95,15 +94,73 @@
           }
         }
       }
+    }
+    &__explanation {
+      @extend %col-nowrap;
+      padding: 1.5rem;
 
+      &__headline {
+        @extend %row-nowrap;
+        @extend %h5;
+        // font-style: italic;
+        font-weight: 900;
+        margin-bottom: 0.3rem;
+      }
+
+      &__text {
+        @extend %h5;
+      }
+      &__link {
+        @extend %h5;
+        font-weight: 600;
+        text-decoration: none;
+        color: $azure-blue;
+      }
     }
   }
 
   &__footer {
     @extend %h6;
-    color: $manatee-gray;
+    color: $black;
     flex: 0 0 auto;
-    padding: 1.5rem;
-    box-shadow: 0 -1px 0 0 $grey;
+    flex-direction: column;
+    line-height: 1rem;
+    box-shadow: 0 -1px 0 0 $caribbean-green;
+    padding: 0 1.5rem 1.5rem 1.5rem;
+
+    &__row {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    &__description {
+      font-weight: 600;
+    }
+
+    &__highlight {
+      color: $azure-blue;
+      font-weight: 700;
+    }
+
+    &__status {
+      @extend %h6;
+      font-weight: 500;
+      line-height: 16px;
+      text-align: right;
+      padding: 0.2rem 0 1rem 0;
+
+      &__failure {
+        color: $orange-red;
+        font-weight: 600;
+      }
+      &__success {
+        color: $caribbean-green;
+        font-weight: 600;
+      }
+      &__neutral {
+        color: $manatee-gray;
+      }
+    }
   }
 }

@@ -9,34 +9,34 @@ const STOP_POLLING = 'app/chain/stopPolling';
 const initialState = {
   height: 0,
   currentHash: '',
+  chainHeight: 4110,
   synced: false,
-  isPolling: false
+  isPolling: false,
 };
 
-export const getChainInfo = () => (dispatch, getState) => client
-    .dispatch({ type: rpc.GET_CHAIN_INFO })
-    .then((payload) => {
-      const state = getState().chain;
-      const oldState = {
-        height: state.height,
-        currentHash: state.currentHash,
-        synced: state.synced
-      };
+export const getChainInfo = () => (dispatch, getState) =>
+  client.dispatch({ type: rpc.GET_CHAIN_INFO }).then(payload => {
+    const state = getState().chain;
+    const oldState = {
+      height: state.height,
+      currentHash: state.currentHash,
+      synced: state.synced,
+    };
 
-      if (isEqual(payload, oldState)) {
-        return
-      }
+    if (isEqual(payload, oldState)) {
+      return;
+    }
 
-      dispatch({
-        type: SET_CHAIN_INFO,
-        payload
-      })
+    dispatch({
+      type: SET_CHAIN_INFO,
+      payload,
     });
+  });
 
 export const startChainInfoPoller = () => {
   return async (dispatch, getState) => {
     dispatch({
-      type: START_POLLING
+      type: START_POLLING,
     });
 
     const poll = async () => {
@@ -59,7 +59,7 @@ export const startChainInfoPoller = () => {
 
 export const stopChainInfoPoller = () => {
   return {
-    type: STOP_POLLING
+    type: STOP_POLLING,
   };
 };
 

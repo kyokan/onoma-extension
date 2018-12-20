@@ -9,7 +9,9 @@ import './home.scss';
 @connect(
   state => ({
     height: state.chain.height,
+    chainHeight: state.chain.chainHeight,
     currentHash: state.chain.currentHash,
+    synced: state.chain.synced,
   }),
   dispatch => ({
     toggleResolve: () => dispatch(extensionActions.toggleResolve()),
@@ -19,7 +21,9 @@ class Home extends Component {
   static propTypes = {
     currentHash: PropTypes.string.isRequired,
     height: PropTypes.number.isRequired,
+    chainHeight: PropTypes.number.isRequired,
     toggleResolve: PropTypes.func.isRequired,
+    synced: PropTypes.bool.isRequired,
   };
 
   state = {
@@ -27,17 +31,49 @@ class Home extends Component {
   };
 
   toggle = () => {
-    this.setState({
-      isToggledOn: !this.state.isToggledOn,
-    }, this.props.toggleResolve);
+    this.setState(
+      {
+        isToggledOn: !this.state.isToggledOn,
+      },
+      this.props.toggleResolve,
+    );
+  };
+
+  renderSynced = () => {
+    const { synced, height, chainHeight } = this.props;
+    let text = '';
+    if (synced) {
+      return (text = 'Synchronized');
+    }
+    if (chainHeight > height) {
+      return (text = 'Synchronizing');
+    }
+    return text;
   };
 
   render() {
-    const { currentHash, height } = this.props;
+    const { currentHash, height, synced, chainHeight } = this.props;
     return (
       <div className="home">
         <div className="home__header" />
         <div className="home__content">
+          <div className="home__content__explanation">
+            <div className="home__content__explanation__headline">
+              Resolve on Handshake
+            </div>
+            <div className="home__content__explanation__text">
+              Push the button to enter the new web. To see it working, visit the
+              HNS domain{' '}
+              <a
+                className="home__content__explanation__link"
+                target="_blank"
+                rel="noopener noreferrer"
+                href="http://megatest/"
+              >
+                .megatest/
+              </a>
+            </div>
+          </div>
           <div
             className={c('home__content__power', {
               'home__content__power--on': this.state.isToggledOn,
@@ -48,16 +84,28 @@ class Home extends Component {
           </div>
         </div>
         <div className="home__footer">
-          <div>
-            {`Current Height: #${height}`}
+          <div
+            className={c('home__footer__status', {
+              home__footer__status__success: synced,
+              home__footer__status__neutral: chainHeight > height,
+            })}
+          >
+            {this.renderSynced()}
           </div>
-          <div>
-            Current Hash: <Hash value={currentHash} />
+          <div className="home__footer__row">
+            <div className="home__footer__description">Current Height: </div>
+            <div className="home__footer__highlight">{height}</div>
+          </div>
+          <div className="home__footer__row">
+            <div className="home__footer__description">Current Hash: </div>
+            <div className="home__footer__highlight">
+              <Hash value={currentHash} />
+            </div>
           </div>
         </div>
       </div>
     );
-  };
+  }
 }
 
 export default Home;
