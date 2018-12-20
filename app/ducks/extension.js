@@ -21,7 +21,7 @@ export const setView = viewType => ({
 
 export const toggleResolve = () => () => {
   client.dispatch({ type: rpc.TOGGLE_RESOLVE });
-  window.close();
+  // window.close();
 };
 
 export default function extension(state = initialState, { type, payload }) {
