@@ -48,7 +48,7 @@ class Home extends Component {
     if (chainHeight > height) {
       return (text = 'Synchronizing');
     }
-    return text;
+    return { text };
   };
 
   render() {
