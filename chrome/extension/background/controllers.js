@@ -3,6 +3,7 @@
 import * as walletTypes from '../../../app/ducks/wallet';
 import Amount from '../../../node_modules/hsd/lib/ui/amount';
 import MasterKey from 'hsd/lib/wallet/masterkey';
+import { toggleResolution } from './resolver/resolve';
 
 const { EXTENSION, NONE } = walletTypes;
 const ONE_DAY = 24 * 60 * 60 * 1000;
@@ -245,9 +246,9 @@ export async function send(req, res) {
 }
 
 export async function toggleResolve() {
-  const shouldResovleOnHandshake = localStorage.getItem('shouldResovleOnHandshake');
-  localStorage.setItem('shouldResovleOnHandshake', shouldResovleOnHandshake ? '' : '1');
-  window.location.reload();
+  const shouldResolveOnHandshake = localStorage.getItem('shouldResolveOnHandshake');
+  localStorage.setItem('shouldResolveOnHandshake', shouldResolveOnHandshake ? '' : '1');
+  toggleResolution();
 }
 
 export async function rpcRequest(req, res) {

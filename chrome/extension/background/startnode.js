@@ -4,6 +4,7 @@ import Logger from 'blgr';
 import SPVNode from '../../../node_modules/hsd/lib/node/spvnode';
 import plugin from '../../../node_modules/hsd/lib/wallet/plugin';
 import ProxySocket from './utils/proxysocket';
+import Question from '../../../node_modules/bns/lib/wire';
 
 const logger = new Logger({
   level: 'debug',
@@ -31,10 +32,10 @@ export default async function startNode() {
     logConsole: true,
     workers: true,
     workerFile: '/worker.js',
-    createSocket: (port, host) => ProxySocket.connect('ws://hnsd-1.dev.kyokan.io:8081', port, host),
+    createSocket: (port, host) => ProxySocket.connect('ws://onoma-infra.dev.kyokan.io:8888', port, host),
     logger,
     plugins: [plugin],
-    seeds: ['aorsxa4ylaacshipyjkfbvzfkh3jhh4yowtoqdt64nzemqtiw2whk@18.217.172.158']
+    seeds: ['aorsxa4ylaacshipyjkfbvzfkh3jhh4yowtoqdt64nzemqtiw2whk@45.55.108.48']
   });
 
   // const { wdb } = node.require('walletdb');
@@ -46,6 +47,5 @@ export default async function startNode() {
   await node.connect();
   node.startSync();
 
-  cachedNode = node;
   return cachedNode;
 };

@@ -1,9 +1,4 @@
-import {
-  resolveViaAPI,
-  isNormalURL,
-  parseURL,
-  allURLs,
-} from './common';
+import { allURLs, isIPAddress, isNormalURL, parseURL, resolveViaAPI, } from './common';
 
 import cache from './cache';
 /*
@@ -108,6 +103,8 @@ var pac = {
       .replace(/^.*|.*$/g, '')    // wrapping 'function () { ... }'.
       .replace('CACHE_HERE', pac.buildObject());
 
+    console.log(script);
+
     var config = {
       mode: 'pac_script',
       pacScript: {
@@ -129,8 +126,8 @@ cache.onIpChange = pac.onIpChange;
 cache.onDomainDelete = pac.onDomainDelete;
 
 chrome.webRequest.onBeforeRequest.addListener(function (details) {
-  var url = parseURL(details.url);
-  if (!url || !url.tld || isNormalURL(url) || !localStorage.getItem('shouldResovleOnHandshake')) {
+  const url = parseURL(details.url);
+  if (!url || !url.tld || isNormalURL(url) || isIPAddress(url.url) || !localStorage.getItem('shouldResolveOnHandshake')) {
     return;
   }
 
@@ -141,7 +138,7 @@ chrome.webRequest.onBeforeRequest.addListener(function (details) {
   } else {
     console.log('NHE: #' + details.requestId + ' (' + url.domain + '): resolving, full URL: ' + url.url); //-
 
-    resolveViaAPI(url.domain, false, function (ips) {
+    resolveViaAPI(url.domain, function (ips) {
       if (ips && ips.length) {
         cache.set(url.domain, ips);
       }
@@ -151,25 +148,11 @@ chrome.webRequest.onBeforeRequest.addListener(function (details) {
   }
 }, allURLs, ["blocking"]);
 
-chrome.webRequest.onErrorOccurred.addListener(function (details) {
-  var req = details.requestId;
-  var url = parseURL(details.url);
-  console.log('NHE: #' + req + ' (' + url.domain + '): ' + details.error); //-
-
-  switch (details.error) {
-    // Proxy error. Fired once, only if all IPs from the list of domain's IPs are down.
-    case 'net::ERR_PROXY_CONNECTION_FAILED':
-      if (cache.has(url.domain)) {
-        showThrottledNotification(url.domain, url.domain + ' is down');
-      }
-
-      break;
+export function toggleResolution() {
+  // the other state is a noop because requests will not be
+  // added to the cache once the shouldResolveOnHandshake flag
+  // is flipped.
+  if (!localStorage.getItem('shouldResolveOnHandshake')) {
+    chrome.proxy.settings.clear()
   }
-}, allURLs);
-
-chrome.alarms.create({periodInMinutes: 1});
-
-chrome.alarms.onAlarm.addListener(function () {
-  var count = cache.prune();
-  console.log('NHE: deleted ' + count + ' expired entries; cache size = ' + cache.length); //-
-});
+}

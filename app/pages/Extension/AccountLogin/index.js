@@ -85,7 +85,7 @@ export default class AccountLogin extends Component {
             <label className="switch">
               <input
                 type="checkbox"
-                defaultChecked={!!localStorage.getItem('shouldResovleOnHandshake')}
+                defaultChecked={!!localStorage.getItem('shouldResolveOnHandshake')}
                 onChange={() => {
                   this.props.toggleResolve();
                 }}

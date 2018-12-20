@@ -51,9 +51,11 @@
 */
 
 // Update manifest when this list is changed.
-const apiBase = 'http://hnsd-1.dev.kyokan.io:8081/';
+import { getJSON } from '../utils/net';
 
-let apiTimeout = 5000;
+const apiBase = 'http://onoma-infra.dev.kyokan.io:8080';
+
+const apiTimeout = 5000;
 
 // Additionally restricted by manifest's permissions.
 export const allURLs = { urls: [ "<all_urls>" ] };
@@ -72,51 +74,26 @@ export function parseURL(url) {
 }
 
 // done = function (ips), ips = [] if nx, [ip, ...] if xx, null on error.
-export function resolveViaAPI(domain, async, done) {
-  var xhr = new XMLHttpRequest;
+export function resolveViaAPI(domain, done) {
+  const timeout = setTimeout(done, apiTimeout);
 
-  xhr.onreadystatechange = function () {
-    var ips = (xhr.responseText || '').trim();
-
-    console.info('NHE: ' + domain + ': from ' + apiBase + ': readyState=' + xhr.readyState + ', status=' + xhr.status + ', response=' + ips.replace(/\r?\n/g, ',')); //-
-
-    if (xhr.readyState == 4) {
-      if (xhr.status == 200 && ips.match(/^[\d.\r\n]+$/)) {
-        ips = ips.split(/\r?\n/);
-        done(ips);
-      } else {
-        xhr.onerror = null;
-        done();
-      }
+  (async function() {
+    try {
+      const res = await getJSON(`${apiBase}/resolve?domain=${encodeURIComponent(domain)}`);
+      clearTimeout(timeout);
+      done([res.resolution]);
+    } catch (e) {
+      done();
     }
-  }
-
-  xhr.onerror = function () { done(); };
-
-  xhr.ontimeout = function () {
-    apiTimeout = Math.min(apiTimeout * 1.5, 30000);
-    console.warn('NHE: ' + domain + ': resolver has timed out, increasing timeout to ' + apiTimeout + 'ms'); //-
-    // Error handled is called from onreadystatechange.
-  };
-
-  // No way to specify timeout in Chrome. I'd love to hear the sound reason
-  // for not allowing timeout on sync XHR - where it's most needed.
-  if (async) {
-    xhr.timeout = apiTimeout;
-  }
-
-  try {
-    var apiURL = apiBase + "resolve?domain=" + encodeURIComponent(domain);
-    xhr.open("GET", apiURL, async);
-    xhr.send();
-    return xhr;
-  } catch (e) {
-    done();
-  }
+  })();
 }
 
 export function isNormalURL(url) {
   return normalTLDs.indexOf(url.tld[0]) !== -1;
+}
+
+export function isIPAddress(url) {
+  return url.match(/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)/i)
 }
 
 const normalTLDs = [
