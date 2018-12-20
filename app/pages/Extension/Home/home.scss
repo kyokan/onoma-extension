@@ -58,10 +58,10 @@
           display: block;
           height: 3rem;
           width: 3rem;
-          background-image: url('/img/power.svg');
+          background-image: url('/img/icon-128.png');
           background-size: contain;
           background-repeat: no-repeat;
-          opacity: 0.75;
+          opacity: 0.5;
         }
       }
 
@@ -73,23 +73,37 @@
             box-shadow: 0 0 0 2px rgba($black, 0.6);
 
             &:before {
-              opacity: 0.75;
+              opacity: 0.5;
             }
           }
         }
       }
 
       &--on {
-        box-shadow: 0 0 10px 30px rgba($caribbean-green, 0.08) !important;
+        box-shadow: 0 0 10px 30px rgba($azure-blue, 0.08) !important;
 
         .home__content__power {
           &__icon {
-            border: 3px solid rgba($caribbean-green, 0.15);
-            box-shadow: 0 0 0 2px darken($caribbean-green, 15) !important;
+            border: 3px solid rgba($azure-blue, 0.15);
+            box-shadow: 0 0 0 2px darken($azure-blue, 15) !important;
 
             &:before {
               opacity: 1;
-              background-image: url('/img/power-on.svg');
+              background-image: url('/img/icon-128-blue.png');
+            }
+          }
+        }
+        &:hover {
+          box-shadow: 0 0 6px 30px rgba($azure-blue, 0.1) !important;
+
+          .home__content__power {
+            &__icon {
+              border: 3px solid rgba($azure-blue, 0.15);
+              box-shadow: 0 0 0 2px darken($azure-blue, 15) !important;
+
+              &:before {
+                opacity: 1;
+              }
             }
           }
         }
@@ -125,8 +139,16 @@
     flex: 0 0 auto;
     flex-direction: column;
     line-height: 1rem;
-    box-shadow: 0 -1px 0 0 $caribbean-green;
+    box-shadow: 0 -1px 0 0 $grey;
     padding: 0 1.5rem 1.5rem 1.5rem;
+
+    &__success {
+      box-shadow: 0 -1px 0 0 $caribbean-green;
+    }
+
+    &__failure {
+      box-shadow: 0 -1px 0 0 $orange-red;
+    }
 
     &__row {
       display: flex;
@@ -142,13 +164,17 @@
       color: $azure-blue;
       font-weight: 700;
     }
-
+    &__status-wrapper {
+      @extend %row-nowrap;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 0.2rem 0 1rem 0;
+    }
     &__status {
       @extend %h6;
       font-weight: 500;
       line-height: 16px;
-      text-align: right;
-      padding: 0.2rem 0 1rem 0;
+      color: $manatee-gray;
 
       &__failure {
         color: $orange-red;
@@ -158,8 +184,14 @@
         color: $caribbean-green;
         font-weight: 600;
       }
-      &__neutral {
-        color: $manatee-gray;
+
+      &__loading {
+        background-image: url('/img/blocks.svg');
+        background-size: cover;
+        background-position: center;
+        height: 12px;
+        width: 12px;
+        margin-right: 0.3rem;
       }
     }
   }

@@ -42,11 +42,13 @@ class Home extends Component {
   renderSynced = () => {
     const { synced, height, chainHeight } = this.props;
     let text = '';
+    if (chainHeight > height) {
+      return (text = `Synchronizing ${Math.floor(
+        (height / chainHeight) * 100,
+      )}%`);
+    }
     if (synced) {
       return (text = 'Synchronized');
-    }
-    if (chainHeight > height) {
-      return (text = 'Synchronizing');
     }
     return { text };
   };
@@ -83,14 +85,24 @@ class Home extends Component {
             <div className="home__content__power__icon" />
           </div>
         </div>
-        <div className="home__footer">
-          <div
-            className={c('home__footer__status', {
-              home__footer__status__success: synced,
-              home__footer__status__neutral: chainHeight > height,
-            })}
-          >
-            {this.renderSynced()}
+        <div
+          className={c('home__footer', {
+            home__footer__success: synced && chainHeight === height,
+            home__footer__failure: !synced,
+          })}
+        >
+          <div className="home__footer__status-wrapper">
+            {!(synced && chainHeight === height) && (
+              <div className="home__footer__status__loading" />
+            )}
+            <div
+              className={c('home__footer__status', {
+                home__footer__status__success: synced && chainHeight === height,
+                home__footer__failure: !synced,
+              })}
+            >
+              {this.renderSynced()}
+            </div>
           </div>
           <div className="home__footer__row">
             <div className="home__footer__description">Current Height: </div>
