@@ -9,7 +9,6 @@ import './home.scss';
 @connect(
   state => ({
     height: state.chain.height,
-    chainHeight: state.chain.chainHeight,
     currentHash: state.chain.currentHash,
     synced: state.chain.synced,
     isSynchronizing: state.chain.isSynchronizing,
@@ -22,7 +21,6 @@ class Home extends Component {
   static propTypes = {
     currentHash: PropTypes.string.isRequired,
     height: PropTypes.number.isRequired,
-    chainHeight: PropTypes.number.isRequired,
     toggleResolve: PropTypes.func.isRequired,
     synced: PropTypes.bool.isRequired,
     isSynchronizing: PropTypes.bool.isRequired,
