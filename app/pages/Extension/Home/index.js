@@ -12,6 +12,7 @@ import './home.scss';
     chainHeight: state.chain.chainHeight,
     currentHash: state.chain.currentHash,
     synced: state.chain.synced,
+    isSynchronizing: state.chain.isSynchronizing,
   }),
   dispatch => ({
     toggleResolve: () => dispatch(extensionActions.toggleResolve()),
@@ -24,6 +25,7 @@ class Home extends Component {
     chainHeight: PropTypes.number.isRequired,
     toggleResolve: PropTypes.func.isRequired,
     synced: PropTypes.bool.isRequired,
+    isSynchronizing: PropTypes.bool.isRequired,
   };
 
   state = {
@@ -39,22 +41,25 @@ class Home extends Component {
     );
   };
 
+  isSynced = () => this.props.synced && !this.props.isSynchronizing;
+  isNotSynced = () => !this.props.synced && !this.props.isSynchronizing;
+
   renderSynced = () => {
-    const { synced, height, chainHeight } = this.props;
-    let text = '';
-    if (chainHeight > height) {
-      return (text = `Synchronizing ${Math.floor(
-        (height / chainHeight) * 100,
-      )}%`);
+    const { synced, isSynchronizing } = this.props;
+
+    if (isSynchronizing) {
+      return 'Synchronizing';
     }
+
     if (synced) {
-      return (text = 'Synchronized');
+      return 'Synchronized';
     }
-    return { text };
+
+    return 'Not Synchronized';
   };
 
   render() {
-    const { currentHash, height, synced, chainHeight } = this.props;
+    const { currentHash, height, isSynchronizing } = this.props;
     return (
       <div className="home">
         <div className="home__header" />
@@ -87,18 +92,17 @@ class Home extends Component {
         </div>
         <div
           className={c('home__footer', {
-            home__footer__success: synced && chainHeight === height,
-            home__footer__failure: !synced,
+            'home__footer--syncing': isSynchronizing,
+            'home__footer--success': this.isSynced(),
+            'home__footer--failure': this.isNotSynced(),
           })}
         >
           <div className="home__footer__status-wrapper">
-            {!(synced && chainHeight === height) && (
-              <div className="home__footer__status__loading" />
-            )}
             <div
               className={c('home__footer__status', {
-                home__footer__status__success: synced && chainHeight === height,
-                home__footer__failure: !synced,
+                'home__footer__status--syncing': isSynchronizing,
+                'home__footer__status--success': this.isSynced(),
+                'home__footer__status--failure': this.isNotSynced(),
               })}
             >
               {this.renderSynced()}
