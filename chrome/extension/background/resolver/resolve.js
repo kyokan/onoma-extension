@@ -194,6 +194,6 @@ export function toggleResolution() {
   // added to the cache once the shouldResolveOnHandshake flag
   // is flipped.
   if (!localStorage.getItem('shouldResolveOnHandshake')) {
-    chrome.proxy.settings.clear();
+    chrome.proxy.settings.clear({});
   }
 }
