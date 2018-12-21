@@ -12,9 +12,7 @@
     "48": "img/icon-128.png",
     "128": "img/icon-128.png"
   },
-  "web_accessible_resources": [
-    "inject.html"
-  ],
+  "web_accessible_resources": ["inject.html"],
   "background": {
     "page": "background.html",
     "persistent": true

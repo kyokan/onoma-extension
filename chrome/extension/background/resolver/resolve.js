@@ -1,4 +1,10 @@
-import { allURLs, isIPAddress, isNormalURL, parseURL, resolveViaAPI, } from './common';
+import {
+  allURLs,
+  isIPAddress,
+  isNormalURL,
+  parseURL,
+  resolveViaAPI,
+} from './common';
 
 import cache from './cache';
 /*
@@ -55,7 +61,7 @@ function showNotification(title, msg) {
 }
 
 var pac = {
-  _scriptStub: function () {
+  _scriptStub: function() {
     var cache = CACHE_HERE;
 
     function FindProxyForURL(url, host) {
@@ -81,26 +87,29 @@ var pac = {
     }
   },
 
-  buildObject: function () {
+  buildObject: function() {
     var obj = {};
 
-    cache.each(function (domain) {
+    cache.each(function(domain) {
       var ips = cache.ips(domain);
-      if (ips.length) { obj[domain] = ips; }
+      if (ips.length) {
+        obj[domain] = ips;
+      }
     });
 
     return JSON.stringify(obj);
   },
 
-  onIpChange: function (domain, ips, existed) {
+  onIpChange: function(domain, ips, existed) {
     if (!ips.length) {
       // Non-existent domains.js are handled (cancelled) by onBeforeRequest.
       // They don't reach PAC.
       return;
     }
 
-    var script = pac._scriptStub.toString()
-      .replace(/^.*|.*$/g, '')    // wrapping 'function () { ... }'.
+    var script = pac._scriptStub
+      .toString()
+      .replace(/^.*|.*$/g, '') // wrapping 'function () { ... }'.
       .replace('CACHE_HERE', pac.buildObject());
 
     console.log(script);
@@ -112,47 +121,79 @@ var pac = {
       },
     };
 
-    chrome.proxy.settings.set({value: config}, function () {
+    chrome.proxy.settings.set({ value: config }, function() {
       console.log('NHE: set new PAC script, length = ' + script.length); //-
     });
   },
 
   // No need to update PAC on domains.js missing (deleted) from cache since they
   // will be reprocessed by onBeforeRequest before PAC is queried.
-  onDomainDelete: function (domain) { },
+  onDomainDelete: function(domain) {},
 };
 
 cache.onIpChange = pac.onIpChange;
 cache.onDomainDelete = pac.onDomainDelete;
 
-chrome.webRequest.onBeforeRequest.addListener(function (details) {
-  const url = parseURL(details.url);
-  if (!url || !url.tld || isNormalURL(url) || isIPAddress(url.url) || !localStorage.getItem('shouldResolveOnHandshake')) {
-    return;
-  }
+chrome.webRequest.onBeforeRequest.addListener(
+  function(details) {
+    const url = parseURL(details.url);
+    if (
+      !url ||
+      !url.tld ||
+      isNormalURL(url) ||
+      isIPAddress(url.url) ||
+      !localStorage.getItem('shouldResolveOnHandshake')
+    ) {
+      return;
+    }
 
-  const ips = cache.ips(url.domain);
+    const ips = cache.ips(url.domain);
 
-  if (ips) {
-    console.log('NHE: #' + details.requestId + ' (' + url.domain + '): already resolved to ' + ips + '; cache size = ' + cache.length); //-
-  } else {
-    console.log('NHE: #' + details.requestId + ' (' + url.domain + '): resolving, full URL: ' + url.url); //-
+    if (ips) {
+      console.log(
+        'NHE: #' +
+          details.requestId +
+          ' (' +
+          url.domain +
+          '): already resolved to ' +
+          ips +
+          '; cache size = ' +
+          cache.length,
+      ); //-
+    } else {
+      console.log(
+        'NHE: #' +
+          details.requestId +
+          ' (' +
+          url.domain +
+          '): resolving, full URL: ' +
+          url.url,
+      ); //-
 
-    resolveViaAPI(url.domain, function (ips) {
-      if (ips && ips.length) {
-        cache.set(url.domain, ips);
-      }
-    });
+      resolveViaAPI(url.domain, function(ips) {
+        if (ips && ips.length) {
+          cache.set(url.domain, ips);
+        }
+      });
 
-    console.log('NHE: #' + details.requestId + ' (' + url.domain + '): resolution finished, returning '); //-
-  }
-}, allURLs, ["blocking"]);
+      console.log(
+        'NHE: #' +
+          details.requestId +
+          ' (' +
+          url.domain +
+          '): resolution finished, returning ',
+      ); //-
+    }
+  },
+  allURLs,
+  ['blocking'],
+);
 
 export function toggleResolution() {
   // the other state is a noop because requests will not be
   // added to the cache once the shouldResolveOnHandshake flag
   // is flipped.
   if (!localStorage.getItem('shouldResolveOnHandshake')) {
-    chrome.proxy.settings.clear()
+    chrome.proxy.settings.clear();
   }
 }
