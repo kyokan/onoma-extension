@@ -112,8 +112,6 @@ var pac = {
       .replace(/^.*|.*$/g, '') // wrapping 'function () { ... }'.
       .replace('CACHE_HERE', pac.buildObject());
 
-    console.log(script);
-
     var config = {
       mode: 'pac_script',
       pacScript: {
