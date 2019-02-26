@@ -18,7 +18,8 @@
       display: block;
       height: 1.5rem;
       width: 1.5rem;
-      background-image: url('/img/icon-128.png');
+      //background-image: url('/img/icon-128.png');
+      background-image: url('/img/bob-logo.svg');
       background-size: contain;
       background-repeat: no-repeat;
     }
@@ -58,9 +59,10 @@
           display: block;
           height: 3rem;
           width: 3rem;
-          background-image: url('/img/icon-128.png');
+          background-image: url('/img/bob-logo.svg');
           background-size: contain;
           background-repeat: no-repeat;
+          background-position: center;
           opacity: 0.5;
         }
       }
@@ -89,7 +91,7 @@
 
             &:before {
               opacity: 1;
-              background-image: url('/img/icon-128-blue.png');
+              background-image: url('/img/bob-blue-logo.svg');
             }
           }
         }
